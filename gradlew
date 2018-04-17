@@ -6,6 +6,9 @@
 ##
 ##############################################################################
 
+# Try to start the docker container needed for app. DB, Jregistry, etc...
+docker-compose -f src/main/docker/appDev.yml up -d
+
 # Attempt to set APP_HOME
 # Resolve links: $0 may be a link
 PRG="$0"
