@@ -1,0 +1,44 @@
+
+<div *ngIf="appointment">
+    <h2><span jhiTranslate="bemApp.appointment.detail.title">Appointment</span> {{appointment.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bemApp.appointment.category">Category</span></dt>
+        <dd>
+            <span jhiTranslate="{{'bemApp.Category.' + appointment.category}}">{{appointment.category}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.appointment.name">Name</span></dt>
+        <dd>
+            <span>{{appointment.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.appointment.address">Address</span></dt>
+        <dd>
+            <span>{{appointment.address}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.appointment.time">Time</span></dt>
+        <dd>
+            <span>{{appointment.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.appointment.user">User</span></dt>
+        <dd>
+            <span *ngFor="let user of appointment.users; let last = last">
+                <a [routerLink]="['/profile', user?.id ]">{{user.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'appointment/'+ appointment.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

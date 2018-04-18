@@ -1,0 +1,35 @@
+entity Profile {
+	phNumber String,
+    name String,
+}
+
+entity Appointment {
+	category Category,
+    name String,
+    address String,
+    time ZonedDateTime,
+}
+
+entity Message {
+	time ZonedDateTime,
+    content String
+}
+
+enum Category {
+	FACE, BODY, MEN, DENTAL, HAIR, HEALTH, WELLBEING
+}
+
+relationship ManyToMany {
+	Appointment{user(name)} to Profile{appointment(name)}
+}
+
+relationship OneToMany {
+	Appointment{message(time)} to Message{appointment(name)}
+}
+
+relationship OneToOne {
+	Profile{user(login)} to User{profile(name)}
+}
+
+paginate Appointment with pagination
+paginate Message with pagination

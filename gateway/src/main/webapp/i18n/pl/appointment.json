@@ -1,0 +1,27 @@
+
+{
+    "bemApp": {
+        "appointment" : {
+            "home": {
+                "title": "Appointments",
+                "createLabel": "Dodaj Appointment",
+                "createOrEditLabel": "Dodaj lub edytuj: Appointment"
+            },
+            "created": "Utworzono nowy Appointment z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Appointment z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Appointment z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Appointment {{ id }}?"
+            },
+            "detail": {
+                "title": "Appointment"
+            },
+            "category": "Category",
+            "name": "Name",
+            "address": "Address",
+            "time": "Time",
+            "message": "Message",
+            "user": "User"
+        }
+    }
+}

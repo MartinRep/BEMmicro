@@ -1,0 +1,14 @@
+{
+    "bemApp": {
+        "Category" : {
+            "null": "",
+            "FACE": "FACE",
+            "BODY": "BODY",
+            "MEN": "MEN",
+            "DENTAL": "DENTAL",
+            "HAIR": "HAIR",
+            "HEALTH": "HEALTH",
+            "WELLBEING": "WELLBEING"
+        }
+    }
+}

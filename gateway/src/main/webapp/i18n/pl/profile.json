@@ -1,0 +1,25 @@
+
+{
+    "bemApp": {
+        "profile" : {
+            "home": {
+                "title": "Profiles",
+                "createLabel": "Dodaj Profile",
+                "createOrEditLabel": "Dodaj lub edytuj: Profile"
+            },
+            "created": "Utworzono nowy Profile z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Profile z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Profile z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Profile {{ id }}?"
+            },
+            "detail": {
+                "title": "Profile"
+            },
+            "phNumber": "Ph Number",
+            "name": "Name",
+            "user": "User",
+            "appointment": "Appointment"
+        }
+    }
+}
