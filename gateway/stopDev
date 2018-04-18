@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# Stops all the docker containers started by ./gradlew
+docker-compose -f src/main/docker/appDev.yml down
