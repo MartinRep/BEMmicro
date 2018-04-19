@@ -1,0 +1,41 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "offer",
+            "otherEntityName": "offer",
+            "otherEntityRelationshipName": "request"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "category",
+            "fieldType": "Category",
+            "fieldValues": "FACE,BODY,MEN,DENTAL,HAIR,HEALTH,WELLBEING"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "duration",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "expPrice",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "user",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180419202510",
+    "entityTableName": "request",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "request"
+}

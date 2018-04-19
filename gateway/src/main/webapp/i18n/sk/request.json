@@ -1,0 +1,32 @@
+
+{
+    "bemApp": {
+        "request" : {
+            "home": {
+                "title": "Requests",
+                "createLabel": "Pridať Request",
+                "createOrEditLabel": "Pridať alebo upraviť Request"
+            },
+            "delete": {
+                "question": "Ste si istý, že chcete vymazať Request {{ id }}?"
+            },
+            "detail": {
+                "title": "Request"
+            },
+            "category": "Category",
+            "name": "Name",
+            "duration": "Duration",
+            "expPrice": "Exp Price",
+            "user": "User",
+            "offer": "Offer",
+            "profile": "Profile"
+        }
+    },
+    "requestApp": {
+        "request" : {
+            "created": "Bol vytvorený potomok entity Request s identifikátorom {{ param }}",
+            "updated": "Potomok entity Request s identifikátorom {{ param }} bol upravený.",
+            "deleted": "Potomok entity Request s identifikátorom {{ param }} bol vymazaný."
+        }
+    }
+}

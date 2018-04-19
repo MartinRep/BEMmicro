@@ -3,6 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BemProfileModule } from './profile/profile.module';
 import { BemAppointmentModule } from './appointment/appointment.module';
 import { BemMessageModule } from './message/message.module';
+import { BemRequestModule } from './request/request.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -10,6 +11,7 @@ import { BemMessageModule } from './message/message.module';
         BemProfileModule,
         BemAppointmentModule,
         BemMessageModule,
+        BemRequestModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

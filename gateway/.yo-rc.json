@@ -2,7 +2,8 @@
   "generator-jhipster": {
     "promptValues": {
       "packageName": "ie.gmit.bem",
-      "nativeLanguage": "en"
+      "nativeLanguage": "en",
+      "microservicePath": "../request"
     },
     "jhipsterVersion": "4.14.3",
     "baseName": "Bem",

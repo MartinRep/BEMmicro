@@ -1,0 +1,48 @@
+
+<div *ngIf="request">
+    <h2><span jhiTranslate="bemApp.request.detail.title">Request</span> {{request.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bemApp.request.category">Category</span></dt>
+        <dd>
+            <span jhiTranslate="{{'bemApp.Category.' + request.category}}">{{request.category}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.request.name">Name</span></dt>
+        <dd>
+            <span>{{request.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.request.duration">Duration</span></dt>
+        <dd>
+            <span>{{request.duration | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.request.expPrice">Exp Price</span></dt>
+        <dd>
+            <span>{{request.expPrice}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.request.user">User</span></dt>
+        <dd>
+            <span>{{request.user}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.request.profile">Profile</span></dt>
+        <dd>
+            <div *ngIf="request.profile">
+                <a [routerLink]="['/profile', request.profile?.id]">{{request.profile?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'request/'+ request.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

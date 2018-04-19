@@ -1,0 +1,22 @@
+entity Request {
+	category Category,
+    name String,
+    duration ZonedDateTime,
+    expPrice Double,
+    user Integer
+}
+
+entity Offer {
+	name String,
+    time ZonedDateTime,
+    price Double,
+    user Integer
+}
+
+enum Category {
+	FACE, BODY, MEN, DENTAL, HAIR, HEALTH, WELLBEING
+}
+
+relationship OneToMany {
+	Request{offer(name)} to Offer{request(name)}
+}

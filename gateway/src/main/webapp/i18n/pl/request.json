@@ -1,0 +1,32 @@
+
+{
+    "bemApp": {
+        "request" : {
+            "home": {
+                "title": "Requests",
+                "createLabel": "Dodaj Request",
+                "createOrEditLabel": "Dodaj lub edytuj: Request"
+            },
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Request {{ id }}?"
+            },
+            "detail": {
+                "title": "Request"
+            },
+            "category": "Category",
+            "name": "Name",
+            "duration": "Duration",
+            "expPrice": "Exp Price",
+            "user": "User",
+            "offer": "Offer",
+            "profile": "Profile"
+        }
+    },
+    "requestApp": {
+        "request" : {
+            "created": "Utworzono nowy Request z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Request z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Request z identyfikatorem {{ param }}"
+        }
+    }
+}
