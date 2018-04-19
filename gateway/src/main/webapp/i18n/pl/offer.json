@@ -1,0 +1,31 @@
+
+{
+    "bemApp": {
+        "offer" : {
+            "home": {
+                "title": "Offers",
+                "createLabel": "Dodaj Offer",
+                "createOrEditLabel": "Dodaj lub edytuj: Offer"
+            },
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Offer {{ id }}?"
+            },
+            "detail": {
+                "title": "Offer"
+            },
+            "name": "Name",
+            "time": "Time",
+            "price": "Price",
+            "user": "User",
+            "request": "Request",
+            "profile": "Profile"
+        }
+    },
+    "requestApp": {
+        "offer" : {
+            "created": "Utworzono nowy Offer z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Offer z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Offer z identyfikatorem {{ param }}"
+        }
+    }
+}

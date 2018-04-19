@@ -1,0 +1,50 @@
+
+<div *ngIf="offer">
+    <h2><span jhiTranslate="bemApp.offer.detail.title">Offer</span> {{offer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bemApp.offer.name">Name</span></dt>
+        <dd>
+            <span>{{offer.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.offer.time">Time</span></dt>
+        <dd>
+            <span>{{offer.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.offer.price">Price</span></dt>
+        <dd>
+            <span>{{offer.price}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.offer.user">User</span></dt>
+        <dd>
+            <span>{{offer.user}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.offer.request">Request</span></dt>
+        <dd>
+            <div *ngIf="offer.request">
+                <a [routerLink]="['/request', offer.request?.id]">{{offer.request?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="bemApp.offer.profile">Profile</span></dt>
+        <dd>
+            <div *ngIf="offer.profile">
+                <a [routerLink]="['/profile', offer.profile?.id]">{{offer.profile?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'offer/'+ offer.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

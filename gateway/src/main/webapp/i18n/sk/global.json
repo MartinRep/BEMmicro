@@ -11,6 +11,7 @@
                 "appointment": "Appointment",
                 "message": "Message",
                 "request": "Request",
+                "offer": "Offer",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -1,0 +1,31 @@
+
+{
+    "bemApp": {
+        "offer" : {
+            "home": {
+                "title": "Offers",
+                "createLabel": "Pridať Offer",
+                "createOrEditLabel": "Pridať alebo upraviť Offer"
+            },
+            "delete": {
+                "question": "Ste si istý, že chcete vymazať Offer {{ id }}?"
+            },
+            "detail": {
+                "title": "Offer"
+            },
+            "name": "Name",
+            "time": "Time",
+            "price": "Price",
+            "user": "User",
+            "request": "Request",
+            "profile": "Profile"
+        }
+    },
+    "requestApp": {
+        "offer" : {
+            "created": "Bol vytvorený potomok entity Offer s identifikátorom {{ param }}",
+            "updated": "Potomok entity Offer s identifikátorom {{ param }} bol upravený.",
+            "deleted": "Potomok entity Offer s identifikátorom {{ param }} bol vymazaný."
+        }
+    }
+}

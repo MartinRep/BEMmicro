@@ -4,6 +4,7 @@ import { BemProfileModule } from './profile/profile.module';
 import { BemAppointmentModule } from './appointment/appointment.module';
 import { BemMessageModule } from './message/message.module';
 import { BemRequestModule } from './request/request.module';
+import { BemOfferModule } from './offer/offer.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -12,6 +13,7 @@ import { BemRequestModule } from './request/request.module';
         BemAppointmentModule,
         BemMessageModule,
         BemRequestModule,
+        BemOfferModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],
