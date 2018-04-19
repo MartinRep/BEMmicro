@@ -1,0 +1,35 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "service",
+            "otherEntityName": "lastMinuteService",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "profile",
+            "otherEntityName": "profile",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "price",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "user",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180419213150",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "last_minute_offer",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no",
+    "microserviceName": "lastminute",
+    "searchEngine": false
+}

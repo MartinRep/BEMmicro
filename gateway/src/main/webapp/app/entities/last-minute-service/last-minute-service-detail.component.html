@@ -1,0 +1,52 @@
+
+<div *ngIf="lastMinuteService">
+    <h2><span jhiTranslate="bemApp.lastMinuteService.detail.title">Last Minute Service</span> {{lastMinuteService.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bemApp.lastMinuteService.category">Category</span></dt>
+        <dd>
+            <span jhiTranslate="{{'bemApp.Category.' + lastMinuteService.category}}">{{lastMinuteService.category}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.name">Name</span></dt>
+        <dd>
+            <span>{{lastMinuteService.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.time">Time</span></dt>
+        <dd>
+            <span>{{lastMinuteService.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.price">Price</span></dt>
+        <dd>
+            <span>{{lastMinuteService.price}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.address">Address</span></dt>
+        <dd>
+            <span>{{lastMinuteService.address}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.user">User</span></dt>
+        <dd>
+            <span>{{lastMinuteService.user}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.profile">Profile</span></dt>
+        <dd>
+            <div *ngIf="lastMinuteService.profile">
+                <a [routerLink]="['/profile', lastMinuteService.profile?.id]">{{lastMinuteService.profile?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'last-minute-service/'+ lastMinuteService.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

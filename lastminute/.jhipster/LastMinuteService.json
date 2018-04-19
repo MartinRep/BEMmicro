@@ -1,0 +1,45 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "purchase",
+            "otherEntityName": "lastMinuteOffer",
+            "otherEntityRelationshipName": "service"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "category",
+            "fieldType": "Category",
+            "fieldValues": "FACE,BODY,MEN,DENTAL,HAIR,HEALTH,WELLBEING"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "time",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "user",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180419213149",
+    "entityTableName": "last_minute_service",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "lastminute"
+}

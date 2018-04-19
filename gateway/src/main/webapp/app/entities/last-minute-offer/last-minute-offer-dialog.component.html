@@ -1,0 +1,49 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myLastMinuteOfferLabel" jhiTranslate="bemApp.lastMinuteOffer.home.createOrEditLabel">Create or edit a Last Minute Offer</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!lastMinuteOffer.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="lastMinuteOffer.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.price" for="field_price">Price</label>
+            <input type="number" class="form-control" name="price" id="field_price"
+                [(ngModel)]="lastMinuteOffer.price" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.user" for="field_user">User</label>
+            <input type="number" class="form-control" name="user" id="field_user"
+                [(ngModel)]="lastMinuteOffer.user" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.service" for="field_service">Service</label>
+            <select class="form-control" id="field_service" name="service" [(ngModel)]="lastMinuteOffer.service" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="lastMinuteServiceOption.id === lastMinuteOffer.service?.id ? lastMinuteOffer.service : lastMinuteServiceOption" *ngFor="let lastMinuteServiceOption of lastminuteservices; trackBy: trackLastMinuteServiceById">{{lastMinuteServiceOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.profile" for="field_profile">Profile</label>
+            <select class="form-control" id="field_profile" name="profile" [(ngModel)]="lastMinuteOffer.profile" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="profileOption.id === lastMinuteOffer.profile?.id ? lastMinuteOffer.profile : profileOption" *ngFor="let profileOption of profiles; trackBy: trackProfileById">{{profileOption.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,33 @@
+
+{
+    "bemApp": {
+        "lastMinuteService" : {
+            "home": {
+                "title": "Last Minute Services",
+                "createLabel": "Pridať Last Minute Service",
+                "createOrEditLabel": "Pridať alebo upraviť Last Minute Service"
+            },
+            "delete": {
+                "question": "Ste si istý, že chcete vymazať Last Minute Service {{ id }}?"
+            },
+            "detail": {
+                "title": "Last Minute Service"
+            },
+            "category": "Category",
+            "name": "Name",
+            "time": "Time",
+            "price": "Price",
+            "address": "Address",
+            "user": "User",
+            "purchase": "Purchase",
+            "profile": "Profile"
+        }
+    },
+    "lastminuteApp": {
+        "lastMinuteService" : {
+            "created": "Bol vytvorený potomok entity Last Minute Service s identifikátorom {{ param }}",
+            "updated": "Potomok entity Last Minute Service s identifikátorom {{ param }} bol upravený.",
+            "deleted": "Potomok entity Last Minute Service s identifikátorom {{ param }} bol vymazaný."
+        }
+    }
+}

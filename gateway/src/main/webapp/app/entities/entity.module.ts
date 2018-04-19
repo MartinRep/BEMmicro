@@ -5,6 +5,8 @@ import { BemAppointmentModule } from './appointment/appointment.module';
 import { BemMessageModule } from './message/message.module';
 import { BemRequestModule } from './request/request.module';
 import { BemOfferModule } from './offer/offer.module';
+import { BemLastMinuteServiceModule } from './last-minute-service/last-minute-service.module';
+import { BemLastMinuteOfferModule } from './last-minute-offer/last-minute-offer.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -14,6 +16,8 @@ import { BemOfferModule } from './offer/offer.module';
         BemMessageModule,
         BemRequestModule,
         BemOfferModule,
+        BemLastMinuteServiceModule,
+        BemLastMinuteOfferModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

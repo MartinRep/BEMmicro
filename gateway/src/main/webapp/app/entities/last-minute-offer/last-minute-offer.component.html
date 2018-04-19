@@ -1,0 +1,72 @@
+<div>
+    <h2>
+        <span jhiTranslate="bemApp.lastMinuteOffer.home.title">Last Minute Offers</span>
+        <button class="btn btn-primary float-right jh-create-entity create-last-minute-offer" [routerLink]="['/', { outlets: { popup: ['last-minute-offer-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="bemApp.lastMinuteOffer.home.createLabel">
+            Create new Last Minute Offer
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="lastMinuteOffers">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="bemApp.lastMinuteOffer.price">Price</span></th>
+            <th><span jhiTranslate="bemApp.lastMinuteOffer.user">User</span></th>
+            <th><span jhiTranslate="bemApp.lastMinuteOffer.service">Service</span></th>
+            <th><span jhiTranslate="bemApp.lastMinuteOffer.profile">Profile</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let lastMinuteOffer of lastMinuteOffers ;trackBy: trackId">
+                <td><a [routerLink]="['../last-minute-offer', lastMinuteOffer.id ]">{{lastMinuteOffer.id}}</a></td>
+                <td>{{lastMinuteOffer.price}}</td>
+                <td>{{lastMinuteOffer.user}}</td>
+                <td>
+                    <div *ngIf="lastMinuteOffer.service">
+                        <a [routerLink]="['../last-minute-service', lastMinuteOffer.service?.id ]" >{{lastMinuteOffer.service?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="lastMinuteOffer.profile">
+                        <a [routerLink]="['../profile', lastMinuteOffer.profile?.id ]" >{{lastMinuteOffer.profile?.name}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../last-minute-offer', lastMinuteOffer.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'last-minute-offer/'+ lastMinuteOffer.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'last-minute-offer/'+ lastMinuteOffer.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

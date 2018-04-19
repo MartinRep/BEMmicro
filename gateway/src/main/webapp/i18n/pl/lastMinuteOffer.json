@@ -1,0 +1,29 @@
+
+{
+    "bemApp": {
+        "lastMinuteOffer" : {
+            "home": {
+                "title": "Last Minute Offers",
+                "createLabel": "Dodaj Last Minute Offer",
+                "createOrEditLabel": "Dodaj lub edytuj: Last Minute Offer"
+            },
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Last Minute Offer {{ id }}?"
+            },
+            "detail": {
+                "title": "Last Minute Offer"
+            },
+            "price": "Price",
+            "user": "User",
+            "service": "Service",
+            "profile": "Profile"
+        }
+    },
+    "lastminuteApp": {
+        "lastMinuteOffer" : {
+            "created": "Utworzono nowy Last Minute Offer z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Last Minute Offer z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Last Minute Offer z identyfikatorem {{ param }}"
+        }
+    }
+}

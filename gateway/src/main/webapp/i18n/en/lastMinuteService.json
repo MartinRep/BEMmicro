@@ -1,0 +1,33 @@
+
+{
+    "bemApp": {
+        "lastMinuteService" : {
+            "home": {
+                "title": "Last Minute Services",
+                "createLabel": "Create a new Last Minute Service",
+                "createOrEditLabel": "Create or edit a Last Minute Service"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Last Minute Service {{ id }}?"
+            },
+            "detail": {
+                "title": "Last Minute Service"
+            },
+            "category": "Category",
+            "name": "Name",
+            "time": "Time",
+            "price": "Price",
+            "address": "Address",
+            "user": "User",
+            "purchase": "Purchase",
+            "profile": "Profile"
+        }
+    },
+    "lastminuteApp": {
+        "lastMinuteService" : {
+            "created": "A new Last Minute Service is created with identifier {{ param }}",
+            "updated": "A Last Minute Service is updated with identifier {{ param }}",
+            "deleted": "A Last Minute Service is deleted with identifier {{ param }}"
+        }
+    }
+}

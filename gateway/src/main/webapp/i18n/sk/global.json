@@ -12,6 +12,8 @@
                 "message": "Message",
                 "request": "Request",
                 "offer": "Offer",
+                "lastMinuteService": "Last Minute Service",
+                "lastMinuteOffer": "Last Minute Offer",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

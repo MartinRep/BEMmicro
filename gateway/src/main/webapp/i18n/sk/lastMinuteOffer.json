@@ -1,0 +1,29 @@
+
+{
+    "bemApp": {
+        "lastMinuteOffer" : {
+            "home": {
+                "title": "Last Minute Offers",
+                "createLabel": "Pridať Last Minute Offer",
+                "createOrEditLabel": "Pridať alebo upraviť Last Minute Offer"
+            },
+            "delete": {
+                "question": "Ste si istý, že chcete vymazať Last Minute Offer {{ id }}?"
+            },
+            "detail": {
+                "title": "Last Minute Offer"
+            },
+            "price": "Price",
+            "user": "User",
+            "service": "Service",
+            "profile": "Profile"
+        }
+    },
+    "lastminuteApp": {
+        "lastMinuteOffer" : {
+            "created": "Bol vytvorený potomok entity Last Minute Offer s identifikátorom {{ param }}",
+            "updated": "Potomok entity Last Minute Offer s identifikátorom {{ param }} bol upravený.",
+            "deleted": "Potomok entity Last Minute Offer s identifikátorom {{ param }} bol vymazaný."
+        }
+    }
+}
