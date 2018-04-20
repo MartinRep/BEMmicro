@@ -21,6 +21,11 @@ npm-debug.log.*
 .sass-cache/
 
 ######################
+# Gradle Wrapper
+######################
+!gradle/wrapper/gradle-wrapper.jar
+
+######################
 # Eclipse
 ######################
 *.pydevproject
@@ -127,11 +132,6 @@ Desktop.ini
 *.*~
 *~
 .merge_file*
-
-######################
-# Gradle Wrapper
-######################
-!gradle/wrapper/gradle-wrapper.jar
 
 ######################
 # Maven Wrapper
