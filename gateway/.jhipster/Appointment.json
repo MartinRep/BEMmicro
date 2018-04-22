@@ -3,25 +3,26 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "message",
-            "otherEntityName": "message",
+            "relationshipName": "categories",
+            "otherEntityName": "categories",
             "otherEntityRelationshipName": "appointment"
         },
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "appointment",
-            "relationshipName": "user",
+            "relationshipName": "profile",
             "otherEntityName": "profile",
             "otherEntityField": "name",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "message",
+            "otherEntityName": "message",
+            "otherEntityRelationshipName": "appointment"
         }
     ],
     "fields": [
-        {
-            "fieldName": "category",
-            "fieldType": "Category",
-            "fieldValues": "FACE,BODY,MEN,DENTAL,HAIR,HEALTH,WELLBEING"
-        },
         {
             "fieldName": "name",
             "fieldType": "String"

@@ -14,6 +14,8 @@
                 "offer": "Offer",
                 "lastMinuteService": "Last Minute Service",
                 "lastMinuteOffer": "Last Minute Offer",
+                "location": "Location",
+                "categories": "Categories",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

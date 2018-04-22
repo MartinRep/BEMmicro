@@ -33,14 +33,13 @@ describe('Appointment e2e test', () => {
 
     it('should create and save Appointments', () => {
         appointmentComponentsPage.clickOnCreateButton();
-        appointmentDialogPage.categorySelectLastOption();
         appointmentDialogPage.setNameInput('name');
         expect(appointmentDialogPage.getNameInput()).toMatch('name');
         appointmentDialogPage.setAddressInput('address');
         expect(appointmentDialogPage.getAddressInput()).toMatch('address');
         appointmentDialogPage.setTimeInput(12310020012301);
         expect(appointmentDialogPage.getTimeInput()).toMatch('2001-12-31T02:30');
-        // appointmentDialogPage.userSelectLastOption();
+        // appointmentDialogPage.profileSelectLastOption();
         appointmentDialogPage.save();
         expect(appointmentDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -67,27 +66,15 @@ export class AppointmentDialogPage {
     modalTitle = element(by.css('h4#myAppointmentLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    categorySelect = element(by.css('select#field_category'));
     nameInput = element(by.css('input#field_name'));
     addressInput = element(by.css('input#field_address'));
     timeInput = element(by.css('input#field_time'));
-    userSelect = element(by.css('select#field_user'));
+    profileSelect = element(by.css('select#field_profile'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
     }
 
-    setCategorySelect = function(category) {
-        this.categorySelect.sendKeys(category);
-    };
-
-    getCategorySelect = function() {
-        return this.categorySelect.element(by.css('option:checked')).getText();
-    };
-
-    categorySelectLastOption = function() {
-        this.categorySelect.all(by.tagName('option')).last().click();
-    };
     setNameInput = function(name) {
         this.nameInput.sendKeys(name);
     };
@@ -112,20 +99,20 @@ export class AppointmentDialogPage {
         return this.timeInput.getAttribute('value');
     };
 
-    userSelectLastOption = function() {
-        this.userSelect.all(by.tagName('option')).last().click();
+    profileSelectLastOption = function() {
+        this.profileSelect.all(by.tagName('option')).last().click();
     };
 
-    userSelectOption = function(option) {
-        this.userSelect.sendKeys(option);
+    profileSelectOption = function(option) {
+        this.profileSelect.sendKeys(option);
     };
 
-    getUserSelect = function() {
-        return this.userSelect;
+    getProfileSelect = function() {
+        return this.profileSelect;
     };
 
-    getUserSelectedOption = function() {
-        return this.userSelect.element(by.css('option:checked')).getText();
+    getProfileSelectedOption = function() {
+        return this.profileSelect.element(by.css('option:checked')).getText();
     };
 
     save() {

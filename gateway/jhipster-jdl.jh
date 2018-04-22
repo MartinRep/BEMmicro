@@ -1,35 +1,41 @@
 entity Profile {
-	phNumber String,
-    name String,
+	name String,
+    phNumber String,
+    picture ImageBlob
+}
+
+entity Location {
+	region String
 }
 
 entity Appointment {
-	category Category,
     name String,
     address String,
     time ZonedDateTime,
 }
 
 entity Message {
-	time ZonedDateTime,
+	time Instant,
     content String
 }
 
-enum Category {
-	FACE, BODY, MEN, DENTAL, HAIR, HEALTH, WELLBEING
+entity Categories {
+	category String
 }
 
 relationship ManyToMany {
-	Appointment{user(name)} to Profile{appointment(name)}
+	Appointment{profile(name)} to Profile{appointment(name)}
 }
 
 relationship OneToMany {
-	Appointment{message(time)} to Message{appointment(name)}
+	Appointment{categories(category)} to Categories{appointment(name)}
 }
 
-relationship OneToOne {
-	Profile{user(login)} to User{profile(name)}
+relationship ManyToOne{
+	Profile{user(login)} to User,
+    Profile{location(region)} to Location{profile(location)},
+    Message{appointment(name)} to Appointment{message(time)}
 }
 
 paginate Appointment with pagination
-paginate Message with pagination
+paginate Message with infinite-scroll

@@ -13,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-    @Query("select distinct appointment from Appointment appointment left join fetch appointment.users")
+    @Query("select distinct appointment from Appointment appointment left join fetch appointment.profiles")
     List<Appointment> findAllWithEagerRelationships();
 
-    @Query("select appointment from Appointment appointment left join fetch appointment.users where appointment.id =:id")
+    @Query("select appointment from Appointment appointment left join fetch appointment.profiles where appointment.id =:id")
     Appointment findOneWithEagerRelationships(@Param("id") Long id);
 
 }

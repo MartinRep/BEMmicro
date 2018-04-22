@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Profile } from './profile.model';
 import { ProfileService } from './profile.service';
@@ -19,6 +19,7 @@ profiles: Profile[];
     constructor(
         private profileService: ProfileService,
         private jhiAlertService: JhiAlertService,
+        private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
         private principal: Principal
     ) {
@@ -46,6 +47,14 @@ profiles: Profile[];
 
     trackId(index: number, item: Profile) {
         return item.id;
+    }
+
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
     }
     registerChangeInProfiles() {
         this.eventSubscriber = this.eventManager.subscribe('profileListModification', (response) => this.loadAll());

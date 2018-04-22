@@ -16,9 +16,11 @@
             "detail": {
                 "title": "Profile"
             },
-            "phNumber": "Ph Number",
             "name": "Name",
+            "phNumber": "Ph Number",
+            "picture": "Picture",
             "user": "User",
+            "location": "Location",
             "appointment": "Appointment"
         }
     }

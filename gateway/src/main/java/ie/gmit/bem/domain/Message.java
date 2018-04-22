@@ -6,7 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -24,7 +24,7 @@ public class Message implements Serializable {
     private Long id;
 
     @Column(name = "jhi_time")
-    private ZonedDateTime time;
+    private Instant time;
 
     @Column(name = "content")
     private String content;
@@ -41,16 +41,16 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public ZonedDateTime getTime() {
+    public Instant getTime() {
         return time;
     }
 
-    public Message time(ZonedDateTime time) {
+    public Message time(Instant time) {
         this.time = time;
         return this;
     }
 
-    public void setTime(ZonedDateTime time) {
+    public void setTime(Instant time) {
         this.time = time;
     }
 

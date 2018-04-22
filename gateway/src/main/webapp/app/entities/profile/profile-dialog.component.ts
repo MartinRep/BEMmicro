@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Profile } from './profile.model';
 import { ProfilePopupService } from './profile-popup.service';
 import { ProfileService } from './profile.service';
 import { User, UserService } from '../../shared';
+import { Location, LocationService } from '../location';
 import { Appointment, AppointmentService } from '../appointment';
 
 @Component({
@@ -23,14 +24,19 @@ export class ProfileDialogComponent implements OnInit {
 
     users: User[];
 
+    locations: Location[];
+
     appointments: Appointment[];
 
     constructor(
         public activeModal: NgbActiveModal,
+        private dataUtils: JhiDataUtils,
         private jhiAlertService: JhiAlertService,
         private profileService: ProfileService,
         private userService: UserService,
+        private locationService: LocationService,
         private appointmentService: AppointmentService,
+        private elementRef: ElementRef,
         private eventManager: JhiEventManager
     ) {
     }
@@ -39,8 +45,26 @@ export class ProfileDialogComponent implements OnInit {
         this.isSaving = false;
         this.userService.query()
             .subscribe((res: HttpResponse<User[]>) => { this.users = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+        this.locationService.query()
+            .subscribe((res: HttpResponse<Location[]>) => { this.locations = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.appointmentService.query()
             .subscribe((res: HttpResponse<Appointment[]>) => { this.appointments = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+    }
+
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
+
+    setFileData(event, entity, field, isImage) {
+        this.dataUtils.setFileData(event, entity, field, isImage);
+    }
+
+    clearInputImage(field: string, fieldContentType: string, idInput: string) {
+        this.dataUtils.clearInputImage(this.profile, this.elementRef, field, fieldContentType, idInput);
     }
 
     clear() {
@@ -78,6 +102,10 @@ export class ProfileDialogComponent implements OnInit {
     }
 
     trackUserById(index: number, item: User) {
+        return item.id;
+    }
+
+    trackLocationById(index: number, item: Location) {
         return item.id;
     }
 

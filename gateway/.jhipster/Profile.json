@@ -2,29 +2,38 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "user",
             "otherEntityName": "user",
-            "otherEntityField": "login",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "profile(name)"
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "location",
+            "otherEntityName": "location",
+            "otherEntityField": "region"
         },
         {
             "relationshipType": "many-to-many",
             "relationshipName": "appointment",
             "otherEntityName": "appointment",
             "ownerSide": false,
-            "otherEntityRelationshipName": "user"
+            "otherEntityRelationshipName": "profile"
         }
     ],
     "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
         {
             "fieldName": "phNumber",
             "fieldType": "String"
         },
         {
-            "fieldName": "name",
-            "fieldType": "String"
+            "fieldName": "picture",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
         }
     ],
     "changelogDate": "20180418093536",

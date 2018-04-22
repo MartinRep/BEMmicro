@@ -10,10 +10,13 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Profile_ {
 
 	public static volatile SetAttribute<Profile, Appointment> appointments;
-	public static volatile SingularAttribute<Profile, String> phNumber;
 	public static volatile SingularAttribute<Profile, String> name;
+	public static volatile SingularAttribute<Profile, String> phNumber;
+	public static volatile SingularAttribute<Profile, Location> location;
 	public static volatile SingularAttribute<Profile, Long> id;
+	public static volatile SingularAttribute<Profile, String> pictureContentType;
 	public static volatile SingularAttribute<Profile, User> user;
+	public static volatile SingularAttribute<Profile, byte[]> picture;
 
 }
 

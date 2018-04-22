@@ -12,8 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-import ie.gmit.bem.domain.enumeration.Category;
-
 /**
  * A Appointment.
  */
@@ -28,10 +26,6 @@ public class Appointment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private Category category;
-
     @Column(name = "name")
     private String name;
 
@@ -44,14 +38,19 @@ public class Appointment implements Serializable {
     @OneToMany(mappedBy = "appointment")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Message> messages = new HashSet<>();
+    private Set<Categories> categories = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "appointment_user",
+    @JoinTable(name = "appointment_profile",
                joinColumns = @JoinColumn(name="appointments_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))
-    private Set<Profile> users = new HashSet<>();
+               inverseJoinColumns = @JoinColumn(name="profiles_id", referencedColumnName="id"))
+    private Set<Profile> profiles = new HashSet<>();
+
+    @OneToMany(mappedBy = "appointment")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Message> messages = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -60,19 +59,6 @@ public class Appointment implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public Appointment category(Category category) {
-        this.category = category;
-        return this;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public String getName() {
@@ -114,6 +100,56 @@ public class Appointment implements Serializable {
         this.time = time;
     }
 
+    public Set<Categories> getCategories() {
+        return categories;
+    }
+
+    public Appointment categories(Set<Categories> categories) {
+        this.categories = categories;
+        return this;
+    }
+
+    public Appointment addCategories(Categories categories) {
+        this.categories.add(categories);
+        categories.setAppointment(this);
+        return this;
+    }
+
+    public Appointment removeCategories(Categories categories) {
+        this.categories.remove(categories);
+        categories.setAppointment(null);
+        return this;
+    }
+
+    public void setCategories(Set<Categories> categories) {
+        this.categories = categories;
+    }
+
+    public Set<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public Appointment profiles(Set<Profile> profiles) {
+        this.profiles = profiles;
+        return this;
+    }
+
+    public Appointment addProfile(Profile profile) {
+        this.profiles.add(profile);
+        profile.getAppointments().add(this);
+        return this;
+    }
+
+    public Appointment removeProfile(Profile profile) {
+        this.profiles.remove(profile);
+        profile.getAppointments().remove(this);
+        return this;
+    }
+
+    public void setProfiles(Set<Profile> profiles) {
+        this.profiles = profiles;
+    }
+
     public Set<Message> getMessages() {
         return messages;
     }
@@ -137,31 +173,6 @@ public class Appointment implements Serializable {
 
     public void setMessages(Set<Message> messages) {
         this.messages = messages;
-    }
-
-    public Set<Profile> getUsers() {
-        return users;
-    }
-
-    public Appointment users(Set<Profile> profiles) {
-        this.users = profiles;
-        return this;
-    }
-
-    public Appointment addUser(Profile profile) {
-        this.users.add(profile);
-        profile.getAppointments().add(this);
-        return this;
-    }
-
-    public Appointment removeUser(Profile profile) {
-        this.users.remove(profile);
-        profile.getAppointments().remove(this);
-        return this;
-    }
-
-    public void setUsers(Set<Profile> profiles) {
-        this.users = profiles;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -189,7 +200,6 @@ public class Appointment implements Serializable {
     public String toString() {
         return "Appointment{" +
             "id=" + getId() +
-            ", category='" + getCategory() + "'" +
             ", name='" + getName() + "'" +
             ", address='" + getAddress() + "'" +
             ", time='" + getTime() + "'" +

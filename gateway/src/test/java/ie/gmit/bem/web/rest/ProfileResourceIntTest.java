@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -38,11 +39,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = BemApp.class)
 public class ProfileResourceIntTest {
 
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
+
     private static final String DEFAULT_PH_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_PH_NUMBER = "BBBBBBBBBB";
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final byte[] DEFAULT_PICTURE = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_PICTURE = TestUtil.createByteArray(2, "1");
+    private static final String DEFAULT_PICTURE_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_PICTURE_CONTENT_TYPE = "image/png";
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -82,8 +88,10 @@ public class ProfileResourceIntTest {
      */
     public static Profile createEntity(EntityManager em) {
         Profile profile = new Profile()
+            .name(DEFAULT_NAME)
             .phNumber(DEFAULT_PH_NUMBER)
-            .name(DEFAULT_NAME);
+            .picture(DEFAULT_PICTURE)
+            .pictureContentType(DEFAULT_PICTURE_CONTENT_TYPE);
         return profile;
     }
 
@@ -107,8 +115,10 @@ public class ProfileResourceIntTest {
         List<Profile> profileList = profileRepository.findAll();
         assertThat(profileList).hasSize(databaseSizeBeforeCreate + 1);
         Profile testProfile = profileList.get(profileList.size() - 1);
-        assertThat(testProfile.getPhNumber()).isEqualTo(DEFAULT_PH_NUMBER);
         assertThat(testProfile.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testProfile.getPhNumber()).isEqualTo(DEFAULT_PH_NUMBER);
+        assertThat(testProfile.getPicture()).isEqualTo(DEFAULT_PICTURE);
+        assertThat(testProfile.getPictureContentType()).isEqualTo(DEFAULT_PICTURE_CONTENT_TYPE);
     }
 
     @Test
@@ -141,8 +151,10 @@ public class ProfileResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(profile.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].phNumber").value(hasItem(DEFAULT_PH_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].pictureContentType").value(hasItem(DEFAULT_PICTURE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].picture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE))));
     }
 
     @Test
@@ -156,8 +168,10 @@ public class ProfileResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(profile.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.phNumber").value(DEFAULT_PH_NUMBER.toString()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.pictureContentType").value(DEFAULT_PICTURE_CONTENT_TYPE))
+            .andExpect(jsonPath("$.picture").value(Base64Utils.encodeToString(DEFAULT_PICTURE)));
     }
 
     @Test
@@ -180,8 +194,10 @@ public class ProfileResourceIntTest {
         // Disconnect from session so that the updates on updatedProfile are not directly saved in db
         em.detach(updatedProfile);
         updatedProfile
+            .name(UPDATED_NAME)
             .phNumber(UPDATED_PH_NUMBER)
-            .name(UPDATED_NAME);
+            .picture(UPDATED_PICTURE)
+            .pictureContentType(UPDATED_PICTURE_CONTENT_TYPE);
 
         restProfileMockMvc.perform(put("/api/profiles")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -192,8 +208,10 @@ public class ProfileResourceIntTest {
         List<Profile> profileList = profileRepository.findAll();
         assertThat(profileList).hasSize(databaseSizeBeforeUpdate);
         Profile testProfile = profileList.get(profileList.size() - 1);
-        assertThat(testProfile.getPhNumber()).isEqualTo(UPDATED_PH_NUMBER);
         assertThat(testProfile.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testProfile.getPhNumber()).isEqualTo(UPDATED_PH_NUMBER);
+        assertThat(testProfile.getPicture()).isEqualTo(UPDATED_PICTURE);
+        assertThat(testProfile.getPictureContentType()).isEqualTo(UPDATED_PICTURE_CONTENT_TYPE);
     }
 
     @Test

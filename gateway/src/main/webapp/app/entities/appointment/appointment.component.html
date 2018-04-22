@@ -17,7 +17,6 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="category"><span jhiTranslate="bemApp.appointment.category">Category</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="name"><span jhiTranslate="bemApp.appointment.name">Name</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="address"><span jhiTranslate="bemApp.appointment.address">Address</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="time"><span jhiTranslate="bemApp.appointment.time">Time</span> <span class="fa fa-sort"></span></th>
@@ -27,7 +26,6 @@
             <tbody>
             <tr *ngFor="let appointment of appointments ;trackBy: trackId">
                 <td><a [routerLink]="['../appointment', appointment.id ]">{{appointment.id}}</a></td>
-                <td jhiTranslate="{{'bemApp.Category.' + appointment.category}}">{{appointment.category}}</td>
                 <td>{{appointment.name}}</td>
                 <td>{{appointment.address}}</td>
                 <td>{{appointment.time | date:'medium'}}</td>

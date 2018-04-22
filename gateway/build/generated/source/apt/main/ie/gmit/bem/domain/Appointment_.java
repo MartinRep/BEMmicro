@@ -1,6 +1,5 @@
 package ie.gmit.bem.domain;
 
-import ie.gmit.bem.domain.enumeration.Category;
 import java.time.ZonedDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
@@ -13,11 +12,11 @@ public abstract class Appointment_ {
 
 	public static volatile SingularAttribute<Appointment, String> address;
 	public static volatile SingularAttribute<Appointment, String> name;
+	public static volatile SetAttribute<Appointment, Profile> profiles;
 	public static volatile SetAttribute<Appointment, Message> messages;
 	public static volatile SingularAttribute<Appointment, Long> id;
 	public static volatile SingularAttribute<Appointment, ZonedDateTime> time;
-	public static volatile SingularAttribute<Appointment, Category> category;
-	public static volatile SetAttribute<Appointment, Profile> users;
+	public static volatile SetAttribute<Appointment, Categories> categories;
 
 }
 

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
@@ -14,71 +13,53 @@ import { ITEMS_PER_PAGE, Principal } from '../../shared';
 })
 export class MessageComponent implements OnInit, OnDestroy {
 
-currentAccount: any;
     messages: Message[];
-    error: any;
-    success: any;
+    currentAccount: any;
     eventSubscriber: Subscription;
-    routeData: any;
+    itemsPerPage: number;
     links: any;
-    totalItems: any;
-    queryCount: any;
-    itemsPerPage: any;
     page: any;
     predicate: any;
-    previousPage: any;
+    queryCount: any;
     reverse: any;
+    totalItems: number;
 
     constructor(
         private messageService: MessageService,
-        private parseLinks: JhiParseLinks,
         private jhiAlertService: JhiAlertService,
-        private principal: Principal,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private parseLinks: JhiParseLinks,
+        private principal: Principal
     ) {
+        this.messages = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
-        this.routeData = this.activatedRoute.data.subscribe((data) => {
-            this.page = data.pagingParams.page;
-            this.previousPage = data.pagingParams.page;
-            this.reverse = data.pagingParams.ascending;
-            this.predicate = data.pagingParams.predicate;
-        });
+        this.page = 0;
+        this.links = {
+            last: 0
+        };
+        this.predicate = 'id';
+        this.reverse = true;
     }
 
     loadAll() {
         this.messageService.query({
-            page: this.page - 1,
+            page: this.page,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
-                (res: HttpResponse<Message[]>) => this.onSuccess(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
+            sort: this.sort()
+        }).subscribe(
+            (res: HttpResponse<Message[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-    loadPage(page: number) {
-        if (page !== this.previousPage) {
-            this.previousPage = page;
-            this.transition();
-        }
-    }
-    transition() {
-        this.router.navigate(['/message'], {queryParams:
-            {
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
-        });
+
+    reset() {
+        this.page = 0;
+        this.messages = [];
         this.loadAll();
     }
 
-    clear() {
-        this.page = 0;
-        this.router.navigate(['/message', {
-            page: this.page,
-            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-        }]);
+    loadPage(page) {
+        this.page = page;
         this.loadAll();
     }
     ngOnInit() {
@@ -97,7 +78,7 @@ currentAccount: any;
         return item.id;
     }
     registerChangeInMessages() {
-        this.eventSubscriber = this.eventManager.subscribe('messageListModification', (response) => this.loadAll());
+        this.eventSubscriber = this.eventManager.subscribe('messageListModification', (response) => this.reset());
     }
 
     sort() {
@@ -111,10 +92,11 @@ currentAccount: any;
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
-        this.queryCount = this.totalItems;
-        // this.page = pagingParams.page;
-        this.messages = data;
+        for (let i = 0; i < data.length; i++) {
+            this.messages.push(data[i]);
+        }
     }
+
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
     }

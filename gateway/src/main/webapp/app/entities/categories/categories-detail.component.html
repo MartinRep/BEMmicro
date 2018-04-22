@@ -1,0 +1,32 @@
+
+<div *ngIf="categories">
+    <h2><span jhiTranslate="bemApp.categories.detail.title">Categories</span> {{categories.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="bemApp.categories.category">Category</span></dt>
+        <dd>
+            <span>{{categories.category}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.categories.appointment">Appointment</span></dt>
+        <dd>
+            <div *ngIf="categories.appointment">
+                <a [routerLink]="['/appointment', categories.appointment?.id]">{{categories.appointment?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'categories/'+ categories.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

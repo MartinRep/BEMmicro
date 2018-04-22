@@ -34,7 +34,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import ie.gmit.bem.domain.enumeration.Category;
 /**
  * Test class for the AppointmentResource REST controller.
  *
@@ -43,9 +42,6 @@ import ie.gmit.bem.domain.enumeration.Category;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BemApp.class)
 public class AppointmentResourceIntTest {
-
-    private static final Category DEFAULT_CATEGORY = Category.FACE;
-    private static final Category UPDATED_CATEGORY = Category.BODY;
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
@@ -94,7 +90,6 @@ public class AppointmentResourceIntTest {
      */
     public static Appointment createEntity(EntityManager em) {
         Appointment appointment = new Appointment()
-            .category(DEFAULT_CATEGORY)
             .name(DEFAULT_NAME)
             .address(DEFAULT_ADDRESS)
             .time(DEFAULT_TIME);
@@ -121,7 +116,6 @@ public class AppointmentResourceIntTest {
         List<Appointment> appointmentList = appointmentRepository.findAll();
         assertThat(appointmentList).hasSize(databaseSizeBeforeCreate + 1);
         Appointment testAppointment = appointmentList.get(appointmentList.size() - 1);
-        assertThat(testAppointment.getCategory()).isEqualTo(DEFAULT_CATEGORY);
         assertThat(testAppointment.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testAppointment.getAddress()).isEqualTo(DEFAULT_ADDRESS);
         assertThat(testAppointment.getTime()).isEqualTo(DEFAULT_TIME);
@@ -157,7 +151,6 @@ public class AppointmentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(appointment.getId().intValue())))
-            .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))));
@@ -174,7 +167,6 @@ public class AppointmentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(appointment.getId().intValue()))
-            .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
             .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)));
@@ -200,7 +192,6 @@ public class AppointmentResourceIntTest {
         // Disconnect from session so that the updates on updatedAppointment are not directly saved in db
         em.detach(updatedAppointment);
         updatedAppointment
-            .category(UPDATED_CATEGORY)
             .name(UPDATED_NAME)
             .address(UPDATED_ADDRESS)
             .time(UPDATED_TIME);
@@ -214,7 +205,6 @@ public class AppointmentResourceIntTest {
         List<Appointment> appointmentList = appointmentRepository.findAll();
         assertThat(appointmentList).hasSize(databaseSizeBeforeUpdate);
         Appointment testAppointment = appointmentList.get(appointmentList.size() - 1);
-        assertThat(testAppointment.getCategory()).isEqualTo(UPDATED_CATEGORY);
         assertThat(testAppointment.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testAppointment.getAddress()).isEqualTo(UPDATED_ADDRESS);
         assertThat(testAppointment.getTime()).isEqualTo(UPDATED_TIME);

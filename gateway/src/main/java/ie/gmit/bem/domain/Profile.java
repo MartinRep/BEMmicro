@@ -25,17 +25,26 @@ public class Profile implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ph_number")
-    private String phNumber;
-
     @Column(name = "name")
     private String name;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Column(name = "ph_number")
+    private String phNumber;
+
+    @Lob
+    @Column(name = "picture")
+    private byte[] picture;
+
+    @Column(name = "picture_content_type")
+    private String pictureContentType;
+
+    @ManyToOne
     private User user;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToOne
+    private Location location;
+
+    @ManyToMany(mappedBy = "profiles")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Appointment> appointments = new HashSet<>();
@@ -47,19 +56,6 @@ public class Profile implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPhNumber() {
-        return phNumber;
-    }
-
-    public Profile phNumber(String phNumber) {
-        this.phNumber = phNumber;
-        return this;
-    }
-
-    public void setPhNumber(String phNumber) {
-        this.phNumber = phNumber;
     }
 
     public String getName() {
@@ -75,6 +71,45 @@ public class Profile implements Serializable {
         this.name = name;
     }
 
+    public String getPhNumber() {
+        return phNumber;
+    }
+
+    public Profile phNumber(String phNumber) {
+        this.phNumber = phNumber;
+        return this;
+    }
+
+    public void setPhNumber(String phNumber) {
+        this.phNumber = phNumber;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public Profile picture(byte[] picture) {
+        this.picture = picture;
+        return this;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+
+    public String getPictureContentType() {
+        return pictureContentType;
+    }
+
+    public Profile pictureContentType(String pictureContentType) {
+        this.pictureContentType = pictureContentType;
+        return this;
+    }
+
+    public void setPictureContentType(String pictureContentType) {
+        this.pictureContentType = pictureContentType;
+    }
+
     public User getUser() {
         return user;
     }
@@ -88,6 +123,19 @@ public class Profile implements Serializable {
         this.user = user;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public Profile location(Location location) {
+        this.location = location;
+        return this;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public Set<Appointment> getAppointments() {
         return appointments;
     }
@@ -99,13 +147,13 @@ public class Profile implements Serializable {
 
     public Profile addAppointment(Appointment appointment) {
         this.appointments.add(appointment);
-        appointment.getUsers().add(this);
+        appointment.getProfiles().add(this);
         return this;
     }
 
     public Profile removeAppointment(Appointment appointment) {
         this.appointments.remove(appointment);
-        appointment.getUsers().remove(this);
+        appointment.getProfiles().remove(this);
         return this;
     }
 
@@ -138,8 +186,10 @@ public class Profile implements Serializable {
     public String toString() {
         return "Profile{" +
             "id=" + getId() +
-            ", phNumber='" + getPhNumber() + "'" +
             ", name='" + getName() + "'" +
+            ", phNumber='" + getPhNumber() + "'" +
+            ", picture='" + getPicture() + "'" +
+            ", pictureContentType='" + getPictureContentType() + "'" +
             "}";
     }
 }

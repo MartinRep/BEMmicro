@@ -4,17 +4,32 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.profile.phNumber">Ph Number</span></dt>
-        <dd>
-            <span>{{profile.phNumber}}</span>
-        </dd>
         <dt><span jhiTranslate="bemApp.profile.name">Name</span></dt>
         <dd>
             <span>{{profile.name}}</span>
         </dd>
+        <dt><span jhiTranslate="bemApp.profile.phNumber">Ph Number</span></dt>
+        <dd>
+            <span>{{profile.phNumber}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.profile.picture">Picture</span></dt>
+        <dd>
+            <div *ngIf="profile.picture">
+                <a (click)="openFile(profile.pictureContentType, profile.picture)">
+                    <img [src]="'data:' + profile.pictureContentType + ';base64,' + profile.picture" style="max-width: 100%;" alt="profile image"/>
+                </a>
+                {{profile.pictureContentType}}, {{byteSize(profile.picture)}}
+            </div>
+        </dd>
         <dt><span jhiTranslate="bemApp.profile.user">User</span></dt>
         <dd>
             {{profile.user?.login}}
+        </dd>
+        <dt><span jhiTranslate="bemApp.profile.location">Location</span></dt>
+        <dd>
+            <div *ngIf="profile.location">
+                <a [routerLink]="['/location', profile.location?.id]">{{profile.location?.region}}</a>
+            </div>
         </dd>
     </dl>
 

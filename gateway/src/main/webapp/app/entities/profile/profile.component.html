@@ -17,19 +17,32 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="bemApp.profile.phNumber">Ph Number</span></th>
             <th><span jhiTranslate="bemApp.profile.name">Name</span></th>
+            <th><span jhiTranslate="bemApp.profile.phNumber">Ph Number</span></th>
+            <th><span jhiTranslate="bemApp.profile.picture">Picture</span></th>
             <th><span jhiTranslate="bemApp.profile.user">User</span></th>
+            <th><span jhiTranslate="bemApp.profile.location">Location</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let profile of profiles ;trackBy: trackId">
                 <td><a [routerLink]="['../profile', profile.id ]">{{profile.id}}</a></td>
-                <td>{{profile.phNumber}}</td>
                 <td>{{profile.name}}</td>
+                <td>{{profile.phNumber}}</td>
+                <td>
+                    <a *ngIf="profile.picture" (click)="openFile(profile.pictureContentType, profile.picture)">
+                        <img [src]="'data:' + profile.pictureContentType + ';base64,' + profile.picture" style="max-height: 30px;" alt="profile image"/>
+                    </a>
+                    <span *ngIf="profile.picture">{{profile.pictureContentType}}, {{byteSize(profile.picture)}}</span>
+                </td>
                 <td>
                     {{profile.user?.login}}
+                </td>
+                <td>
+                    <div *ngIf="profile.location">
+                        <a [routerLink]="['../location', profile.location?.id ]" >{{profile.location?.region}}</a>
+                    </div>
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

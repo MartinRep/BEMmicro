@@ -1,11 +1,13 @@
 import { browser, element, by } from 'protractor';
 import { NavBarPage } from './../page-objects/jhi-page-objects';
-
+import * as path from 'path';
 describe('Profile e2e test', () => {
 
     let navBarPage: NavBarPage;
     let profileDialogPage: ProfileDialogPage;
     let profileComponentsPage: ProfileComponentsPage;
+    const fileToUpload = '../../../../main/webapp/content/images/logo-jhipster.png';
+    const absolutePath = path.resolve(__dirname, fileToUpload);
 
     beforeAll(() => {
         browser.get('/');
@@ -33,11 +35,13 @@ describe('Profile e2e test', () => {
 
     it('should create and save Profiles', () => {
         profileComponentsPage.clickOnCreateButton();
-        profileDialogPage.setPhNumberInput('phNumber');
-        expect(profileDialogPage.getPhNumberInput()).toMatch('phNumber');
         profileDialogPage.setNameInput('name');
         expect(profileDialogPage.getNameInput()).toMatch('name');
+        profileDialogPage.setPhNumberInput('phNumber');
+        expect(profileDialogPage.getPhNumberInput()).toMatch('phNumber');
+        profileDialogPage.setPictureInput(absolutePath);
         profileDialogPage.userSelectLastOption();
+        profileDialogPage.locationSelectLastOption();
         profileDialogPage.save();
         expect(profileDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -64,13 +68,23 @@ export class ProfileDialogPage {
     modalTitle = element(by.css('h4#myProfileLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    phNumberInput = element(by.css('input#field_phNumber'));
     nameInput = element(by.css('input#field_name'));
+    phNumberInput = element(by.css('input#field_phNumber'));
+    pictureInput = element(by.css('input#file_picture'));
     userSelect = element(by.css('select#field_user'));
+    locationSelect = element(by.css('select#field_location'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
     }
+
+    setNameInput = function(name) {
+        this.nameInput.sendKeys(name);
+    };
+
+    getNameInput = function() {
+        return this.nameInput.getAttribute('value');
+    };
 
     setPhNumberInput = function(phNumber) {
         this.phNumberInput.sendKeys(phNumber);
@@ -80,12 +94,12 @@ export class ProfileDialogPage {
         return this.phNumberInput.getAttribute('value');
     };
 
-    setNameInput = function(name) {
-        this.nameInput.sendKeys(name);
+    setPictureInput = function(picture) {
+        this.pictureInput.sendKeys(picture);
     };
 
-    getNameInput = function() {
-        return this.nameInput.getAttribute('value');
+    getPictureInput = function() {
+        return this.pictureInput.getAttribute('value');
     };
 
     userSelectLastOption = function() {
@@ -102,6 +116,22 @@ export class ProfileDialogPage {
 
     getUserSelectedOption = function() {
         return this.userSelect.element(by.css('option:checked')).getText();
+    };
+
+    locationSelectLastOption = function() {
+        this.locationSelect.all(by.tagName('option')).last().click();
+    };
+
+    locationSelectOption = function(option) {
+        this.locationSelect.sendKeys(option);
+    };
+
+    getLocationSelect = function() {
+        return this.locationSelect;
+    };
+
+    getLocationSelectedOption = function() {
+        return this.locationSelect.element(by.css('option:checked')).getText();
     };
 
     save() {

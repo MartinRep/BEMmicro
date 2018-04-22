@@ -16,12 +16,12 @@
             "detail": {
                 "title": "Appointment"
             },
-            "category": "Category",
             "name": "Name",
             "address": "Address",
             "time": "Time",
-            "message": "Message",
-            "user": "User"
+            "categories": "Categories",
+            "profile": "Profile",
+            "message": "Message"
         }
     }
 }

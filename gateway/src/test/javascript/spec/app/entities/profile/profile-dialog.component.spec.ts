@@ -10,6 +10,7 @@ import { ProfileDialogComponent } from '../../../../../../main/webapp/app/entiti
 import { ProfileService } from '../../../../../../main/webapp/app/entities/profile/profile.service';
 import { Profile } from '../../../../../../main/webapp/app/entities/profile/profile.model';
 import { UserService } from '../../../../../../main/webapp/app/shared';
+import { LocationService } from '../../../../../../main/webapp/app/entities/location';
 import { AppointmentService } from '../../../../../../main/webapp/app/entities/appointment';
 
 describe('Component Tests', () => {
@@ -27,6 +28,7 @@ describe('Component Tests', () => {
                 declarations: [ProfileDialogComponent],
                 providers: [
                     UserService,
+                    LocationService,
                     AppointmentService,
                     ProfileService
                 ]

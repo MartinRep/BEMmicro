@@ -22,10 +22,6 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="category" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -42,8 +38,8 @@
         </createTable>
         <dropDefaultValue tableName="appointment" columnName="jhi_time" columnDataType="datetime"/>
         
-        <createTable tableName="appointment_user">
-            <column name="users_id" type="bigint">
+        <createTable tableName="appointment_profile">
+            <column name="profiles_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="appointments_id" type="bigint">
@@ -51,7 +47,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="appointments_id, users_id" tableName="appointment_user"/>
+        <addPrimaryKey columnNames="appointments_id, profiles_id" tableName="appointment_profile"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

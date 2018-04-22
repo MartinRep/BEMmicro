@@ -9,13 +9,13 @@
     <changeSet id="20180418093537-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="appointments_id"
-                                 baseTableName="appointment_user"
-                                 constraintName="fk_appointment_user_appointments_id"
+                                 baseTableName="appointment_profile"
+                                 constraintName="fk_appointment_profile_appointments_id"
                                  referencedColumnNames="id"
                                  referencedTableName="appointment"/>
-        <addForeignKeyConstraint baseColumnNames="users_id"
-                                 baseTableName="appointment_user"
-                                 constraintName="fk_appointment_user_users_id"
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="appointment_profile"
+                                 constraintName="fk_appointment_profile_profiles_id"
                                  referencedColumnNames="id"
                                  referencedTableName="profile"/>
         
