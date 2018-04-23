@@ -1,11 +1,13 @@
 import { browser, element, by } from 'protractor';
 import { NavBarPage } from './../page-objects/jhi-page-objects';
-
+import * as path from 'path';
 describe('LastMinuteService e2e test', () => {
 
     let navBarPage: NavBarPage;
     let lastMinuteServiceDialogPage: LastMinuteServiceDialogPage;
     let lastMinuteServiceComponentsPage: LastMinuteServiceComponentsPage;
+    const fileToUpload = '../../../../main/webapp/content/images/logo-jhipster.png';
+    const absolutePath = path.resolve(__dirname, fileToUpload);
 
     beforeAll(() => {
         browser.get('/');
@@ -33,18 +35,21 @@ describe('LastMinuteService e2e test', () => {
 
     it('should create and save LastMinuteServices', () => {
         lastMinuteServiceComponentsPage.clickOnCreateButton();
-        lastMinuteServiceDialogPage.categorySelectLastOption();
-        lastMinuteServiceDialogPage.setNameInput('name');
-        expect(lastMinuteServiceDialogPage.getNameInput()).toMatch('name');
-        lastMinuteServiceDialogPage.setTimeInput(12310020012301);
-        expect(lastMinuteServiceDialogPage.getTimeInput()).toMatch('2001-12-31T02:30');
         lastMinuteServiceDialogPage.setPriceInput('5');
         expect(lastMinuteServiceDialogPage.getPriceInput()).toMatch('5');
         lastMinuteServiceDialogPage.setAddressInput('address');
         expect(lastMinuteServiceDialogPage.getAddressInput()).toMatch('address');
-        lastMinuteServiceDialogPage.setUserInput('5');
-        expect(lastMinuteServiceDialogPage.getUserInput()).toMatch('5');
-        lastMinuteServiceDialogPage.profileSelectLastOption();
+        lastMinuteServiceDialogPage.setCategoryInput('5');
+        expect(lastMinuteServiceDialogPage.getCategoryInput()).toMatch('5');
+        lastMinuteServiceDialogPage.setDescriptionInput('description');
+        expect(lastMinuteServiceDialogPage.getDescriptionInput()).toMatch('description');
+        lastMinuteServiceDialogPage.setAvailableInput(12310020012301);
+        expect(lastMinuteServiceDialogPage.getAvailableInput()).toMatch('2001-12-31T02:30');
+        lastMinuteServiceDialogPage.setLocationInput('location');
+        expect(lastMinuteServiceDialogPage.getLocationInput()).toMatch('location');
+        lastMinuteServiceDialogPage.setImageInput(absolutePath);
+        lastMinuteServiceDialogPage.setProfileInput('5');
+        expect(lastMinuteServiceDialogPage.getProfileInput()).toMatch('5');
         lastMinuteServiceDialogPage.save();
         expect(lastMinuteServiceDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -71,44 +76,18 @@ export class LastMinuteServiceDialogPage {
     modalTitle = element(by.css('h4#myLastMinuteServiceLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    categorySelect = element(by.css('select#field_category'));
-    nameInput = element(by.css('input#field_name'));
-    timeInput = element(by.css('input#field_time'));
     priceInput = element(by.css('input#field_price'));
     addressInput = element(by.css('input#field_address'));
-    userInput = element(by.css('input#field_user'));
-    profileSelect = element(by.css('select#field_profile'));
+    categoryInput = element(by.css('input#field_category'));
+    descriptionInput = element(by.css('input#field_description'));
+    availableInput = element(by.css('input#field_available'));
+    locationInput = element(by.css('input#field_location'));
+    imageInput = element(by.css('input#file_image'));
+    profileInput = element(by.css('input#field_profile'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
     }
-
-    setCategorySelect = function(category) {
-        this.categorySelect.sendKeys(category);
-    };
-
-    getCategorySelect = function() {
-        return this.categorySelect.element(by.css('option:checked')).getText();
-    };
-
-    categorySelectLastOption = function() {
-        this.categorySelect.all(by.tagName('option')).last().click();
-    };
-    setNameInput = function(name) {
-        this.nameInput.sendKeys(name);
-    };
-
-    getNameInput = function() {
-        return this.nameInput.getAttribute('value');
-    };
-
-    setTimeInput = function(time) {
-        this.timeInput.sendKeys(time);
-    };
-
-    getTimeInput = function() {
-        return this.timeInput.getAttribute('value');
-    };
 
     setPriceInput = function(price) {
         this.priceInput.sendKeys(price);
@@ -126,28 +105,52 @@ export class LastMinuteServiceDialogPage {
         return this.addressInput.getAttribute('value');
     };
 
-    setUserInput = function(user) {
-        this.userInput.sendKeys(user);
+    setCategoryInput = function(category) {
+        this.categoryInput.sendKeys(category);
     };
 
-    getUserInput = function() {
-        return this.userInput.getAttribute('value');
+    getCategoryInput = function() {
+        return this.categoryInput.getAttribute('value');
     };
 
-    profileSelectLastOption = function() {
-        this.profileSelect.all(by.tagName('option')).last().click();
+    setDescriptionInput = function(description) {
+        this.descriptionInput.sendKeys(description);
     };
 
-    profileSelectOption = function(option) {
-        this.profileSelect.sendKeys(option);
+    getDescriptionInput = function() {
+        return this.descriptionInput.getAttribute('value');
     };
 
-    getProfileSelect = function() {
-        return this.profileSelect;
+    setAvailableInput = function(available) {
+        this.availableInput.sendKeys(available);
     };
 
-    getProfileSelectedOption = function() {
-        return this.profileSelect.element(by.css('option:checked')).getText();
+    getAvailableInput = function() {
+        return this.availableInput.getAttribute('value');
+    };
+
+    setLocationInput = function(location) {
+        this.locationInput.sendKeys(location);
+    };
+
+    getLocationInput = function() {
+        return this.locationInput.getAttribute('value');
+    };
+
+    setImageInput = function(image) {
+        this.imageInput.sendKeys(image);
+    };
+
+    getImageInput = function() {
+        return this.imageInput.getAttribute('value');
+    };
+
+    setProfileInput = function(profile) {
+        this.profileInput.sendKeys(profile);
+    };
+
+    getProfileInput = function() {
+        return this.profileInput.getAttribute('value');
     };
 
     save() {

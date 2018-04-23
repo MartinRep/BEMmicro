@@ -17,30 +17,33 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="category"><span jhiTranslate="bemApp.lastMinuteService.category">Category</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="name"><span jhiTranslate="bemApp.lastMinuteService.name">Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="time"><span jhiTranslate="bemApp.lastMinuteService.time">Time</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="price"><span jhiTranslate="bemApp.lastMinuteService.price">Price</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="address"><span jhiTranslate="bemApp.lastMinuteService.address">Address</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="user"><span jhiTranslate="bemApp.lastMinuteService.user">User</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="profile.name"><span jhiTranslate="bemApp.lastMinuteService.profile">Profile</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="category"><span jhiTranslate="bemApp.lastMinuteService.category">Category</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="description"><span jhiTranslate="bemApp.lastMinuteService.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="available"><span jhiTranslate="bemApp.lastMinuteService.available">Available</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="location"><span jhiTranslate="bemApp.lastMinuteService.location">Location</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="image"><span jhiTranslate="bemApp.lastMinuteService.image">Image</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="profile"><span jhiTranslate="bemApp.lastMinuteService.profile">Profile</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let lastMinuteService of lastMinuteServices ;trackBy: trackId">
                 <td><a [routerLink]="['../last-minute-service', lastMinuteService.id ]">{{lastMinuteService.id}}</a></td>
-                <td jhiTranslate="{{'bemApp.Category.' + lastMinuteService.category}}">{{lastMinuteService.category}}</td>
-                <td>{{lastMinuteService.name}}</td>
-                <td>{{lastMinuteService.time | date:'medium'}}</td>
                 <td>{{lastMinuteService.price}}</td>
                 <td>{{lastMinuteService.address}}</td>
-                <td>{{lastMinuteService.user}}</td>
+                <td>{{lastMinuteService.category}}</td>
+                <td>{{lastMinuteService.description}}</td>
+                <td>{{lastMinuteService.available | date:'medium'}}</td>
+                <td>{{lastMinuteService.location}}</td>
                 <td>
-                    <div *ngIf="lastMinuteService.profile">
-                        <a [routerLink]="['../profile', lastMinuteService.profile?.id ]" >{{lastMinuteService.profile?.name}}</a>
-                    </div>
+                    <a *ngIf="lastMinuteService.image" (click)="openFile(lastMinuteService.imageContentType, lastMinuteService.image)">
+                        <img [src]="'data:' + lastMinuteService.imageContentType + ';base64,' + lastMinuteService.image" style="max-height: 30px;" alt="lastMinuteService image"/>
+                    </a>
+                    <span *ngIf="lastMinuteService.image">{{lastMinuteService.imageContentType}}, {{byteSize(lastMinuteService.image)}}</span>
                 </td>
+                <td>{{lastMinuteService.profile}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

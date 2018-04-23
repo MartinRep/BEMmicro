@@ -31,8 +31,8 @@ export class LastMinuteServicePopupService {
                 this.lastMinuteServiceService.find(id)
                     .subscribe((lastMinuteServiceResponse: HttpResponse<LastMinuteService>) => {
                         const lastMinuteService: LastMinuteService = lastMinuteServiceResponse.body;
-                        lastMinuteService.time = this.datePipe
-                            .transform(lastMinuteService.time, 'yyyy-MM-ddTHH:mm:ss');
+                        lastMinuteService.available = this.datePipe
+                            .transform(lastMinuteService.available, 'yyyy-MM-ddTHH:mm:ss');
                         this.ngbModalRef = this.lastMinuteServiceModalRef(component, lastMinuteService);
                         resolve(this.ngbModalRef);
                     });

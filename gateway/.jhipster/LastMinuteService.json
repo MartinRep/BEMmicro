@@ -2,32 +2,13 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "purchase",
+            "relationshipName": "lastMinuteOffer",
             "otherEntityName": "lastMinuteOffer",
-            "otherEntityRelationshipName": "service"
-        },
-        {
-            "relationshipName": "profile",
-            "otherEntityName": "profile",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "name"
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "lastMinuteService"
         }
     ],
     "fields": [
-        {
-            "fieldName": "category",
-            "fieldType": "Category",
-            "fieldValues": "FACE,BODY,MEN,DENTAL,HAIR,HEALTH,WELLBEING"
-        },
-        {
-            "fieldName": "name",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "time",
-            "fieldType": "ZonedDateTime"
-        },
         {
             "fieldName": "price",
             "fieldType": "Double"
@@ -37,7 +18,37 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "user",
+            "fieldName": "category",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "available",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "location",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "profile",
             "fieldType": "Integer"
         }
     ],

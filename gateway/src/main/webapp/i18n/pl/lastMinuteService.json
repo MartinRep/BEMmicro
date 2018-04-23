@@ -13,14 +13,15 @@
             "detail": {
                 "title": "Last Minute Service"
             },
-            "category": "Category",
-            "name": "Name",
-            "time": "Time",
             "price": "Price",
             "address": "Address",
-            "user": "User",
-            "purchase": "Purchase",
-            "profile": "Profile"
+            "category": "Category",
+            "description": "Description",
+            "available": "Available",
+            "location": "Location",
+            "image": "Image",
+            "profile": "Profile",
+            "lastMinuteOffer": "Last Minute Offer"
         }
     },
     "lastminuteApp": {

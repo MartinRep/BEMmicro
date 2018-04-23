@@ -9,7 +9,6 @@ import { BemTestModule } from '../../../test.module';
 import { LastMinuteServiceDialogComponent } from '../../../../../../main/webapp/app/entities/last-minute-service/last-minute-service-dialog.component';
 import { LastMinuteServiceService } from '../../../../../../main/webapp/app/entities/last-minute-service/last-minute-service.service';
 import { LastMinuteService } from '../../../../../../main/webapp/app/entities/last-minute-service/last-minute-service.model';
-import { ProfileService } from '../../../../../../main/webapp/app/entities/profile';
 
 describe('Component Tests', () => {
 
@@ -25,7 +24,6 @@ describe('Component Tests', () => {
                 imports: [BemTestModule],
                 declarations: [LastMinuteServiceDialogComponent],
                 providers: [
-                    ProfileService,
                     LastMinuteServiceService
                 ]
             })

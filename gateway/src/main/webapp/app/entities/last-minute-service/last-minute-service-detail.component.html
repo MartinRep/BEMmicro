@@ -4,18 +4,6 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.lastMinuteService.category">Category</span></dt>
-        <dd>
-            <span jhiTranslate="{{'bemApp.Category.' + lastMinuteService.category}}">{{lastMinuteService.category}}</span>
-        </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.name">Name</span></dt>
-        <dd>
-            <span>{{lastMinuteService.name}}</span>
-        </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.time">Time</span></dt>
-        <dd>
-            <span>{{lastMinuteService.time | date:'medium'}}</span>
-        </dd>
         <dt><span jhiTranslate="bemApp.lastMinuteService.price">Price</span></dt>
         <dd>
             <span>{{lastMinuteService.price}}</span>
@@ -24,15 +12,34 @@
         <dd>
             <span>{{lastMinuteService.address}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.user">User</span></dt>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.category">Category</span></dt>
         <dd>
-            <span>{{lastMinuteService.user}}</span>
+            <span>{{lastMinuteService.category}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.description">Description</span></dt>
+        <dd>
+            <span>{{lastMinuteService.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.available">Available</span></dt>
+        <dd>
+            <span>{{lastMinuteService.available | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.location">Location</span></dt>
+        <dd>
+            <span>{{lastMinuteService.location}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.lastMinuteService.image">Image</span></dt>
+        <dd>
+            <div *ngIf="lastMinuteService.image">
+                <a (click)="openFile(lastMinuteService.imageContentType, lastMinuteService.image)">
+                    <img [src]="'data:' + lastMinuteService.imageContentType + ';base64,' + lastMinuteService.image" style="max-width: 100%;" alt="lastMinuteService image"/>
+                </a>
+                {{lastMinuteService.imageContentType}}, {{byteSize(lastMinuteService.image)}}
+            </div>
         </dd>
         <dt><span jhiTranslate="bemApp.lastMinuteService.profile">Profile</span></dt>
         <dd>
-            <div *ngIf="lastMinuteService.profile">
-                <a [routerLink]="['/profile', lastMinuteService.profile?.id]">{{lastMinuteService.profile?.name}}</a>
-            </div>
+            <span>{{lastMinuteService.profile}}</span>
         </dd>
     </dl>
 

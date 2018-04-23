@@ -63,8 +63,8 @@ export class LastMinuteServiceService {
      */
     private convertItemFromServer(lastMinuteService: LastMinuteService): LastMinuteService {
         const copy: LastMinuteService = Object.assign({}, lastMinuteService);
-        copy.time = this.dateUtils
-            .convertDateTimeFromServer(lastMinuteService.time);
+        copy.available = this.dateUtils
+            .convertDateTimeFromServer(lastMinuteService.available);
         return copy;
     }
 
@@ -74,7 +74,7 @@ export class LastMinuteServiceService {
     private convert(lastMinuteService: LastMinuteService): LastMinuteService {
         const copy: LastMinuteService = Object.assign({}, lastMinuteService);
 
-        copy.time = this.dateUtils.toDate(lastMinuteService.time);
+        copy.available = this.dateUtils.toDate(lastMinuteService.available);
         return copy;
     }
 }

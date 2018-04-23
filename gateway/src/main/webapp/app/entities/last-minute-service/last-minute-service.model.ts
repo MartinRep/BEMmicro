@@ -1,26 +1,18 @@
 import { BaseEntity } from './../../shared';
 
-export const enum Category {
-    'FACE',
-    'BODY',
-    'MEN',
-    'DENTAL',
-    'HAIR',
-    'HEALTH',
-    'WELLBEING'
-}
-
 export class LastMinuteService implements BaseEntity {
     constructor(
         public id?: number,
-        public category?: Category,
-        public name?: string,
-        public time?: any,
         public price?: number,
         public address?: string,
-        public user?: number,
-        public purchases?: BaseEntity[],
-        public profile?: BaseEntity,
+        public category?: number,
+        public description?: string,
+        public available?: any,
+        public location?: string,
+        public imageContentType?: string,
+        public image?: any,
+        public profile?: number,
+        public lastMinuteOffers?: BaseEntity[],
     ) {
     }
 }
