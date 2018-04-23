@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -44,7 +45,7 @@ public class CategoriesResource {
      */
     @PostMapping("/categories")
     @Timed
-    public ResponseEntity<Categories> createCategories(@RequestBody Categories categories) throws URISyntaxException {
+    public ResponseEntity<Categories> createCategories(@Valid @RequestBody Categories categories) throws URISyntaxException {
         log.debug("REST request to save Categories : {}", categories);
         if (categories.getId() != null) {
             throw new BadRequestAlertException("A new categories cannot already have an ID", ENTITY_NAME, "idexists");
@@ -66,7 +67,7 @@ public class CategoriesResource {
      */
     @PutMapping("/categories")
     @Timed
-    public ResponseEntity<Categories> updateCategories(@RequestBody Categories categories) throws URISyntaxException {
+    public ResponseEntity<Categories> updateCategories(@Valid @RequestBody Categories categories) throws URISyntaxException {
         log.debug("REST request to update Categories : {}", categories);
         if (categories.getId() == null) {
             return createCategories(categories);

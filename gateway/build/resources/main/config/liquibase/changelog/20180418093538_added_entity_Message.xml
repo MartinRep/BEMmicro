@@ -27,7 +27,7 @@
             </column>
 
             <column name="content" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="appointment_id" type="bigint">

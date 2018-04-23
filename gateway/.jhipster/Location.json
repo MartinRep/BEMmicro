@@ -11,7 +11,10 @@
     "fields": [
         {
             "fieldName": "region",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20180422200556",

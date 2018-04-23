@@ -5,7 +5,7 @@ entity Profile {
 }
 
 entity Location {
-	region String
+	region String required
 }
 
 entity Appointment {
@@ -16,11 +16,11 @@ entity Appointment {
 
 entity Message {
 	time Instant,
-    content String
+    content String required
 }
 
 entity Categories {
-	category String
+	category String required
 }
 
 relationship ManyToMany {
@@ -28,7 +28,7 @@ relationship ManyToMany {
 }
 
 relationship OneToMany {
-	Appointment{categories(category)} to Categories{appointment(name)}
+	Appointment{categories(category)} to Categories
 }
 
 relationship ManyToOne{

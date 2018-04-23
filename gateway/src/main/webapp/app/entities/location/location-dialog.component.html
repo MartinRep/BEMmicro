@@ -15,7 +15,13 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="bemApp.location.region" for="field_region">Region</label>
             <input type="text" class="form-control" name="region" id="field_region"
-                [(ngModel)]="location.region" />
+                [(ngModel)]="location.region" required/>
+            <div [hidden]="!(editForm.controls.region?.dirty && editForm.controls.region?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.region?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
         </div>
 
     </div>

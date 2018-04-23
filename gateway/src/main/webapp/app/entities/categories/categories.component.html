@@ -28,7 +28,7 @@
                 <td>{{categories.category}}</td>
                 <td>
                     <div *ngIf="categories.appointment">
-                        <a [routerLink]="['../appointment', categories.appointment?.id ]" >{{categories.appointment?.name}}</a>
+                        <a [routerLink]="['../appointment', categories.appointment?.id ]" >{{categories.appointment?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

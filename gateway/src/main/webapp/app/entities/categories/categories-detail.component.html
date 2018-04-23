@@ -11,7 +11,7 @@
         <dt><span jhiTranslate="bemApp.categories.appointment">Appointment</span></dt>
         <dd>
             <div *ngIf="categories.appointment">
-                <a [routerLink]="['/appointment', categories.appointment?.id]">{{categories.appointment?.name}}</a>
+                <a [routerLink]="['/appointment', categories.appointment?.id]">{{categories.appointment?.id}}</a>
             </div>
         </dd>
     </dl>

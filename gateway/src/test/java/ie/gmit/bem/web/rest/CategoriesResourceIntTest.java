@@ -127,6 +127,24 @@ public class CategoriesResourceIntTest {
 
     @Test
     @Transactional
+    public void checkCategoryIsRequired() throws Exception {
+        int databaseSizeBeforeTest = categoriesRepository.findAll().size();
+        // set the field null
+        categories.setCategory(null);
+
+        // Create the Categories, which fails.
+
+        restCategoriesMockMvc.perform(post("/api/categories")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(categories)))
+            .andExpect(status().isBadRequest());
+
+        List<Categories> categoriesList = categoriesRepository.findAll();
+        assertThat(categoriesList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllCategories() throws Exception {
         // Initialize the database
         categoriesRepository.saveAndFlush(categories);

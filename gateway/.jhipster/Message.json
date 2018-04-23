@@ -15,7 +15,10 @@
         },
         {
             "fieldName": "content",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20180418093538",

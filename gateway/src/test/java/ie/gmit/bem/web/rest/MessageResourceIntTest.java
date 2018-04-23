@@ -134,6 +134,24 @@ public class MessageResourceIntTest {
 
     @Test
     @Transactional
+    public void checkContentIsRequired() throws Exception {
+        int databaseSizeBeforeTest = messageRepository.findAll().size();
+        // set the field null
+        message.setContent(null);
+
+        // Create the Message, which fails.
+
+        restMessageMockMvc.perform(post("/api/messages")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(message)))
+            .andExpect(status().isBadRequest());
+
+        List<Message> messageList = messageRepository.findAll();
+        assertThat(messageList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllMessages() throws Exception {
         // Initialize the database
         messageRepository.saveAndFlush(message);

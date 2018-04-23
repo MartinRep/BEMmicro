@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -49,7 +50,7 @@ public class MessageResource {
      */
     @PostMapping("/messages")
     @Timed
-    public ResponseEntity<Message> createMessage(@RequestBody Message message) throws URISyntaxException {
+    public ResponseEntity<Message> createMessage(@Valid @RequestBody Message message) throws URISyntaxException {
         log.debug("REST request to save Message : {}", message);
         if (message.getId() != null) {
             throw new BadRequestAlertException("A new message cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,7 +72,7 @@ public class MessageResource {
      */
     @PutMapping("/messages")
     @Timed
-    public ResponseEntity<Message> updateMessage(@RequestBody Message message) throws URISyntaxException {
+    public ResponseEntity<Message> updateMessage(@Valid @RequestBody Message message) throws URISyntaxException {
         log.debug("REST request to update Message : {}", message);
         if (message.getId() == null) {
             return createMessage(message);
