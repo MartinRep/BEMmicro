@@ -13,14 +13,14 @@
                    [(ngModel)]="lastMinuteOffer.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.price" for="field_price">Price</label>
-            <input type="number" class="form-control" name="price" id="field_price"
-                [(ngModel)]="lastMinuteOffer.price" />
+            <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="lastMinuteOffer.name" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.user" for="field_user">User</label>
-            <input type="number" class="form-control" name="user" id="field_user"
-                [(ngModel)]="lastMinuteOffer.user" />
+            <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.profile" for="field_profile">Profile</label>
+            <input type="number" class="form-control" name="profile" id="field_profile"
+                [(ngModel)]="lastMinuteOffer.profile" />
         </div>
 
         <div class="form-group">
@@ -28,13 +28,6 @@
             <select class="form-control" id="field_service" name="service" [(ngModel)]="lastMinuteOffer.service" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="lastMinuteServiceOption.id === lastMinuteOffer.service?.id ? lastMinuteOffer.service : lastMinuteServiceOption" *ngFor="let lastMinuteServiceOption of lastminuteservices; trackBy: trackLastMinuteServiceById">{{lastMinuteServiceOption.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.profile" for="field_profile">Profile</label>
-            <select class="form-control" id="field_profile" name="profile" [(ngModel)]="lastMinuteOffer.profile" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="profileOption.id === lastMinuteOffer.profile?.id ? lastMinuteOffer.profile : profileOption" *ngFor="let profileOption of profiles; trackBy: trackProfileById">{{profileOption.name}}</option>
             </select>
         </div>
     </div>

@@ -33,12 +33,11 @@ describe('LastMinuteOffer e2e test', () => {
 
     it('should create and save LastMinuteOffers', () => {
         lastMinuteOfferComponentsPage.clickOnCreateButton();
-        lastMinuteOfferDialogPage.setPriceInput('5');
-        expect(lastMinuteOfferDialogPage.getPriceInput()).toMatch('5');
-        lastMinuteOfferDialogPage.setUserInput('5');
-        expect(lastMinuteOfferDialogPage.getUserInput()).toMatch('5');
+        lastMinuteOfferDialogPage.setNameInput('name');
+        expect(lastMinuteOfferDialogPage.getNameInput()).toMatch('name');
+        lastMinuteOfferDialogPage.setProfileInput('5');
+        expect(lastMinuteOfferDialogPage.getProfileInput()).toMatch('5');
         lastMinuteOfferDialogPage.serviceSelectLastOption();
-        lastMinuteOfferDialogPage.profileSelectLastOption();
         lastMinuteOfferDialogPage.save();
         expect(lastMinuteOfferDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -65,29 +64,28 @@ export class LastMinuteOfferDialogPage {
     modalTitle = element(by.css('h4#myLastMinuteOfferLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    priceInput = element(by.css('input#field_price'));
-    userInput = element(by.css('input#field_user'));
+    nameInput = element(by.css('input#field_name'));
+    profileInput = element(by.css('input#field_profile'));
     serviceSelect = element(by.css('select#field_service'));
-    profileSelect = element(by.css('select#field_profile'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
     }
 
-    setPriceInput = function(price) {
-        this.priceInput.sendKeys(price);
+    setNameInput = function(name) {
+        this.nameInput.sendKeys(name);
     };
 
-    getPriceInput = function() {
-        return this.priceInput.getAttribute('value');
+    getNameInput = function() {
+        return this.nameInput.getAttribute('value');
     };
 
-    setUserInput = function(user) {
-        this.userInput.sendKeys(user);
+    setProfileInput = function(profile) {
+        this.profileInput.sendKeys(profile);
     };
 
-    getUserInput = function() {
-        return this.userInput.getAttribute('value');
+    getProfileInput = function() {
+        return this.profileInput.getAttribute('value');
     };
 
     serviceSelectLastOption = function() {
@@ -104,22 +102,6 @@ export class LastMinuteOfferDialogPage {
 
     getServiceSelectedOption = function() {
         return this.serviceSelect.element(by.css('option:checked')).getText();
-    };
-
-    profileSelectLastOption = function() {
-        this.profileSelect.all(by.tagName('option')).last().click();
-    };
-
-    profileSelectOption = function(option) {
-        this.profileSelect.sendKeys(option);
-    };
-
-    getProfileSelect = function() {
-        return this.profileSelect;
-    };
-
-    getProfileSelectedOption = function() {
-        return this.profileSelect.element(by.css('option:checked')).getText();
     };
 
     save() {

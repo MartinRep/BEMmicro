@@ -13,10 +13,9 @@
             "detail": {
                 "title": "Last Minute Offer"
             },
-            "price": "Price",
-            "user": "User",
-            "service": "Service",
-            "profile": "Profile"
+            "name": "Name",
+            "profile": "Profile",
+            "service": "Service"
         }
     },
     "lastminuteApp": {

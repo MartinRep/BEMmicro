@@ -10,7 +10,6 @@ import { LastMinuteOffer } from './last-minute-offer.model';
 import { LastMinuteOfferPopupService } from './last-minute-offer-popup.service';
 import { LastMinuteOfferService } from './last-minute-offer.service';
 import { LastMinuteService, LastMinuteServiceService } from '../last-minute-service';
-import { Profile, ProfileService } from '../profile';
 
 @Component({
     selector: 'jhi-last-minute-offer-dialog',
@@ -23,14 +22,11 @@ export class LastMinuteOfferDialogComponent implements OnInit {
 
     lastminuteservices: LastMinuteService[];
 
-    profiles: Profile[];
-
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private lastMinuteOfferService: LastMinuteOfferService,
         private lastMinuteServiceService: LastMinuteServiceService,
-        private profileService: ProfileService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -39,8 +35,6 @@ export class LastMinuteOfferDialogComponent implements OnInit {
         this.isSaving = false;
         this.lastMinuteServiceService.query()
             .subscribe((res: HttpResponse<LastMinuteService[]>) => { this.lastminuteservices = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-        this.profileService.query()
-            .subscribe((res: HttpResponse<Profile[]>) => { this.profiles = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -78,10 +72,6 @@ export class LastMinuteOfferDialogComponent implements OnInit {
     }
 
     trackLastMinuteServiceById(index: number, item: LastMinuteService) {
-        return item.id;
-    }
-
-    trackProfileById(index: number, item: Profile) {
         return item.id;
     }
 }

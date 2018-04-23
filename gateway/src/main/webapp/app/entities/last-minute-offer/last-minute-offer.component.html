@@ -17,26 +17,20 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="bemApp.lastMinuteOffer.price">Price</span></th>
-            <th><span jhiTranslate="bemApp.lastMinuteOffer.user">User</span></th>
-            <th><span jhiTranslate="bemApp.lastMinuteOffer.service">Service</span></th>
+            <th><span jhiTranslate="bemApp.lastMinuteOffer.name">Name</span></th>
             <th><span jhiTranslate="bemApp.lastMinuteOffer.profile">Profile</span></th>
+            <th><span jhiTranslate="bemApp.lastMinuteOffer.service">Service</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let lastMinuteOffer of lastMinuteOffers ;trackBy: trackId">
                 <td><a [routerLink]="['../last-minute-offer', lastMinuteOffer.id ]">{{lastMinuteOffer.id}}</a></td>
-                <td>{{lastMinuteOffer.price}}</td>
-                <td>{{lastMinuteOffer.user}}</td>
+                <td>{{lastMinuteOffer.name}}</td>
+                <td>{{lastMinuteOffer.profile}}</td>
                 <td>
                     <div *ngIf="lastMinuteOffer.service">
                         <a [routerLink]="['../last-minute-service', lastMinuteOffer.service?.id ]" >{{lastMinuteOffer.service?.name}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="lastMinuteOffer.profile">
-                        <a [routerLink]="['../profile', lastMinuteOffer.profile?.id ]" >{{lastMinuteOffer.profile?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

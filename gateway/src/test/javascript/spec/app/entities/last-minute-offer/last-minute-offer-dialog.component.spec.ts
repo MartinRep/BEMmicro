@@ -10,7 +10,6 @@ import { LastMinuteOfferDialogComponent } from '../../../../../../main/webapp/ap
 import { LastMinuteOfferService } from '../../../../../../main/webapp/app/entities/last-minute-offer/last-minute-offer.service';
 import { LastMinuteOffer } from '../../../../../../main/webapp/app/entities/last-minute-offer/last-minute-offer.model';
 import { LastMinuteServiceService } from '../../../../../../main/webapp/app/entities/last-minute-service';
-import { ProfileService } from '../../../../../../main/webapp/app/entities/profile';
 
 describe('Component Tests', () => {
 
@@ -27,7 +26,6 @@ describe('Component Tests', () => {
                 declarations: [LastMinuteOfferDialogComponent],
                 providers: [
                     LastMinuteServiceService,
-                    ProfileService,
                     LastMinuteOfferService
                 ]
             })
