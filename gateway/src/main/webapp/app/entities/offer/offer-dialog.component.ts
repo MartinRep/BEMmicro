@@ -10,7 +10,6 @@ import { Offer } from './offer.model';
 import { OfferPopupService } from './offer-popup.service';
 import { OfferService } from './offer.service';
 import { Request, RequestService } from '../request';
-import { Profile, ProfileService } from '../profile';
 
 @Component({
     selector: 'jhi-offer-dialog',
@@ -23,14 +22,11 @@ export class OfferDialogComponent implements OnInit {
 
     requests: Request[];
 
-    profiles: Profile[];
-
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private offerService: OfferService,
         private requestService: RequestService,
-        private profileService: ProfileService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -39,8 +35,6 @@ export class OfferDialogComponent implements OnInit {
         this.isSaving = false;
         this.requestService.query()
             .subscribe((res: HttpResponse<Request[]>) => { this.requests = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-        this.profileService.query()
-            .subscribe((res: HttpResponse<Profile[]>) => { this.profiles = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -78,10 +72,6 @@ export class OfferDialogComponent implements OnInit {
     }
 
     trackRequestById(index: number, item: Request) {
-        return item.id;
-    }
-
-    trackProfileById(index: number, item: Profile) {
         return item.id;
     }
 }

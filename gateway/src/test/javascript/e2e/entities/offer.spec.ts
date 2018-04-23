@@ -33,16 +33,15 @@ describe('Offer e2e test', () => {
 
     it('should create and save Offers', () => {
         offerComponentsPage.clickOnCreateButton();
-        offerDialogPage.setNameInput('name');
-        expect(offerDialogPage.getNameInput()).toMatch('name');
-        offerDialogPage.setTimeInput(12310020012301);
-        expect(offerDialogPage.getTimeInput()).toMatch('2001-12-31T02:30');
         offerDialogPage.setPriceInput('5');
         expect(offerDialogPage.getPriceInput()).toMatch('5');
-        offerDialogPage.setUserInput('5');
-        expect(offerDialogPage.getUserInput()).toMatch('5');
+        offerDialogPage.setDescriptionInput('description');
+        expect(offerDialogPage.getDescriptionInput()).toMatch('description');
+        offerDialogPage.setAvailableOnInput(12310020012301);
+        expect(offerDialogPage.getAvailableOnInput()).toMatch('2001-12-31T02:30');
+        offerDialogPage.setProfileInput('5');
+        expect(offerDialogPage.getProfileInput()).toMatch('5');
         offerDialogPage.requestSelectLastOption();
-        offerDialogPage.profileSelectLastOption();
         offerDialogPage.save();
         expect(offerDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -69,32 +68,15 @@ export class OfferDialogPage {
     modalTitle = element(by.css('h4#myOfferLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    nameInput = element(by.css('input#field_name'));
-    timeInput = element(by.css('input#field_time'));
     priceInput = element(by.css('input#field_price'));
-    userInput = element(by.css('input#field_user'));
+    descriptionInput = element(by.css('input#field_description'));
+    availableOnInput = element(by.css('input#field_availableOn'));
+    profileInput = element(by.css('input#field_profile'));
     requestSelect = element(by.css('select#field_request'));
-    profileSelect = element(by.css('select#field_profile'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
     }
-
-    setNameInput = function(name) {
-        this.nameInput.sendKeys(name);
-    };
-
-    getNameInput = function() {
-        return this.nameInput.getAttribute('value');
-    };
-
-    setTimeInput = function(time) {
-        this.timeInput.sendKeys(time);
-    };
-
-    getTimeInput = function() {
-        return this.timeInput.getAttribute('value');
-    };
 
     setPriceInput = function(price) {
         this.priceInput.sendKeys(price);
@@ -104,12 +86,28 @@ export class OfferDialogPage {
         return this.priceInput.getAttribute('value');
     };
 
-    setUserInput = function(user) {
-        this.userInput.sendKeys(user);
+    setDescriptionInput = function(description) {
+        this.descriptionInput.sendKeys(description);
     };
 
-    getUserInput = function() {
-        return this.userInput.getAttribute('value');
+    getDescriptionInput = function() {
+        return this.descriptionInput.getAttribute('value');
+    };
+
+    setAvailableOnInput = function(availableOn) {
+        this.availableOnInput.sendKeys(availableOn);
+    };
+
+    getAvailableOnInput = function() {
+        return this.availableOnInput.getAttribute('value');
+    };
+
+    setProfileInput = function(profile) {
+        this.profileInput.sendKeys(profile);
+    };
+
+    getProfileInput = function() {
+        return this.profileInput.getAttribute('value');
     };
 
     requestSelectLastOption = function() {
@@ -126,22 +124,6 @@ export class OfferDialogPage {
 
     getRequestSelectedOption = function() {
         return this.requestSelect.element(by.css('option:checked')).getText();
-    };
-
-    profileSelectLastOption = function() {
-        this.profileSelect.all(by.tagName('option')).last().click();
-    };
-
-    profileSelectOption = function(option) {
-        this.profileSelect.sendKeys(option);
-    };
-
-    getProfileSelect = function() {
-        return this.profileSelect;
-    };
-
-    getProfileSelectedOption = function() {
-        return this.profileSelect.element(by.css('option:checked')).getText();
     };
 
     save() {

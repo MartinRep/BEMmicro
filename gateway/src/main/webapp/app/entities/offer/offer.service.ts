@@ -63,8 +63,8 @@ export class OfferService {
      */
     private convertItemFromServer(offer: Offer): Offer {
         const copy: Offer = Object.assign({}, offer);
-        copy.time = this.dateUtils
-            .convertDateTimeFromServer(offer.time);
+        copy.availableOn = this.dateUtils
+            .convertDateTimeFromServer(offer.availableOn);
         return copy;
     }
 
@@ -74,7 +74,7 @@ export class OfferService {
     private convert(offer: Offer): Offer {
         const copy: Offer = Object.assign({}, offer);
 
-        copy.time = this.dateUtils.toDate(offer.time);
+        copy.availableOn = this.dateUtils.toDate(offer.availableOn);
         return copy;
     }
 }

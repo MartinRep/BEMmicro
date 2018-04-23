@@ -10,7 +10,6 @@ import { OfferDialogComponent } from '../../../../../../main/webapp/app/entities
 import { OfferService } from '../../../../../../main/webapp/app/entities/offer/offer.service';
 import { Offer } from '../../../../../../main/webapp/app/entities/offer/offer.model';
 import { RequestService } from '../../../../../../main/webapp/app/entities/request';
-import { ProfileService } from '../../../../../../main/webapp/app/entities/profile';
 
 describe('Component Tests', () => {
 
@@ -27,7 +26,6 @@ describe('Component Tests', () => {
                 declarations: [OfferDialogComponent],
                 providers: [
                     RequestService,
-                    ProfileService,
                     OfferService
                 ]
             })

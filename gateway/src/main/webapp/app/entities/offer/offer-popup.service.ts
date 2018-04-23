@@ -31,8 +31,8 @@ export class OfferPopupService {
                 this.offerService.find(id)
                     .subscribe((offerResponse: HttpResponse<Offer>) => {
                         const offer: Offer = offerResponse.body;
-                        offer.time = this.datePipe
-                            .transform(offer.time, 'yyyy-MM-ddTHH:mm:ss');
+                        offer.availableOn = this.datePipe
+                            .transform(offer.availableOn, 'yyyy-MM-ddTHH:mm:ss');
                         this.ngbModalRef = this.offerModalRef(component, offer);
                         resolve(this.ngbModalRef);
                     });

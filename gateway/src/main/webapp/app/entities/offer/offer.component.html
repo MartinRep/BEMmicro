@@ -17,30 +17,24 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="bemApp.offer.name">Name</span></th>
-            <th><span jhiTranslate="bemApp.offer.time">Time</span></th>
             <th><span jhiTranslate="bemApp.offer.price">Price</span></th>
-            <th><span jhiTranslate="bemApp.offer.user">User</span></th>
-            <th><span jhiTranslate="bemApp.offer.request">Request</span></th>
+            <th><span jhiTranslate="bemApp.offer.description">Description</span></th>
+            <th><span jhiTranslate="bemApp.offer.availableOn">Available On</span></th>
             <th><span jhiTranslate="bemApp.offer.profile">Profile</span></th>
+            <th><span jhiTranslate="bemApp.offer.request">Request</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let offer of offers ;trackBy: trackId">
                 <td><a [routerLink]="['../offer', offer.id ]">{{offer.id}}</a></td>
-                <td>{{offer.name}}</td>
-                <td>{{offer.time | date:'medium'}}</td>
                 <td>{{offer.price}}</td>
-                <td>{{offer.user}}</td>
+                <td>{{offer.description}}</td>
+                <td>{{offer.availableOn | date:'medium'}}</td>
+                <td>{{offer.profile}}</td>
                 <td>
                     <div *ngIf="offer.request">
-                        <a [routerLink]="['../request', offer.request?.id ]" >{{offer.request?.name}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="offer.profile">
-                        <a [routerLink]="['../profile', offer.profile?.id ]" >{{offer.profile?.name}}</a>
+                        <a [routerLink]="['../request', offer.request?.id ]" >{{offer.request?.description}}</a>
                     </div>
                 </td>
                 <td class="text-right">

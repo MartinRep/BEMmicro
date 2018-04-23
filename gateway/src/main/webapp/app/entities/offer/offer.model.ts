@@ -3,12 +3,11 @@ import { BaseEntity } from './../../shared';
 export class Offer implements BaseEntity {
     constructor(
         public id?: number,
-        public name?: string,
-        public time?: any,
         public price?: number,
-        public user?: number,
+        public description?: string,
+        public availableOn?: any,
+        public profile?: number,
         public request?: BaseEntity,
-        public profile?: BaseEntity,
     ) {
     }
 }

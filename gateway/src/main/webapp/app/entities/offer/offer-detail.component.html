@@ -4,32 +4,26 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.offer.name">Name</span></dt>
-        <dd>
-            <span>{{offer.name}}</span>
-        </dd>
-        <dt><span jhiTranslate="bemApp.offer.time">Time</span></dt>
-        <dd>
-            <span>{{offer.time | date:'medium'}}</span>
-        </dd>
         <dt><span jhiTranslate="bemApp.offer.price">Price</span></dt>
         <dd>
             <span>{{offer.price}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.offer.user">User</span></dt>
+        <dt><span jhiTranslate="bemApp.offer.description">Description</span></dt>
         <dd>
-            <span>{{offer.user}}</span>
+            <span>{{offer.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.offer.availableOn">Available On</span></dt>
+        <dd>
+            <span>{{offer.availableOn | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.offer.profile">Profile</span></dt>
+        <dd>
+            <span>{{offer.profile}}</span>
         </dd>
         <dt><span jhiTranslate="bemApp.offer.request">Request</span></dt>
         <dd>
             <div *ngIf="offer.request">
-                <a [routerLink]="['/request', offer.request?.id]">{{offer.request?.name}}</a>
-            </div>
-        </dd>
-        <dt><span jhiTranslate="bemApp.offer.profile">Profile</span></dt>
-        <dd>
-            <div *ngIf="offer.profile">
-                <a [routerLink]="['/profile', offer.profile?.id]">{{offer.profile?.name}}</a>
+                <a [routerLink]="['/request', offer.request?.id]">{{offer.request?.description}}</a>
             </div>
         </dd>
     </dl>

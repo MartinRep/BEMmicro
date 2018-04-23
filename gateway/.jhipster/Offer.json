@@ -2,33 +2,31 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "many-to-one",
             "relationshipName": "request",
             "otherEntityName": "request",
-            "otherEntityField": "name"
-        },
-        {
-            "relationshipName": "profile",
-            "otherEntityName": "profile",
             "relationshipType": "many-to-one",
-            "otherEntityField": "name"
+            "otherEntityField": "description"
         }
     ],
     "fields": [
-        {
-            "fieldName": "name",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "time",
-            "fieldType": "ZonedDateTime"
-        },
         {
             "fieldName": "price",
             "fieldType": "Double"
         },
         {
-            "fieldName": "user",
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "availableOn",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "profile",
             "fieldType": "Integer"
         }
     ],

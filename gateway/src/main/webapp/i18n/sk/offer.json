@@ -13,12 +13,11 @@
             "detail": {
                 "title": "Offer"
             },
-            "name": "Name",
-            "time": "Time",
             "price": "Price",
-            "user": "User",
-            "request": "Request",
-            "profile": "Profile"
+            "description": "Description",
+            "availableOn": "Available On",
+            "profile": "Profile",
+            "request": "Request"
         }
     },
     "requestApp": {
