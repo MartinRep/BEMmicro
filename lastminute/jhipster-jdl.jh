@@ -1,23 +1,21 @@
 entity LastMinuteService {
-	category Category,
-    name String,
-    time ZonedDateTime,
-    price Double,
-    address String,
-    user Integer
+	category Integer required,
+    description String required,
+    available ZonedDateTime,
+    location String required,
+    price Double required,
+    address String required,
+    image ImageBlob,
+    profile Integer    
 }
 
 entity LastMinuteOffer {
-	price Double
-    user Integer
-}
-
-enum Category {
-	FACE, BODY, MEN, DENTAL, HAIR, HEALTH, WELLBEING
+	name String
+    profile Integer
 }
 
 relationship OneToMany {
-	LastMinuteService{purchase(price)} to LastMinuteOffer{service(name)}
+	LastMinuteService{bid(name)} to LastMinuteOffer{service(description)}
 }
 
 paginate LastMinuteService with pagination

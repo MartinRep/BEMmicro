@@ -5,14 +5,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
-
-import ie.gmit.bem.domain.enumeration.Category;
 
 /**
  * A LastMinuteService.
@@ -28,29 +27,43 @@ public class LastMinuteService implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private Category category;
+    @NotNull
+    @Column(name = "category", nullable = false)
+    private Integer category;
 
-    @Column(name = "name")
-    private String name;
+    @NotNull
+    @Column(name = "description", nullable = false)
+    private String description;
 
-    @Column(name = "jhi_time")
-    private ZonedDateTime time;
+    @Column(name = "available")
+    private ZonedDateTime available;
 
-    @Column(name = "price")
+    @NotNull
+    @Column(name = "location", nullable = false)
+    private String location;
+
+    @NotNull
+    @Column(name = "price", nullable = false)
     private Double price;
 
-    @Column(name = "address")
+    @NotNull
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "jhi_user")
-    private Integer user;
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
+    @Column(name = "image_content_type")
+    private String imageContentType;
+
+    @Column(name = "jhi_profile")
+    private Integer profile;
 
     @OneToMany(mappedBy = "service")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<LastMinuteOffer> purchases = new HashSet<>();
+    private Set<LastMinuteOffer> bids = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -61,43 +74,56 @@ public class LastMinuteService implements Serializable {
         this.id = id;
     }
 
-    public Category getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public LastMinuteService category(Category category) {
+    public LastMinuteService category(Integer category) {
         this.category = category;
         return this;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public LastMinuteService name(String name) {
-        this.name = name;
+    public LastMinuteService description(String description) {
+        this.description = description;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public ZonedDateTime getTime() {
-        return time;
+    public ZonedDateTime getAvailable() {
+        return available;
     }
 
-    public LastMinuteService time(ZonedDateTime time) {
-        this.time = time;
+    public LastMinuteService available(ZonedDateTime available) {
+        this.available = available;
         return this;
     }
 
-    public void setTime(ZonedDateTime time) {
-        this.time = time;
+    public void setAvailable(ZonedDateTime available) {
+        this.available = available;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public LastMinuteService location(String location) {
+        this.location = location;
+        return this;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Double getPrice() {
@@ -126,42 +152,68 @@ public class LastMinuteService implements Serializable {
         this.address = address;
     }
 
-    public Integer getUser() {
-        return user;
+    public byte[] getImage() {
+        return image;
     }
 
-    public LastMinuteService user(Integer user) {
-        this.user = user;
+    public LastMinuteService image(byte[] image) {
+        this.image = image;
         return this;
     }
 
-    public void setUser(Integer user) {
-        this.user = user;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
-    public Set<LastMinuteOffer> getPurchases() {
-        return purchases;
+    public String getImageContentType() {
+        return imageContentType;
     }
 
-    public LastMinuteService purchases(Set<LastMinuteOffer> lastMinuteOffers) {
-        this.purchases = lastMinuteOffers;
+    public LastMinuteService imageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
         return this;
     }
 
-    public LastMinuteService addPurchase(LastMinuteOffer lastMinuteOffer) {
-        this.purchases.add(lastMinuteOffer);
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
+    public Integer getProfile() {
+        return profile;
+    }
+
+    public LastMinuteService profile(Integer profile) {
+        this.profile = profile;
+        return this;
+    }
+
+    public void setProfile(Integer profile) {
+        this.profile = profile;
+    }
+
+    public Set<LastMinuteOffer> getBids() {
+        return bids;
+    }
+
+    public LastMinuteService bids(Set<LastMinuteOffer> lastMinuteOffers) {
+        this.bids = lastMinuteOffers;
+        return this;
+    }
+
+    public LastMinuteService addBid(LastMinuteOffer lastMinuteOffer) {
+        this.bids.add(lastMinuteOffer);
         lastMinuteOffer.setService(this);
         return this;
     }
 
-    public LastMinuteService removePurchase(LastMinuteOffer lastMinuteOffer) {
-        this.purchases.remove(lastMinuteOffer);
+    public LastMinuteService removeBid(LastMinuteOffer lastMinuteOffer) {
+        this.bids.remove(lastMinuteOffer);
         lastMinuteOffer.setService(null);
         return this;
     }
 
-    public void setPurchases(Set<LastMinuteOffer> lastMinuteOffers) {
-        this.purchases = lastMinuteOffers;
+    public void setBids(Set<LastMinuteOffer> lastMinuteOffers) {
+        this.bids = lastMinuteOffers;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -189,12 +241,15 @@ public class LastMinuteService implements Serializable {
     public String toString() {
         return "LastMinuteService{" +
             "id=" + getId() +
-            ", category='" + getCategory() + "'" +
-            ", name='" + getName() + "'" +
-            ", time='" + getTime() + "'" +
+            ", category=" + getCategory() +
+            ", description='" + getDescription() + "'" +
+            ", available='" + getAvailable() + "'" +
+            ", location='" + getLocation() + "'" +
             ", price=" + getPrice() +
             ", address='" + getAddress() + "'" +
-            ", user=" + getUser() +
+            ", image='" + getImage() + "'" +
+            ", imageContentType='" + getImageContentType() + "'" +
+            ", profile=" + getProfile() +
             "}";
     }
 }

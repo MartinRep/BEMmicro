@@ -3,7 +3,7 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "purchase",
+            "relationshipName": "bid",
             "otherEntityName": "lastMinuteOffer",
             "otherEntityRelationshipName": "service"
         }
@@ -11,27 +11,50 @@
     "fields": [
         {
             "fieldName": "category",
-            "fieldType": "Category",
-            "fieldValues": "FACE,BODY,MEN,DENTAL,HAIR,HEALTH,WELLBEING"
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
-            "fieldName": "name",
-            "fieldType": "String"
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
-            "fieldName": "time",
+            "fieldName": "available",
             "fieldType": "ZonedDateTime"
         },
         {
+            "fieldName": "location",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "price",
-            "fieldType": "Double"
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "address",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
-            "fieldName": "user",
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "profile",
             "fieldType": "Integer"
         }
     ],

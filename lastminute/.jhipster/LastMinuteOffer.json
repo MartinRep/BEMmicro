@@ -5,16 +5,16 @@
             "relationshipType": "many-to-one",
             "relationshipName": "service",
             "otherEntityName": "lastMinuteService",
-            "otherEntityField": "name"
+            "otherEntityField": "description"
         }
     ],
     "fields": [
         {
-            "fieldName": "price",
-            "fieldType": "Double"
+            "fieldName": "name",
+            "fieldType": "String"
         },
         {
-            "fieldName": "user",
+            "fieldName": "profile",
             "fieldType": "Integer"
         }
     ],

@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -49,7 +50,7 @@ public class LastMinuteServiceResource {
      */
     @PostMapping("/last-minute-services")
     @Timed
-    public ResponseEntity<LastMinuteService> createLastMinuteService(@RequestBody LastMinuteService lastMinuteService) throws URISyntaxException {
+    public ResponseEntity<LastMinuteService> createLastMinuteService(@Valid @RequestBody LastMinuteService lastMinuteService) throws URISyntaxException {
         log.debug("REST request to save LastMinuteService : {}", lastMinuteService);
         if (lastMinuteService.getId() != null) {
             throw new BadRequestAlertException("A new lastMinuteService cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,7 +72,7 @@ public class LastMinuteServiceResource {
      */
     @PutMapping("/last-minute-services")
     @Timed
-    public ResponseEntity<LastMinuteService> updateLastMinuteService(@RequestBody LastMinuteService lastMinuteService) throws URISyntaxException {
+    public ResponseEntity<LastMinuteService> updateLastMinuteService(@Valid @RequestBody LastMinuteService lastMinuteService) throws URISyntaxException {
         log.debug("REST request to update LastMinuteService : {}", lastMinuteService);
         if (lastMinuteService.getId() == null) {
             return createLastMinuteService(lastMinuteService);

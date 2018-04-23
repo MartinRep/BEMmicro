@@ -38,11 +38,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = LastminuteApp.class)
 public class LastMinuteOfferResourceIntTest {
 
-    private static final Double DEFAULT_PRICE = 1D;
-    private static final Double UPDATED_PRICE = 2D;
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_USER = 1;
-    private static final Integer UPDATED_USER = 2;
+    private static final Integer DEFAULT_PROFILE = 1;
+    private static final Integer UPDATED_PROFILE = 2;
 
     @Autowired
     private LastMinuteOfferRepository lastMinuteOfferRepository;
@@ -82,8 +82,8 @@ public class LastMinuteOfferResourceIntTest {
      */
     public static LastMinuteOffer createEntity(EntityManager em) {
         LastMinuteOffer lastMinuteOffer = new LastMinuteOffer()
-            .price(DEFAULT_PRICE)
-            .user(DEFAULT_USER);
+            .name(DEFAULT_NAME)
+            .profile(DEFAULT_PROFILE);
         return lastMinuteOffer;
     }
 
@@ -107,8 +107,8 @@ public class LastMinuteOfferResourceIntTest {
         List<LastMinuteOffer> lastMinuteOfferList = lastMinuteOfferRepository.findAll();
         assertThat(lastMinuteOfferList).hasSize(databaseSizeBeforeCreate + 1);
         LastMinuteOffer testLastMinuteOffer = lastMinuteOfferList.get(lastMinuteOfferList.size() - 1);
-        assertThat(testLastMinuteOffer.getPrice()).isEqualTo(DEFAULT_PRICE);
-        assertThat(testLastMinuteOffer.getUser()).isEqualTo(DEFAULT_USER);
+        assertThat(testLastMinuteOffer.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testLastMinuteOffer.getProfile()).isEqualTo(DEFAULT_PROFILE);
     }
 
     @Test
@@ -141,8 +141,8 @@ public class LastMinuteOfferResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(lastMinuteOffer.getId().intValue())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].user").value(hasItem(DEFAULT_USER)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE)));
     }
 
     @Test
@@ -156,8 +156,8 @@ public class LastMinuteOfferResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(lastMinuteOffer.getId().intValue()))
-            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.user").value(DEFAULT_USER));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE));
     }
 
     @Test
@@ -180,8 +180,8 @@ public class LastMinuteOfferResourceIntTest {
         // Disconnect from session so that the updates on updatedLastMinuteOffer are not directly saved in db
         em.detach(updatedLastMinuteOffer);
         updatedLastMinuteOffer
-            .price(UPDATED_PRICE)
-            .user(UPDATED_USER);
+            .name(UPDATED_NAME)
+            .profile(UPDATED_PROFILE);
 
         restLastMinuteOfferMockMvc.perform(put("/api/last-minute-offers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -192,8 +192,8 @@ public class LastMinuteOfferResourceIntTest {
         List<LastMinuteOffer> lastMinuteOfferList = lastMinuteOfferRepository.findAll();
         assertThat(lastMinuteOfferList).hasSize(databaseSizeBeforeUpdate);
         LastMinuteOffer testLastMinuteOffer = lastMinuteOfferList.get(lastMinuteOfferList.size() - 1);
-        assertThat(testLastMinuteOffer.getPrice()).isEqualTo(UPDATED_PRICE);
-        assertThat(testLastMinuteOffer.getUser()).isEqualTo(UPDATED_USER);
+        assertThat(testLastMinuteOffer.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testLastMinuteOffer.getProfile()).isEqualTo(UPDATED_PROFILE);
     }
 
     @Test

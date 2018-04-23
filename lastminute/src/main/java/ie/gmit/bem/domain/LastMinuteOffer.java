@@ -22,11 +22,11 @@ public class LastMinuteOffer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "price")
-    private Double price;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "jhi_user")
-    private Integer user;
+    @Column(name = "jhi_profile")
+    private Integer profile;
 
     @ManyToOne
     private LastMinuteService service;
@@ -40,30 +40,30 @@ public class LastMinuteOffer implements Serializable {
         this.id = id;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getName() {
+        return name;
     }
 
-    public LastMinuteOffer price(Double price) {
-        this.price = price;
+    public LastMinuteOffer name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getUser() {
-        return user;
+    public Integer getProfile() {
+        return profile;
     }
 
-    public LastMinuteOffer user(Integer user) {
-        this.user = user;
+    public LastMinuteOffer profile(Integer profile) {
+        this.profile = profile;
         return this;
     }
 
-    public void setUser(Integer user) {
-        this.user = user;
+    public void setProfile(Integer profile) {
+        this.profile = profile;
     }
 
     public LastMinuteService getService() {
@@ -104,8 +104,8 @@ public class LastMinuteOffer implements Serializable {
     public String toString() {
         return "LastMinuteOffer{" +
             "id=" + getId() +
-            ", price=" + getPrice() +
-            ", user=" + getUser() +
+            ", name='" + getName() + "'" +
+            ", profile=" + getProfile() +
             "}";
     }
 }

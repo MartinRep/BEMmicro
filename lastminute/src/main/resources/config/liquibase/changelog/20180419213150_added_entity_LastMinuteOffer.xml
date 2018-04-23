@@ -22,11 +22,11 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="price" type="double">
+            <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="jhi_user" type="integer">
+            <column name="jhi_profile" type="integer">
                 <constraints nullable="true" />
             </column>
 

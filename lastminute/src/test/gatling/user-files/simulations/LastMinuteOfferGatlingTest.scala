@@ -68,7 +68,7 @@ class LastMinuteOfferGatlingTest extends Simulation {
             .exec(http("Create new lastMinuteOffer")
             .post("/lastminute/api/last-minute-offers")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "price":null, "user":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "name":"SAMPLE_TEXT", "profile":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_lastMinuteOffer_url"))).exitHereIfFailed
             .pause(10)
