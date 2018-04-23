@@ -18,27 +18,32 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="bemApp.request.category">Category</span></th>
-            <th><span jhiTranslate="bemApp.request.name">Name</span></th>
+            <th><span jhiTranslate="bemApp.request.region">Region</span></th>
+            <th><span jhiTranslate="bemApp.request.description">Description</span></th>
             <th><span jhiTranslate="bemApp.request.duration">Duration</span></th>
             <th><span jhiTranslate="bemApp.request.expPrice">Exp Price</span></th>
-            <th><span jhiTranslate="bemApp.request.user">User</span></th>
+            <th><span jhiTranslate="bemApp.request.image">Image</span></th>
             <th><span jhiTranslate="bemApp.request.profile">Profile</span></th>
+            <th><span jhiTranslate="bemApp.request.posted">Posted</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let request of requests ;trackBy: trackId">
                 <td><a [routerLink]="['../request', request.id ]">{{request.id}}</a></td>
-                <td jhiTranslate="{{'bemApp.Category.' + request.category}}">{{request.category}}</td>
-                <td>{{request.name}}</td>
+                <td>{{request.category}}</td>
+                <td>{{request.region}}</td>
+                <td>{{request.description}}</td>
                 <td>{{request.duration | date:'medium'}}</td>
                 <td>{{request.expPrice}}</td>
-                <td>{{request.user}}</td>
                 <td>
-                    <div *ngIf="request.profile">
-                        <a [routerLink]="['../profile', request.profile?.id ]" >{{request.profile?.name}}</a>
-                    </div>
+                    <a *ngIf="request.image" (click)="openFile(request.imageContentType, request.image)">
+                        <img [src]="'data:' + request.imageContentType + ';base64,' + request.image" style="max-height: 30px;" alt="request image"/>
+                    </a>
+                    <span *ngIf="request.image">{{request.imageContentType}}, {{byteSize(request.image)}}</span>
                 </td>
+                <td>{{request.profile}}</td>
+                <td>{{request.posted | date:'medium'}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

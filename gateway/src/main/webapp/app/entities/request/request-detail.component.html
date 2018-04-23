@@ -6,11 +6,15 @@
     <dl class="row-md jh-entity-details">
         <dt><span jhiTranslate="bemApp.request.category">Category</span></dt>
         <dd>
-            <span jhiTranslate="{{'bemApp.Category.' + request.category}}">{{request.category}}</span>
+            <span>{{request.category}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.request.name">Name</span></dt>
+        <dt><span jhiTranslate="bemApp.request.region">Region</span></dt>
         <dd>
-            <span>{{request.name}}</span>
+            <span>{{request.region}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.request.description">Description</span></dt>
+        <dd>
+            <span>{{request.description}}</span>
         </dd>
         <dt><span jhiTranslate="bemApp.request.duration">Duration</span></dt>
         <dd>
@@ -20,15 +24,22 @@
         <dd>
             <span>{{request.expPrice}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.request.user">User</span></dt>
+        <dt><span jhiTranslate="bemApp.request.image">Image</span></dt>
         <dd>
-            <span>{{request.user}}</span>
+            <div *ngIf="request.image">
+                <a (click)="openFile(request.imageContentType, request.image)">
+                    <img [src]="'data:' + request.imageContentType + ';base64,' + request.image" style="max-width: 100%;" alt="request image"/>
+                </a>
+                {{request.imageContentType}}, {{byteSize(request.image)}}
+            </div>
         </dd>
         <dt><span jhiTranslate="bemApp.request.profile">Profile</span></dt>
         <dd>
-            <div *ngIf="request.profile">
-                <a [routerLink]="['/profile', request.profile?.id]">{{request.profile?.name}}</a>
-            </div>
+            <span>{{request.profile}}</span>
+        </dd>
+        <dt><span jhiTranslate="bemApp.request.posted">Posted</span></dt>
+        <dd>
+            <span>{{request.posted | date:'medium'}}</span>
         </dd>
     </dl>
 

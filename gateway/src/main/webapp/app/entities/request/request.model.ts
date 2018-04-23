@@ -1,25 +1,18 @@
 import { BaseEntity } from './../../shared';
 
-export const enum Category {
-    'FACE',
-    'BODY',
-    'MEN',
-    'DENTAL',
-    'HAIR',
-    'HEALTH',
-    'WELLBEING'
-}
-
 export class Request implements BaseEntity {
     constructor(
         public id?: number,
-        public category?: Category,
-        public name?: string,
+        public category?: string,
+        public region?: string,
+        public description?: string,
         public duration?: any,
         public expPrice?: number,
-        public user?: number,
+        public imageContentType?: string,
+        public image?: any,
+        public profile?: number,
+        public posted?: any,
         public offers?: BaseEntity[],
-        public profile?: BaseEntity,
     ) {
     }
 }

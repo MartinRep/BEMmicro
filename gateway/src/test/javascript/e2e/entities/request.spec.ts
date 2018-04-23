@@ -1,11 +1,13 @@
 import { browser, element, by } from 'protractor';
 import { NavBarPage } from './../page-objects/jhi-page-objects';
-
+import * as path from 'path';
 describe('Request e2e test', () => {
 
     let navBarPage: NavBarPage;
     let requestDialogPage: RequestDialogPage;
     let requestComponentsPage: RequestComponentsPage;
+    const fileToUpload = '../../../../main/webapp/content/images/logo-jhipster.png';
+    const absolutePath = path.resolve(__dirname, fileToUpload);
 
     beforeAll(() => {
         browser.get('/');
@@ -33,16 +35,21 @@ describe('Request e2e test', () => {
 
     it('should create and save Requests', () => {
         requestComponentsPage.clickOnCreateButton();
-        requestDialogPage.categorySelectLastOption();
-        requestDialogPage.setNameInput('name');
-        expect(requestDialogPage.getNameInput()).toMatch('name');
+        requestDialogPage.setCategoryInput('category');
+        expect(requestDialogPage.getCategoryInput()).toMatch('category');
+        requestDialogPage.setRegionInput('region');
+        expect(requestDialogPage.getRegionInput()).toMatch('region');
+        requestDialogPage.setDescriptionInput('description');
+        expect(requestDialogPage.getDescriptionInput()).toMatch('description');
         requestDialogPage.setDurationInput(12310020012301);
         expect(requestDialogPage.getDurationInput()).toMatch('2001-12-31T02:30');
         requestDialogPage.setExpPriceInput('5');
         expect(requestDialogPage.getExpPriceInput()).toMatch('5');
-        requestDialogPage.setUserInput('5');
-        expect(requestDialogPage.getUserInput()).toMatch('5');
-        requestDialogPage.profileSelectLastOption();
+        requestDialogPage.setImageInput(absolutePath);
+        requestDialogPage.setProfileInput('5');
+        expect(requestDialogPage.getProfileInput()).toMatch('5');
+        requestDialogPage.setPostedInput(12310020012301);
+        expect(requestDialogPage.getPostedInput()).toMatch('2001-12-31T02:30');
         requestDialogPage.save();
         expect(requestDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -69,34 +76,41 @@ export class RequestDialogPage {
     modalTitle = element(by.css('h4#myRequestLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    categorySelect = element(by.css('select#field_category'));
-    nameInput = element(by.css('input#field_name'));
+    categoryInput = element(by.css('input#field_category'));
+    regionInput = element(by.css('input#field_region'));
+    descriptionInput = element(by.css('input#field_description'));
     durationInput = element(by.css('input#field_duration'));
     expPriceInput = element(by.css('input#field_expPrice'));
-    userInput = element(by.css('input#field_user'));
-    profileSelect = element(by.css('select#field_profile'));
+    imageInput = element(by.css('input#file_image'));
+    profileInput = element(by.css('input#field_profile'));
+    postedInput = element(by.css('input#field_posted'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
     }
 
-    setCategorySelect = function(category) {
-        this.categorySelect.sendKeys(category);
+    setCategoryInput = function(category) {
+        this.categoryInput.sendKeys(category);
     };
 
-    getCategorySelect = function() {
-        return this.categorySelect.element(by.css('option:checked')).getText();
+    getCategoryInput = function() {
+        return this.categoryInput.getAttribute('value');
     };
 
-    categorySelectLastOption = function() {
-        this.categorySelect.all(by.tagName('option')).last().click();
-    };
-    setNameInput = function(name) {
-        this.nameInput.sendKeys(name);
+    setRegionInput = function(region) {
+        this.regionInput.sendKeys(region);
     };
 
-    getNameInput = function() {
-        return this.nameInput.getAttribute('value');
+    getRegionInput = function() {
+        return this.regionInput.getAttribute('value');
+    };
+
+    setDescriptionInput = function(description) {
+        this.descriptionInput.sendKeys(description);
+    };
+
+    getDescriptionInput = function() {
+        return this.descriptionInput.getAttribute('value');
     };
 
     setDurationInput = function(duration) {
@@ -115,28 +129,28 @@ export class RequestDialogPage {
         return this.expPriceInput.getAttribute('value');
     };
 
-    setUserInput = function(user) {
-        this.userInput.sendKeys(user);
+    setImageInput = function(image) {
+        this.imageInput.sendKeys(image);
     };
 
-    getUserInput = function() {
-        return this.userInput.getAttribute('value');
+    getImageInput = function() {
+        return this.imageInput.getAttribute('value');
     };
 
-    profileSelectLastOption = function() {
-        this.profileSelect.all(by.tagName('option')).last().click();
+    setProfileInput = function(profile) {
+        this.profileInput.sendKeys(profile);
     };
 
-    profileSelectOption = function(option) {
-        this.profileSelect.sendKeys(option);
+    getProfileInput = function() {
+        return this.profileInput.getAttribute('value');
     };
 
-    getProfileSelect = function() {
-        return this.profileSelect;
+    setPostedInput = function(posted) {
+        this.postedInput.sendKeys(posted);
     };
 
-    getProfileSelectedOption = function() {
-        return this.profileSelect.element(by.css('option:checked')).getText();
+    getPostedInput = function() {
+        return this.postedInput.getAttribute('value');
     };
 
     save() {

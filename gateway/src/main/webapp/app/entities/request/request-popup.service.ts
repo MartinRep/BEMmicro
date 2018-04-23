@@ -33,6 +33,8 @@ export class RequestPopupService {
                         const request: Request = requestResponse.body;
                         request.duration = this.datePipe
                             .transform(request.duration, 'yyyy-MM-ddTHH:mm:ss');
+                        request.posted = this.datePipe
+                            .transform(request.posted, 'yyyy-MM-ddTHH:mm:ss');
                         this.ngbModalRef = this.requestModalRef(component, request);
                         resolve(this.ngbModalRef);
                     });

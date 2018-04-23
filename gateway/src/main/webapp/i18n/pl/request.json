@@ -14,12 +14,14 @@
                 "title": "Request"
             },
             "category": "Category",
-            "name": "Name",
+            "region": "Region",
+            "description": "Description",
             "duration": "Duration",
             "expPrice": "Exp Price",
-            "user": "User",
-            "offer": "Offer",
-            "profile": "Profile"
+            "image": "Image",
+            "profile": "Profile",
+            "posted": "Posted",
+            "offer": "Offer"
         }
     },
     "requestApp": {

@@ -9,7 +9,6 @@ import { BemTestModule } from '../../../test.module';
 import { RequestDialogComponent } from '../../../../../../main/webapp/app/entities/request/request-dialog.component';
 import { RequestService } from '../../../../../../main/webapp/app/entities/request/request.service';
 import { Request } from '../../../../../../main/webapp/app/entities/request/request.model';
-import { ProfileService } from '../../../../../../main/webapp/app/entities/profile';
 
 describe('Component Tests', () => {
 
@@ -25,7 +24,6 @@ describe('Component Tests', () => {
                 imports: [BemTestModule],
                 declarations: [RequestDialogComponent],
                 providers: [
-                    ProfileService,
                     RequestService
                 ]
             })

@@ -65,6 +65,8 @@ export class RequestService {
         const copy: Request = Object.assign({}, request);
         copy.duration = this.dateUtils
             .convertDateTimeFromServer(request.duration);
+        copy.posted = this.dateUtils
+            .convertDateTimeFromServer(request.posted);
         return copy;
     }
 
@@ -75,6 +77,8 @@ export class RequestService {
         const copy: Request = Object.assign({}, request);
 
         copy.duration = this.dateUtils.toDate(request.duration);
+
+        copy.posted = this.dateUtils.toDate(request.posted);
         return copy;
     }
 }

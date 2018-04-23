@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Request } from './request.model';
 import { RequestService } from './request.service';
@@ -19,6 +19,7 @@ requests: Request[];
     constructor(
         private requestService: RequestService,
         private jhiAlertService: JhiAlertService,
+        private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
         private principal: Principal
     ) {
@@ -46,6 +47,14 @@ requests: Request[];
 
     trackId(index: number, item: Request) {
         return item.id;
+    }
+
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
     }
     registerChangeInRequests() {
         this.eventSubscriber = this.eventManager.subscribe('requestListModification', (response) => this.loadAll());

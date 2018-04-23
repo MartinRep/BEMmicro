@@ -2,27 +2,33 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
             "relationshipName": "offer",
             "otherEntityName": "offer",
+            "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "request"
-        },
-        {
-            "relationshipName": "profile",
-            "otherEntityName": "profile",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "name"
         }
     ],
     "fields": [
         {
             "fieldName": "category",
-            "fieldType": "Category",
-            "fieldValues": "FACE,BODY,MEN,DENTAL,HAIR,HEALTH,WELLBEING"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
-            "fieldName": "name",
-            "fieldType": "String"
+            "fieldName": "region",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "duration",
@@ -33,8 +39,17 @@
             "fieldType": "Double"
         },
         {
-            "fieldName": "user",
+            "fieldName": "image",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "profile",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "posted",
+            "fieldType": "Instant"
         }
     ],
     "changelogDate": "20180419202510",
