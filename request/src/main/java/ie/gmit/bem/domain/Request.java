@@ -5,14 +5,14 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
-
-import ie.gmit.bem.domain.enumeration.Category;
 
 /**
  * A Request.
@@ -28,12 +28,17 @@ public class Request implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private Category category;
+    @NotNull
+    @Column(name = "category", nullable = false)
+    private String category;
 
-    @Column(name = "name")
-    private String name;
+    @NotNull
+    @Column(name = "region", nullable = false)
+    private String region;
+
+    @NotNull
+    @Column(name = "description", nullable = false)
+    private String description;
 
     @Column(name = "duration")
     private ZonedDateTime duration;
@@ -41,8 +46,18 @@ public class Request implements Serializable {
     @Column(name = "exp_price")
     private Double expPrice;
 
-    @Column(name = "jhi_user")
-    private Integer user;
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
+    @Column(name = "image_content_type")
+    private String imageContentType;
+
+    @Column(name = "jhi_profile")
+    private Integer profile;
+
+    @Column(name = "posted")
+    private Instant posted;
 
     @OneToMany(mappedBy = "request")
     @JsonIgnore
@@ -58,30 +73,43 @@ public class Request implements Serializable {
         this.id = id;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public Request category(Category category) {
+    public Request category(String category) {
         this.category = category;
         return this;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public String getName() {
-        return name;
+    public String getRegion() {
+        return region;
     }
 
-    public Request name(String name) {
-        this.name = name;
+    public Request region(String region) {
+        this.region = region;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Request description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public ZonedDateTime getDuration() {
@@ -110,17 +138,56 @@ public class Request implements Serializable {
         this.expPrice = expPrice;
     }
 
-    public Integer getUser() {
-        return user;
+    public byte[] getImage() {
+        return image;
     }
 
-    public Request user(Integer user) {
-        this.user = user;
+    public Request image(byte[] image) {
+        this.image = image;
         return this;
     }
 
-    public void setUser(Integer user) {
-        this.user = user;
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public Request imageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+        return this;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
+    public Integer getProfile() {
+        return profile;
+    }
+
+    public Request profile(Integer profile) {
+        this.profile = profile;
+        return this;
+    }
+
+    public void setProfile(Integer profile) {
+        this.profile = profile;
+    }
+
+    public Instant getPosted() {
+        return posted;
+    }
+
+    public Request posted(Instant posted) {
+        this.posted = posted;
+        return this;
+    }
+
+    public void setPosted(Instant posted) {
+        this.posted = posted;
     }
 
     public Set<Offer> getOffers() {
@@ -174,10 +241,14 @@ public class Request implements Serializable {
         return "Request{" +
             "id=" + getId() +
             ", category='" + getCategory() + "'" +
-            ", name='" + getName() + "'" +
+            ", region='" + getRegion() + "'" +
+            ", description='" + getDescription() + "'" +
             ", duration='" + getDuration() + "'" +
             ", expPrice=" + getExpPrice() +
-            ", user=" + getUser() +
+            ", image='" + getImage() + "'" +
+            ", imageContentType='" + getImageContentType() + "'" +
+            ", profile=" + getProfile() +
+            ", posted='" + getPosted() + "'" +
             "}";
     }
 }

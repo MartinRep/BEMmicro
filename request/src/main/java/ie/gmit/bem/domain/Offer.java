@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -23,17 +24,18 @@ public class Offer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @NotNull
+    @Column(name = "description", nullable = false)
+    private String description;
 
-    @Column(name = "jhi_time")
-    private ZonedDateTime time;
+    @Column(name = "available_on")
+    private ZonedDateTime availableOn;
 
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "jhi_user")
-    private Integer user;
+    @Column(name = "jhi_profile")
+    private Integer profile;
 
     @ManyToOne
     private Request request;
@@ -47,30 +49,30 @@ public class Offer implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public Offer name(String name) {
-        this.name = name;
+    public Offer description(String description) {
+        this.description = description;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public ZonedDateTime getTime() {
-        return time;
+    public ZonedDateTime getAvailableOn() {
+        return availableOn;
     }
 
-    public Offer time(ZonedDateTime time) {
-        this.time = time;
+    public Offer availableOn(ZonedDateTime availableOn) {
+        this.availableOn = availableOn;
         return this;
     }
 
-    public void setTime(ZonedDateTime time) {
-        this.time = time;
+    public void setAvailableOn(ZonedDateTime availableOn) {
+        this.availableOn = availableOn;
     }
 
     public Double getPrice() {
@@ -86,17 +88,17 @@ public class Offer implements Serializable {
         this.price = price;
     }
 
-    public Integer getUser() {
-        return user;
+    public Integer getProfile() {
+        return profile;
     }
 
-    public Offer user(Integer user) {
-        this.user = user;
+    public Offer profile(Integer profile) {
+        this.profile = profile;
         return this;
     }
 
-    public void setUser(Integer user) {
-        this.user = user;
+    public void setProfile(Integer profile) {
+        this.profile = profile;
     }
 
     public Request getRequest() {
@@ -137,10 +139,10 @@ public class Offer implements Serializable {
     public String toString() {
         return "Offer{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", time='" + getTime() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", availableOn='" + getAvailableOn() + "'" +
             ", price=" + getPrice() +
-            ", user=" + getUser() +
+            ", profile=" + getProfile() +
             "}";
     }
 }

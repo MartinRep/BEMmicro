@@ -1,22 +1,21 @@
 entity Request {
-	category Category,
-    name String,
+	category String required,
+    region String required,
+    description String required,
     duration ZonedDateTime,
     expPrice Double,
-    user Integer
+    image ImageBlob,
+    profile Integer,
+    posted Instant
 }
 
 entity Offer {
-	name String,
-    time ZonedDateTime,
+	description String required,
+    availableOn ZonedDateTime,
     price Double,
-    user Integer
-}
-
-enum Category {
-	FACE, BODY, MEN, DENTAL, HAIR, HEALTH, WELLBEING
+    profile Integer
 }
 
 relationship OneToMany {
-	Request{offer(name)} to Offer{request(name)}
+	Request{offer(description)} to Offer{request(description)}
 }

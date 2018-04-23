@@ -43,17 +43,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = RequestApp.class)
 public class OfferResourceIntTest {
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final ZonedDateTime DEFAULT_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime DEFAULT_AVAILABLE_ON = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_AVAILABLE_ON = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     private static final Double DEFAULT_PRICE = 1D;
     private static final Double UPDATED_PRICE = 2D;
 
-    private static final Integer DEFAULT_USER = 1;
-    private static final Integer UPDATED_USER = 2;
+    private static final Integer DEFAULT_PROFILE = 1;
+    private static final Integer UPDATED_PROFILE = 2;
 
     @Autowired
     private OfferRepository offerRepository;
@@ -93,10 +93,10 @@ public class OfferResourceIntTest {
      */
     public static Offer createEntity(EntityManager em) {
         Offer offer = new Offer()
-            .name(DEFAULT_NAME)
-            .time(DEFAULT_TIME)
+            .description(DEFAULT_DESCRIPTION)
+            .availableOn(DEFAULT_AVAILABLE_ON)
             .price(DEFAULT_PRICE)
-            .user(DEFAULT_USER);
+            .profile(DEFAULT_PROFILE);
         return offer;
     }
 
@@ -120,10 +120,10 @@ public class OfferResourceIntTest {
         List<Offer> offerList = offerRepository.findAll();
         assertThat(offerList).hasSize(databaseSizeBeforeCreate + 1);
         Offer testOffer = offerList.get(offerList.size() - 1);
-        assertThat(testOffer.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testOffer.getTime()).isEqualTo(DEFAULT_TIME);
+        assertThat(testOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testOffer.getAvailableOn()).isEqualTo(DEFAULT_AVAILABLE_ON);
         assertThat(testOffer.getPrice()).isEqualTo(DEFAULT_PRICE);
-        assertThat(testOffer.getUser()).isEqualTo(DEFAULT_USER);
+        assertThat(testOffer.getProfile()).isEqualTo(DEFAULT_PROFILE);
     }
 
     @Test
@@ -147,6 +147,24 @@ public class OfferResourceIntTest {
 
     @Test
     @Transactional
+    public void checkDescriptionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = offerRepository.findAll().size();
+        // set the field null
+        offer.setDescription(null);
+
+        // Create the Offer, which fails.
+
+        restOfferMockMvc.perform(post("/api/offers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(offer)))
+            .andExpect(status().isBadRequest());
+
+        List<Offer> offerList = offerRepository.findAll();
+        assertThat(offerList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllOffers() throws Exception {
         // Initialize the database
         offerRepository.saveAndFlush(offer);
@@ -156,10 +174,10 @@ public class OfferResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(offer.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].availableOn").value(hasItem(sameInstant(DEFAULT_AVAILABLE_ON))))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].user").value(hasItem(DEFAULT_USER)));
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE)));
     }
 
     @Test
@@ -173,10 +191,10 @@ public class OfferResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(offer.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.availableOn").value(sameInstant(DEFAULT_AVAILABLE_ON)))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.user").value(DEFAULT_USER));
+            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE));
     }
 
     @Test
@@ -199,10 +217,10 @@ public class OfferResourceIntTest {
         // Disconnect from session so that the updates on updatedOffer are not directly saved in db
         em.detach(updatedOffer);
         updatedOffer
-            .name(UPDATED_NAME)
-            .time(UPDATED_TIME)
+            .description(UPDATED_DESCRIPTION)
+            .availableOn(UPDATED_AVAILABLE_ON)
             .price(UPDATED_PRICE)
-            .user(UPDATED_USER);
+            .profile(UPDATED_PROFILE);
 
         restOfferMockMvc.perform(put("/api/offers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -213,10 +231,10 @@ public class OfferResourceIntTest {
         List<Offer> offerList = offerRepository.findAll();
         assertThat(offerList).hasSize(databaseSizeBeforeUpdate);
         Offer testOffer = offerList.get(offerList.size() - 1);
-        assertThat(testOffer.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testOffer.getTime()).isEqualTo(UPDATED_TIME);
+        assertThat(testOffer.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testOffer.getAvailableOn()).isEqualTo(UPDATED_AVAILABLE_ON);
         assertThat(testOffer.getPrice()).isEqualTo(UPDATED_PRICE);
-        assertThat(testOffer.getUser()).isEqualTo(UPDATED_USER);
+        assertThat(testOffer.getProfile()).isEqualTo(UPDATED_PROFILE);
     }
 
     @Test

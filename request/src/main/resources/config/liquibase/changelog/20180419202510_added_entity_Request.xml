@@ -23,11 +23,15 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="category" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
-            <column name="name" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="region" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
 
             <column name="duration" type="timestamp">
@@ -38,13 +42,25 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="jhi_user" type="integer">
+            <column name="image" type="blob">
+                <constraints nullable="true" />
+            </column>
+            <column name="image_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="jhi_profile" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="posted" type="timestamp">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="request" columnName="duration" columnDataType="datetime"/>
+        <dropDefaultValue tableName="request" columnName="posted" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

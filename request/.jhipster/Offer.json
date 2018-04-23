@@ -5,16 +5,19 @@
             "relationshipType": "many-to-one",
             "relationshipName": "request",
             "otherEntityName": "request",
-            "otherEntityField": "name"
+            "otherEntityField": "description"
         }
     ],
     "fields": [
         {
-            "fieldName": "name",
-            "fieldType": "String"
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
-            "fieldName": "time",
+            "fieldName": "availableOn",
             "fieldType": "ZonedDateTime"
         },
         {
@@ -22,7 +25,7 @@
             "fieldType": "Double"
         },
         {
-            "fieldName": "user",
+            "fieldName": "profile",
             "fieldType": "Integer"
         }
     ],
