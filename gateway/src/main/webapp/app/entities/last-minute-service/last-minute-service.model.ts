@@ -3,10 +3,10 @@ import { BaseEntity } from './../../shared';
 export class LastMinuteService implements BaseEntity {
     constructor(
         public id?: number,
-        public price?: number,
-        public address?: string,
         public category?: number,
         public description?: string,
+        public price?: number,
+        public address?: string,
         public available?: any,
         public location?: string,
         public imageContentType?: string,

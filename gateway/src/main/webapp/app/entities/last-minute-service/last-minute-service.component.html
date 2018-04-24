@@ -17,10 +17,10 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="price"><span jhiTranslate="bemApp.lastMinuteService.price">Price</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="address"><span jhiTranslate="bemApp.lastMinuteService.address">Address</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="category"><span jhiTranslate="bemApp.lastMinuteService.category">Category</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="description"><span jhiTranslate="bemApp.lastMinuteService.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="price"><span jhiTranslate="bemApp.lastMinuteService.price">Price</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="address"><span jhiTranslate="bemApp.lastMinuteService.address">Address</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="available"><span jhiTranslate="bemApp.lastMinuteService.available">Available</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="location"><span jhiTranslate="bemApp.lastMinuteService.location">Location</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="image"><span jhiTranslate="bemApp.lastMinuteService.image">Image</span> <span class="fa fa-sort"></span></th>
@@ -31,10 +31,10 @@
             <tbody>
             <tr *ngFor="let lastMinuteService of lastMinuteServices ;trackBy: trackId">
                 <td><a [routerLink]="['../last-minute-service', lastMinuteService.id ]">{{lastMinuteService.id}}</a></td>
-                <td>{{lastMinuteService.price}}</td>
-                <td>{{lastMinuteService.address}}</td>
                 <td>{{lastMinuteService.category}}</td>
                 <td>{{lastMinuteService.description}}</td>
+                <td>{{lastMinuteService.price}}</td>
+                <td>{{lastMinuteService.address}}</td>
                 <td>{{lastMinuteService.available | date:'medium'}}</td>
                 <td>{{lastMinuteService.location}}</td>
                 <td>

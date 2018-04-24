@@ -15,7 +15,7 @@
         <dt><span jhiTranslate="bemApp.lastMinuteOffer.service">Service</span></dt>
         <dd>
             <div *ngIf="lastMinuteOffer.service">
-                <a [routerLink]="['/last-minute-service', lastMinuteOffer.service?.id]">{{lastMinuteOffer.service?.name}}</a>
+                <a [routerLink]="['/last-minute-service', lastMinuteOffer.service?.id]">{{lastMinuteOffer.service?.description}}</a>
             </div>
         </dd>
     </dl>

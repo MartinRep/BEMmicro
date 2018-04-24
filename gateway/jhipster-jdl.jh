@@ -11,7 +11,7 @@ entity Location {
 entity Appointment {
     name String,
     address String,
-    time ZonedDateTime,
+    time ZonedDateTime
 }
 
 entity Message {
@@ -34,7 +34,7 @@ relationship OneToMany {
 relationship ManyToOne{
 	Profile{user(login)} to User,
     Profile{location(region)} to Location{profile(location)},
-    Message{appointment(name)} to Appointment{message(time)}
+    Message{appointment(name)} to Appointment
 }
 
 paginate Appointment with pagination

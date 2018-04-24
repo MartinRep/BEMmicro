@@ -10,14 +10,6 @@
     ],
     "fields": [
         {
-            "fieldName": "price",
-            "fieldType": "Double"
-        },
-        {
-            "fieldName": "address",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "category",
             "fieldType": "Integer",
             "fieldValidateRules": [
@@ -30,6 +22,14 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
         },
         {
             "fieldName": "available",

@@ -35,14 +35,14 @@ describe('LastMinuteService e2e test', () => {
 
     it('should create and save LastMinuteServices', () => {
         lastMinuteServiceComponentsPage.clickOnCreateButton();
-        lastMinuteServiceDialogPage.setPriceInput('5');
-        expect(lastMinuteServiceDialogPage.getPriceInput()).toMatch('5');
-        lastMinuteServiceDialogPage.setAddressInput('address');
-        expect(lastMinuteServiceDialogPage.getAddressInput()).toMatch('address');
         lastMinuteServiceDialogPage.setCategoryInput('5');
         expect(lastMinuteServiceDialogPage.getCategoryInput()).toMatch('5');
         lastMinuteServiceDialogPage.setDescriptionInput('description');
         expect(lastMinuteServiceDialogPage.getDescriptionInput()).toMatch('description');
+        lastMinuteServiceDialogPage.setPriceInput('5');
+        expect(lastMinuteServiceDialogPage.getPriceInput()).toMatch('5');
+        lastMinuteServiceDialogPage.setAddressInput('address');
+        expect(lastMinuteServiceDialogPage.getAddressInput()).toMatch('address');
         lastMinuteServiceDialogPage.setAvailableInput(12310020012301);
         expect(lastMinuteServiceDialogPage.getAvailableInput()).toMatch('2001-12-31T02:30');
         lastMinuteServiceDialogPage.setLocationInput('location');
@@ -76,10 +76,10 @@ export class LastMinuteServiceDialogPage {
     modalTitle = element(by.css('h4#myLastMinuteServiceLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    priceInput = element(by.css('input#field_price'));
-    addressInput = element(by.css('input#field_address'));
     categoryInput = element(by.css('input#field_category'));
     descriptionInput = element(by.css('input#field_description'));
+    priceInput = element(by.css('input#field_price'));
+    addressInput = element(by.css('input#field_address'));
     availableInput = element(by.css('input#field_available'));
     locationInput = element(by.css('input#field_location'));
     imageInput = element(by.css('input#file_image'));
@@ -88,22 +88,6 @@ export class LastMinuteServiceDialogPage {
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
     }
-
-    setPriceInput = function(price) {
-        this.priceInput.sendKeys(price);
-    };
-
-    getPriceInput = function() {
-        return this.priceInput.getAttribute('value');
-    };
-
-    setAddressInput = function(address) {
-        this.addressInput.sendKeys(address);
-    };
-
-    getAddressInput = function() {
-        return this.addressInput.getAttribute('value');
-    };
 
     setCategoryInput = function(category) {
         this.categoryInput.sendKeys(category);
@@ -119,6 +103,22 @@ export class LastMinuteServiceDialogPage {
 
     getDescriptionInput = function() {
         return this.descriptionInput.getAttribute('value');
+    };
+
+    setPriceInput = function(price) {
+        this.priceInput.sendKeys(price);
+    };
+
+    getPriceInput = function() {
+        return this.priceInput.getAttribute('value');
+    };
+
+    setAddressInput = function(address) {
+        this.addressInput.sendKeys(address);
+    };
+
+    getAddressInput = function() {
+        return this.addressInput.getAttribute('value');
     };
 
     setAvailableInput = function(available) {

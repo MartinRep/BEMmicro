@@ -27,7 +27,7 @@
             <label class="form-control-label" jhiTranslate="bemApp.lastMinuteOffer.service" for="field_service">Service</label>
             <select class="form-control" id="field_service" name="service" [(ngModel)]="lastMinuteOffer.service" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="lastMinuteServiceOption.id === lastMinuteOffer.service?.id ? lastMinuteOffer.service : lastMinuteServiceOption" *ngFor="let lastMinuteServiceOption of lastminuteservices; trackBy: trackLastMinuteServiceById">{{lastMinuteServiceOption.name}}</option>
+                <option [ngValue]="lastMinuteServiceOption.id === lastMinuteOffer.service?.id ? lastMinuteOffer.service : lastMinuteServiceOption" *ngFor="let lastMinuteServiceOption of lastminuteservices; trackBy: trackLastMinuteServiceById">{{lastMinuteServiceOption.description}}</option>
             </select>
         </div>
     </div>

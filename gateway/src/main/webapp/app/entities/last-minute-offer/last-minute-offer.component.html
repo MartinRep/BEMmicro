@@ -30,7 +30,7 @@
                 <td>{{lastMinuteOffer.profile}}</td>
                 <td>
                     <div *ngIf="lastMinuteOffer.service">
-                        <a [routerLink]="['../last-minute-service', lastMinuteOffer.service?.id ]" >{{lastMinuteOffer.service?.name}}</a>
+                        <a [routerLink]="['../last-minute-service', lastMinuteOffer.service?.id ]" >{{lastMinuteOffer.service?.description}}</a>
                     </div>
                 </td>
                 <td class="text-right">

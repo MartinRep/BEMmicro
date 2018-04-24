@@ -13,10 +13,10 @@
             "detail": {
                 "title": "Last Minute Service"
             },
-            "price": "Price",
-            "address": "Address",
             "category": "Category",
             "description": "Description",
+            "price": "Price",
+            "address": "Address",
             "available": "Available",
             "location": "Location",
             "image": "Image",
