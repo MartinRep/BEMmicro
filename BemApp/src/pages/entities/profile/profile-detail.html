@@ -1,0 +1,44 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Profile</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>Name</ion-label>
+            <div item-content>
+                <span>{{profile.name}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Ph Number</ion-label>
+            <div item-content>
+                <span>{{profile.phNumber}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Picture</ion-label>
+            <div item-content>
+                <div *ngIf="profile.picture">
+                    <a (click)="openFile(profile.pictureContentType, profile.picture)">
+                        <img [src]="'data:' + profile.pictureContentType + ';base64,' + profile.picture" style="max-width: 100%;" alt="profile image"/>
+                    </a>
+                    {{profile.pictureContentType}}, {{byteSize(profile.picture)}}
+                </div>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>User</ion-label>
+            <div item-content>{{profile.user?.login}}</div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Location</ion-label>
+            <div item-content *ngIf="profile.location">
+                <a>{{profile.location?.region}}</a>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <button ion-button block (click)="open(profile)">{{ 'EDIT_BUTTON' | translate }}</button>
+</ion-content>

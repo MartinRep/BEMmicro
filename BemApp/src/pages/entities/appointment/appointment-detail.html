@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Appointment</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>Name</ion-label>
+            <div item-content>
+                <span>{{appointment.name}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Address</ion-label>
+            <div item-content>
+                <span>{{appointment.address}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Time</ion-label>
+            <div item-content>
+                <span>{{appointment.time | date:'medium'}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Profile</ion-label>
+            <div item-content>
+                <span *ngFor="let profile of appointment.profiles; let last = last">
+                    <a>{{profile.name}}</a>{{last ? '' : ', '}}
+                </span>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <button ion-button block (click)="open(appointment)">{{ 'EDIT_BUTTON' | translate }}</button>
+</ion-content>
