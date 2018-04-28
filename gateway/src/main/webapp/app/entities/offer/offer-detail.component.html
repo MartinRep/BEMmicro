@@ -1,26 +1,26 @@
 
 <div *ngIf="offer">
-    <h2><span jhiTranslate="bemApp.offer.detail.title">Offer</span> {{offer.id}}</h2>
+    <h2><span jhiTranslate="gatewayApp.offer.detail.title">Offer</span> {{offer.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.offer.price">Price</span></dt>
-        <dd>
-            <span>{{offer.price}}</span>
-        </dd>
-        <dt><span jhiTranslate="bemApp.offer.description">Description</span></dt>
+        <dt><span jhiTranslate="gatewayApp.offer.description">Description</span></dt>
         <dd>
             <span>{{offer.description}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.offer.availableOn">Available On</span></dt>
+        <dt><span jhiTranslate="gatewayApp.offer.availableOn">Available On</span></dt>
         <dd>
             <span>{{offer.availableOn | date:'medium'}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.offer.profile">Profile</span></dt>
+        <dt><span jhiTranslate="gatewayApp.offer.price">Price</span></dt>
+        <dd>
+            <span>{{offer.price}}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.offer.profile">Profile</span></dt>
         <dd>
             <span>{{offer.profile}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.offer.request">Request</span></dt>
+        <dt><span jhiTranslate="gatewayApp.offer.request">Request</span></dt>
         <dd>
             <div *ngIf="offer.request">
                 <a [routerLink]="['/request', offer.request?.id]">{{offer.request?.description}}</a>

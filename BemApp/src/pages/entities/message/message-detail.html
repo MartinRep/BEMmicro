@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Message</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>Time</ion-label>
+            <div item-content>
+                <span>{{message.time | date:'medium'}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Content</ion-label>
+            <div item-content>
+                <span>{{message.content}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Appointment</ion-label>
+            <div item-content>
+                <span *ngFor="let appointment of message.appointments; let last = last">
+                    <a>{{appointment.name}}</a>{{last ? '' : ', '}}
+                </span>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <button ion-button block (click)="open(message)">{{ 'EDIT_BUTTON' | translate }}</button>
+</ion-content>

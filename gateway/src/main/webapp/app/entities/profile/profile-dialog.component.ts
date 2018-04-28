@@ -12,6 +12,7 @@ import { ProfileService } from './profile.service';
 import { User, UserService } from '../../shared';
 import { Location, LocationService } from '../location';
 import { Appointment, AppointmentService } from '../appointment';
+import { Category, CategoryService } from '../category';
 
 @Component({
     selector: 'jhi-profile-dialog',
@@ -28,6 +29,8 @@ export class ProfileDialogComponent implements OnInit {
 
     appointments: Appointment[];
 
+    categories: Category[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
@@ -36,6 +39,7 @@ export class ProfileDialogComponent implements OnInit {
         private userService: UserService,
         private locationService: LocationService,
         private appointmentService: AppointmentService,
+        private categoryService: CategoryService,
         private elementRef: ElementRef,
         private eventManager: JhiEventManager
     ) {
@@ -49,6 +53,8 @@ export class ProfileDialogComponent implements OnInit {
             .subscribe((res: HttpResponse<Location[]>) => { this.locations = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.appointmentService.query()
             .subscribe((res: HttpResponse<Appointment[]>) => { this.appointments = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+        this.categoryService.query()
+            .subscribe((res: HttpResponse<Category[]>) => { this.categories = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     byteSize(field) {
@@ -110,6 +116,10 @@ export class ProfileDialogComponent implements OnInit {
     }
 
     trackAppointmentById(index: number, item: Appointment) {
+        return item.id;
+    }
+
+    trackCategoryById(index: number, item: Category) {
         return item.id;
     }
 

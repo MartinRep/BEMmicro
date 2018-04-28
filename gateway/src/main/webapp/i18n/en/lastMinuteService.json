@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "lastMinuteService" : {
             "home": {
                 "title": "Last Minute Services",
                 "createLabel": "Create a new Last Minute Service",
-                "createOrEditLabel": "Create or edit a Last Minute Service"
+                "createOrEditLabel": "Create or edit a Last Minute Service",
+                "search": "Search for Last Minute Service"
             },
             "delete": {
                 "question": "Are you sure you want to delete Last Minute Service {{ id }}?"
@@ -13,15 +14,15 @@
             "detail": {
                 "title": "Last Minute Service"
             },
-            "price": "Price",
-            "address": "Address",
             "category": "Category",
             "description": "Description",
             "available": "Available",
             "location": "Location",
+            "price": "Price",
+            "address": "Address",
             "image": "Image",
             "profile": "Profile",
-            "lastMinuteOffer": "Last Minute Offer"
+            "lastminuteOffer": "Lastminute Offer"
         }
     },
     "lastminuteApp": {

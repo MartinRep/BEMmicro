@@ -1,15 +1,28 @@
 <div>
     <h2>
-        <span jhiTranslate="bemApp.offer.home.title">Offers</span>
+        <span jhiTranslate="gatewayApp.offer.home.title">Offers</span>
         <button class="btn btn-primary float-right jh-create-entity create-offer" [routerLink]="['/', { outlets: { popup: ['offer-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="bemApp.offer.home.createLabel">
+            <span class="hidden-sm-down"  jhiTranslate="gatewayApp.offer.home.createLabel">
             Create new Offer
             </span>
         </button>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'gatewayApp.offer.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
     <br/>
     <div class="table-responsive" *ngIf="offers">
@@ -17,20 +30,20 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="bemApp.offer.price">Price</span></th>
-            <th><span jhiTranslate="bemApp.offer.description">Description</span></th>
-            <th><span jhiTranslate="bemApp.offer.availableOn">Available On</span></th>
-            <th><span jhiTranslate="bemApp.offer.profile">Profile</span></th>
-            <th><span jhiTranslate="bemApp.offer.request">Request</span></th>
+            <th><span jhiTranslate="gatewayApp.offer.description">Description</span></th>
+            <th><span jhiTranslate="gatewayApp.offer.availableOn">Available On</span></th>
+            <th><span jhiTranslate="gatewayApp.offer.price">Price</span></th>
+            <th><span jhiTranslate="gatewayApp.offer.profile">Profile</span></th>
+            <th><span jhiTranslate="gatewayApp.offer.request">Request</span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let offer of offers ;trackBy: trackId">
                 <td><a [routerLink]="['../offer', offer.id ]">{{offer.id}}</a></td>
-                <td>{{offer.price}}</td>
                 <td>{{offer.description}}</td>
                 <td>{{offer.availableOn | date:'medium'}}</td>
+                <td>{{offer.price}}</td>
                 <td>{{offer.profile}}</td>
                 <td>
                     <div *ngIf="offer.request">

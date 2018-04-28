@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "message" : {
             "home": {
                 "title": "Messages",
                 "createLabel": "Dodaj Message",
-                "createOrEditLabel": "Dodaj lub edytuj: Message"
+                "createOrEditLabel": "Dodaj lub edytuj: Message",
+                "search": "Szukaj Message"
             },
             "created": "Utworzono nowy Message z identyfikatorem {{ param }}",
             "updated": "Uaktualniono Message z identyfikatorem {{ param }}",

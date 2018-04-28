@@ -19,7 +19,7 @@ describe('Offer e2e test', () => {
         navBarPage.goToEntity('offer');
         offerComponentsPage = new OfferComponentsPage();
         expect(offerComponentsPage.getTitle())
-            .toMatch(/bemApp.offer.home.title/);
+            .toMatch(/gatewayApp.offer.home.title/);
 
     });
 
@@ -27,20 +27,20 @@ describe('Offer e2e test', () => {
         offerComponentsPage.clickOnCreateButton();
         offerDialogPage = new OfferDialogPage();
         expect(offerDialogPage.getModalTitle())
-            .toMatch(/bemApp.offer.home.createOrEditLabel/);
+            .toMatch(/gatewayApp.offer.home.createOrEditLabel/);
         offerDialogPage.close();
     });
 
     it('should create and save Offers', () => {
         offerComponentsPage.clickOnCreateButton();
-        offerDialogPage.setPriceInput('5');
-        expect(offerDialogPage.getPriceInput()).toMatch('5');
         offerDialogPage.setDescriptionInput('description');
         expect(offerDialogPage.getDescriptionInput()).toMatch('description');
         offerDialogPage.setAvailableOnInput(12310020012301);
         expect(offerDialogPage.getAvailableOnInput()).toMatch('2001-12-31T02:30');
-        offerDialogPage.setProfileInput('5');
-        expect(offerDialogPage.getProfileInput()).toMatch('5');
+        offerDialogPage.setPriceInput('5');
+        expect(offerDialogPage.getPriceInput()).toMatch('5');
+        offerDialogPage.setProfileInput('profile');
+        expect(offerDialogPage.getProfileInput()).toMatch('profile');
         offerDialogPage.requestSelectLastOption();
         offerDialogPage.save();
         expect(offerDialogPage.getSaveButton().isPresent()).toBeFalsy();
@@ -68,23 +68,15 @@ export class OfferDialogPage {
     modalTitle = element(by.css('h4#myOfferLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    priceInput = element(by.css('input#field_price'));
     descriptionInput = element(by.css('input#field_description'));
     availableOnInput = element(by.css('input#field_availableOn'));
+    priceInput = element(by.css('input#field_price'));
     profileInput = element(by.css('input#field_profile'));
     requestSelect = element(by.css('select#field_request'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
     }
-
-    setPriceInput = function(price) {
-        this.priceInput.sendKeys(price);
-    };
-
-    getPriceInput = function() {
-        return this.priceInput.getAttribute('value');
-    };
 
     setDescriptionInput = function(description) {
         this.descriptionInput.sendKeys(description);
@@ -100,6 +92,14 @@ export class OfferDialogPage {
 
     getAvailableOnInput = function() {
         return this.availableOnInput.getAttribute('value');
+    };
+
+    setPriceInput = function(price) {
+        this.priceInput.sendKeys(price);
+    };
+
+    getPriceInput = function() {
+        return this.priceInput.getAttribute('value');
     };
 
     setProfileInput = function(profile) {

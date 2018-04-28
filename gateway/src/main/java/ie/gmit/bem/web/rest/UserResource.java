@@ -4,6 +4,7 @@ import ie.gmit.bem.config.Constants;
 import com.codahale.metrics.annotation.Timed;
 import ie.gmit.bem.domain.User;
 import ie.gmit.bem.repository.UserRepository;
+import ie.gmit.bem.repository.search.UserSearchRepository;
 import ie.gmit.bem.security.AuthoritiesConstants;
 import ie.gmit.bem.service.MailService;
 import ie.gmit.bem.service.UserService;
@@ -29,6 +30,10 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing users.
@@ -66,11 +71,14 @@ public class UserResource {
 
     private final MailService mailService;
 
-    public UserResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final UserSearchRepository userSearchRepository;
+
+    public UserResource(UserRepository userRepository, UserService userService, MailService mailService, UserSearchRepository userSearchRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.userSearchRepository = userSearchRepository;
     }
 
     /**
@@ -186,5 +194,20 @@ public class UserResource {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.deleted", login)).build();
+    }
+
+    /**
+     * SEARCH /_search/users/:query : search for the User corresponding
+     * to the query.
+     *
+     * @param query the query to search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/users/{query}")
+    @Timed
+    public List<User> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

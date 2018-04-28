@@ -1,18 +1,18 @@
 
 <div *ngIf="profile">
-    <h2><span jhiTranslate="bemApp.profile.detail.title">Profile</span> {{profile.id}}</h2>
+    <h2><span jhiTranslate="gatewayApp.profile.detail.title">Profile</span> {{profile.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.profile.name">Name</span></dt>
+        <dt><span jhiTranslate="gatewayApp.profile.name">Name</span></dt>
         <dd>
             <span>{{profile.name}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.profile.phNumber">Ph Number</span></dt>
+        <dt><span jhiTranslate="gatewayApp.profile.phNumber">Ph Number</span></dt>
         <dd>
             <span>{{profile.phNumber}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.profile.picture">Picture</span></dt>
+        <dt><span jhiTranslate="gatewayApp.profile.picture">Picture</span></dt>
         <dd>
             <div *ngIf="profile.picture">
                 <a (click)="openFile(profile.pictureContentType, profile.picture)">
@@ -21,15 +21,27 @@
                 {{profile.pictureContentType}}, {{byteSize(profile.picture)}}
             </div>
         </dd>
-        <dt><span jhiTranslate="bemApp.profile.user">User</span></dt>
+        <dt><span jhiTranslate="gatewayApp.profile.user">User</span></dt>
         <dd>
-            {{profile.user?.login}}
+            {{profile.user?.email}}
         </dd>
-        <dt><span jhiTranslate="bemApp.profile.location">Location</span></dt>
+        <dt><span jhiTranslate="gatewayApp.profile.location">Location</span></dt>
         <dd>
             <div *ngIf="profile.location">
                 <a [routerLink]="['/location', profile.location?.id]">{{profile.location?.region}}</a>
             </div>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profile.appointment">Appointment</span></dt>
+        <dd>
+            <span *ngFor="let appointment of profile.appointments; let last = last">
+                <a [routerLink]="['/appointment', appointment?.id ]">{{appointment.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.profile.category">Category</span></dt>
+        <dd>
+            <span *ngFor="let category of profile.categories; let last = last">
+                <a [routerLink]="['/category', category?.id ]">{{category.name}}</a>{{last ? '' : ', '}}
+            </span>
         </dd>
     </dl>
 

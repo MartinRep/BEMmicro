@@ -12,6 +12,7 @@ export type EntityResponseType = HttpResponse<Location>;
 export class LocationService {
 
     private resourceUrl =  SERVER_API_URL + 'api/locations';
+    private resourceSearchUrl = SERVER_API_URL + 'api/_search/locations';
 
     constructor(private http: HttpClient) { }
 
@@ -40,6 +41,12 @@ export class LocationService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+    }
+
+    search(req?: any): Observable<HttpResponse<Location[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<Location[]>(this.resourceSearchUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<Location[]>) => this.convertArrayResponse(res));
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {

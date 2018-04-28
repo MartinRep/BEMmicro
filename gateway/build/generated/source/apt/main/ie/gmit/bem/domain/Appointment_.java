@@ -14,9 +14,10 @@ public abstract class Appointment_ {
 	public static volatile SingularAttribute<Appointment, String> name;
 	public static volatile SetAttribute<Appointment, Profile> profiles;
 	public static volatile SetAttribute<Appointment, Message> messages;
+	public static volatile SingularAttribute<Appointment, Location> location;
 	public static volatile SingularAttribute<Appointment, Long> id;
 	public static volatile SingularAttribute<Appointment, ZonedDateTime> time;
-	public static volatile SetAttribute<Appointment, Categories> categories;
+	public static volatile SingularAttribute<Appointment, Category> category;
 
 }
 

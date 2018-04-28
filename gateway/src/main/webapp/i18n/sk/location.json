@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "location" : {
             "home": {
                 "title": "Locations",
                 "createLabel": "Pridať Location",
-                "createOrEditLabel": "Pridať alebo upraviť Location"
+                "createOrEditLabel": "Pridať alebo upraviť Location",
+                "search": "Vyhľadať Location"
             },
             "created": "Bol vytvorený potomok entity Location s identifikátorom {{ param }}",
             "updated": "Potomok entity Location s identifikátorom {{ param }} bol upravený.",
@@ -16,8 +17,7 @@
             "detail": {
                 "title": "Location"
             },
-            "region": "Region",
-            "profile": "Profile"
+            "region": "Region"
         }
     }
 }

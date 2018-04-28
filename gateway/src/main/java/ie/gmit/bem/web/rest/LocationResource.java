@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import ie.gmit.bem.domain.Location;
 
 import ie.gmit.bem.repository.LocationRepository;
+import ie.gmit.bem.repository.search.LocationSearchRepository;
 import ie.gmit.bem.web.rest.errors.BadRequestAlertException;
 import ie.gmit.bem.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -18,6 +19,10 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Location.
@@ -32,8 +37,11 @@ public class LocationResource {
 
     private final LocationRepository locationRepository;
 
-    public LocationResource(LocationRepository locationRepository) {
+    private final LocationSearchRepository locationSearchRepository;
+
+    public LocationResource(LocationRepository locationRepository, LocationSearchRepository locationSearchRepository) {
         this.locationRepository = locationRepository;
+        this.locationSearchRepository = locationSearchRepository;
     }
 
     /**
@@ -51,6 +59,7 @@ public class LocationResource {
             throw new BadRequestAlertException("A new location cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Location result = locationRepository.save(location);
+        locationSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/locations/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -73,6 +82,7 @@ public class LocationResource {
             return createLocation(location);
         }
         Location result = locationRepository.save(location);
+        locationSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, location.getId().toString()))
             .body(result);
@@ -115,6 +125,24 @@ public class LocationResource {
     public ResponseEntity<Void> deleteLocation(@PathVariable Long id) {
         log.debug("REST request to delete Location : {}", id);
         locationRepository.delete(id);
+        locationSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/locations?query=:query : search for the location corresponding
+     * to the query.
+     *
+     * @param query the query of the location search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/locations")
+    @Timed
+    public List<Location> searchLocations(@RequestParam String query) {
+        log.debug("REST request to search Locations for query {}", query);
+        return StreamSupport
+            .stream(locationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
+    }
+
 }

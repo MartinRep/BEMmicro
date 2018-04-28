@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
-import { BemTestModule } from '../../../test.module';
+import { GatewayTestModule } from '../../../test.module';
 import { OfferComponent } from '../../../../../../main/webapp/app/entities/offer/offer.component';
 import { OfferService } from '../../../../../../main/webapp/app/entities/offer/offer.service';
 import { Offer } from '../../../../../../main/webapp/app/entities/offer/offer.model';
@@ -17,7 +17,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [BemTestModule],
+                imports: [GatewayTestModule],
                 declarations: [OfferComponent],
                 providers: [
                     OfferService

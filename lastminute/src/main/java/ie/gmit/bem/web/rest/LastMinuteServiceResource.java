@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import ie.gmit.bem.domain.LastMinuteService;
 
 import ie.gmit.bem.repository.LastMinuteServiceRepository;
+import ie.gmit.bem.repository.search.LastMinuteServiceSearchRepository;
 import ie.gmit.bem.web.rest.errors.BadRequestAlertException;
 import ie.gmit.bem.web.rest.util.HeaderUtil;
 import ie.gmit.bem.web.rest.util.PaginationUtil;
@@ -23,6 +24,10 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing LastMinuteService.
@@ -37,8 +42,11 @@ public class LastMinuteServiceResource {
 
     private final LastMinuteServiceRepository lastMinuteServiceRepository;
 
-    public LastMinuteServiceResource(LastMinuteServiceRepository lastMinuteServiceRepository) {
+    private final LastMinuteServiceSearchRepository lastMinuteServiceSearchRepository;
+
+    public LastMinuteServiceResource(LastMinuteServiceRepository lastMinuteServiceRepository, LastMinuteServiceSearchRepository lastMinuteServiceSearchRepository) {
         this.lastMinuteServiceRepository = lastMinuteServiceRepository;
+        this.lastMinuteServiceSearchRepository = lastMinuteServiceSearchRepository;
     }
 
     /**
@@ -56,6 +64,7 @@ public class LastMinuteServiceResource {
             throw new BadRequestAlertException("A new lastMinuteService cannot already have an ID", ENTITY_NAME, "idexists");
         }
         LastMinuteService result = lastMinuteServiceRepository.save(lastMinuteService);
+        lastMinuteServiceSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/last-minute-services/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -78,6 +87,7 @@ public class LastMinuteServiceResource {
             return createLastMinuteService(lastMinuteService);
         }
         LastMinuteService result = lastMinuteServiceRepository.save(lastMinuteService);
+        lastMinuteServiceSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, lastMinuteService.getId().toString()))
             .body(result);
@@ -123,6 +133,25 @@ public class LastMinuteServiceResource {
     public ResponseEntity<Void> deleteLastMinuteService(@PathVariable Long id) {
         log.debug("REST request to delete LastMinuteService : {}", id);
         lastMinuteServiceRepository.delete(id);
+        lastMinuteServiceSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/last-minute-services?query=:query : search for the lastMinuteService corresponding
+     * to the query.
+     *
+     * @param query the query of the lastMinuteService search
+     * @param pageable the pagination information
+     * @return the result of the search
+     */
+    @GetMapping("/_search/last-minute-services")
+    @Timed
+    public ResponseEntity<List<LastMinuteService>> searchLastMinuteServices(@RequestParam String query, Pageable pageable) {
+        log.debug("REST request to search for a page of LastMinuteServices for query {}", query);
+        Page<LastMinuteService> page = lastMinuteServiceSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/last-minute-services");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
 }

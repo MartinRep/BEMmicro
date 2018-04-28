@@ -5,7 +5,7 @@
             "relationshipType": "many-to-one",
             "relationshipName": "user",
             "otherEntityName": "user",
-            "otherEntityField": "login"
+            "otherEntityField": "email"
         },
         {
             "relationshipType": "many-to-one",
@@ -15,10 +15,19 @@
         },
         {
             "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
             "relationshipName": "appointment",
             "otherEntityName": "appointment",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "profile"
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "otherEntityField": "name",
+            "ownerSide": true
         }
     ],
     "fields": [
@@ -36,7 +45,7 @@
             "fieldTypeBlobContent": "image"
         }
     ],
-    "changelogDate": "20180418093536",
+    "changelogDate": "20180427234546",
     "entityTableName": "profile",
     "dto": "no",
     "pagination": "no",

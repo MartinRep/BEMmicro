@@ -1,34 +1,34 @@
 
 <div *ngIf="lastMinuteService">
-    <h2><span jhiTranslate="bemApp.lastMinuteService.detail.title">Last Minute Service</span> {{lastMinuteService.id}}</h2>
+    <h2><span jhiTranslate="gatewayApp.lastMinuteService.detail.title">Last Minute Service</span> {{lastMinuteService.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.lastMinuteService.price">Price</span></dt>
-        <dd>
-            <span>{{lastMinuteService.price}}</span>
-        </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.address">Address</span></dt>
-        <dd>
-            <span>{{lastMinuteService.address}}</span>
-        </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.category">Category</span></dt>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteService.category">Category</span></dt>
         <dd>
             <span>{{lastMinuteService.category}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.description">Description</span></dt>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteService.description">Description</span></dt>
         <dd>
             <span>{{lastMinuteService.description}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.available">Available</span></dt>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteService.available">Available</span></dt>
         <dd>
             <span>{{lastMinuteService.available | date:'medium'}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.location">Location</span></dt>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteService.location">Location</span></dt>
         <dd>
             <span>{{lastMinuteService.location}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.image">Image</span></dt>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteService.price">Price</span></dt>
+        <dd>
+            <span>{{lastMinuteService.price}}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteService.address">Address</span></dt>
+        <dd>
+            <span>{{lastMinuteService.address}}</span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteService.image">Image</span></dt>
         <dd>
             <div *ngIf="lastMinuteService.image">
                 <a (click)="openFile(lastMinuteService.imageContentType, lastMinuteService.image)">
@@ -37,7 +37,7 @@
                 {{lastMinuteService.imageContentType}}, {{byteSize(lastMinuteService.image)}}
             </div>
         </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteService.profile">Profile</span></dt>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteService.profile">Profile</span></dt>
         <dd>
             <span>{{lastMinuteService.profile}}</span>
         </dd>

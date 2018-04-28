@@ -1,0 +1,8 @@
+{
+  "name": "BemApp",
+  "app_id": "fa2810dd",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

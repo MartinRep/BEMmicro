@@ -4,6 +4,7 @@ import ie.gmit.bem.RequestApp;
 
 import ie.gmit.bem.domain.Request;
 import ie.gmit.bem.repository.RequestRepository;
+import ie.gmit.bem.repository.search.RequestSearchRepository;
 import ie.gmit.bem.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -65,14 +66,17 @@ public class RequestResourceIntTest {
     private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_IMAGE_CONTENT_TYPE = "image/png";
 
-    private static final Integer DEFAULT_PROFILE = 1;
-    private static final Integer UPDATED_PROFILE = 2;
+    private static final String DEFAULT_PROFILE = "AAAAAAAAAA";
+    private static final String UPDATED_PROFILE = "BBBBBBBBBB";
 
     private static final Instant DEFAULT_POSTED = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_POSTED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private RequestRepository requestRepository;
+
+    @Autowired
+    private RequestSearchRepository requestSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -93,7 +97,7 @@ public class RequestResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final RequestResource requestResource = new RequestResource(requestRepository);
+        final RequestResource requestResource = new RequestResource(requestRepository, requestSearchRepository);
         this.restRequestMockMvc = MockMvcBuilders.standaloneSetup(requestResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -123,6 +127,7 @@ public class RequestResourceIntTest {
 
     @Before
     public void initTest() {
+        requestSearchRepository.deleteAll();
         request = createEntity(em);
     }
 
@@ -150,6 +155,11 @@ public class RequestResourceIntTest {
         assertThat(testRequest.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
         assertThat(testRequest.getProfile()).isEqualTo(DEFAULT_PROFILE);
         assertThat(testRequest.getPosted()).isEqualTo(DEFAULT_POSTED);
+
+        // Validate the Request in Elasticsearch
+        Request requestEs = requestSearchRepository.findOne(testRequest.getId());
+        assertThat(testRequest.getDuration()).isEqualTo(testRequest.getDuration());
+        assertThat(requestEs).isEqualToIgnoringGivenFields(testRequest, "duration");
     }
 
     @Test
@@ -227,6 +237,24 @@ public class RequestResourceIntTest {
 
     @Test
     @Transactional
+    public void checkProfileIsRequired() throws Exception {
+        int databaseSizeBeforeTest = requestRepository.findAll().size();
+        // set the field null
+        request.setProfile(null);
+
+        // Create the Request, which fails.
+
+        restRequestMockMvc.perform(post("/api/requests")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(request)))
+            .andExpect(status().isBadRequest());
+
+        List<Request> requestList = requestRepository.findAll();
+        assertThat(requestList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllRequests() throws Exception {
         // Initialize the database
         requestRepository.saveAndFlush(request);
@@ -243,7 +271,7 @@ public class RequestResourceIntTest {
             .andExpect(jsonPath("$.[*].expPrice").value(hasItem(DEFAULT_EXP_PRICE.doubleValue())))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
-            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE)))
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE.toString())))
             .andExpect(jsonPath("$.[*].posted").value(hasItem(DEFAULT_POSTED.toString())));
     }
 
@@ -265,7 +293,7 @@ public class RequestResourceIntTest {
             .andExpect(jsonPath("$.expPrice").value(DEFAULT_EXP_PRICE.doubleValue()))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
-            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE))
+            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE.toString()))
             .andExpect(jsonPath("$.posted").value(DEFAULT_POSTED.toString()));
     }
 
@@ -282,6 +310,7 @@ public class RequestResourceIntTest {
     public void updateRequest() throws Exception {
         // Initialize the database
         requestRepository.saveAndFlush(request);
+        requestSearchRepository.save(request);
         int databaseSizeBeforeUpdate = requestRepository.findAll().size();
 
         // Update the request
@@ -317,6 +346,11 @@ public class RequestResourceIntTest {
         assertThat(testRequest.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
         assertThat(testRequest.getProfile()).isEqualTo(UPDATED_PROFILE);
         assertThat(testRequest.getPosted()).isEqualTo(UPDATED_POSTED);
+
+        // Validate the Request in Elasticsearch
+        Request requestEs = requestSearchRepository.findOne(testRequest.getId());
+        assertThat(testRequest.getDuration()).isEqualTo(testRequest.getDuration());
+        assertThat(requestEs).isEqualToIgnoringGivenFields(testRequest, "duration");
     }
 
     @Test
@@ -342,6 +376,7 @@ public class RequestResourceIntTest {
     public void deleteRequest() throws Exception {
         // Initialize the database
         requestRepository.saveAndFlush(request);
+        requestSearchRepository.save(request);
         int databaseSizeBeforeDelete = requestRepository.findAll().size();
 
         // Get the request
@@ -349,9 +384,36 @@ public class RequestResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean requestExistsInEs = requestSearchRepository.exists(request.getId());
+        assertThat(requestExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Request> requestList = requestRepository.findAll();
         assertThat(requestList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchRequest() throws Exception {
+        // Initialize the database
+        requestRepository.saveAndFlush(request);
+        requestSearchRepository.save(request);
+
+        // Search the request
+        restRequestMockMvc.perform(get("/api/_search/requests?query=id:" + request.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(request.getId().intValue())))
+            .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())))
+            .andExpect(jsonPath("$.[*].region").value(hasItem(DEFAULT_REGION.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].duration").value(hasItem(sameInstant(DEFAULT_DURATION))))
+            .andExpect(jsonPath("$.[*].expPrice").value(hasItem(DEFAULT_EXP_PRICE.doubleValue())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE.toString())))
+            .andExpect(jsonPath("$.[*].posted").value(hasItem(DEFAULT_POSTED.toString())));
     }
 
     @Test

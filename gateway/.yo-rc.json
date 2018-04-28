@@ -5,8 +5,8 @@
       "nativeLanguage": "en",
       "microservicePath": "../lastminute"
     },
-    "jhipsterVersion": "4.14.3",
-    "baseName": "Bem",
+    "jhipsterVersion": "4.14.1",
+    "baseName": "gateway",
     "packageName": "ie.gmit.bem",
     "packageFolder": "ie/gmit/bem",
     "serverPort": "9080",
@@ -17,13 +17,13 @@
     "databaseType": "sql",
     "devDatabaseType": "mariadb",
     "prodDatabaseType": "mariadb",
-    "searchEngine": false,
+    "searchEngine": "elasticsearch",
     "messageBroker": "kafka",
     "serviceDiscoveryType": "eureka",
     "buildTool": "gradle",
     "enableSocialSignIn": false,
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "34c7e4b2b28fcc6e94b8facc3c02ea4669ef579e",
+    "jwtSecretKey": "ecd8aae62c6a1e983ec92bf711890ea7248cf25a",
     "clientFramework": "angularX",
     "useSass": true,
     "clientPackageManager": "yarn",
@@ -33,12 +33,6 @@
       "protractor"
     ],
     "jhiPrefix": "jhi",
-    "otherModules": [
-      {
-        "name": "generator-jhipster-ionic",
-        "version": "3.1.2"
-      }
-    ],
     "enableTranslation": true,
     "nativeLanguage": "en",
     "languages": [

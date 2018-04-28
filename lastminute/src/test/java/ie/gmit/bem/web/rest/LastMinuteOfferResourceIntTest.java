@@ -4,6 +4,7 @@ import ie.gmit.bem.LastminuteApp;
 
 import ie.gmit.bem.domain.LastMinuteOffer;
 import ie.gmit.bem.repository.LastMinuteOfferRepository;
+import ie.gmit.bem.repository.search.LastMinuteOfferSearchRepository;
 import ie.gmit.bem.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -41,11 +42,14 @@ public class LastMinuteOfferResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_PROFILE = 1;
-    private static final Integer UPDATED_PROFILE = 2;
+    private static final String DEFAULT_PROFILE = "AAAAAAAAAA";
+    private static final String UPDATED_PROFILE = "BBBBBBBBBB";
 
     @Autowired
     private LastMinuteOfferRepository lastMinuteOfferRepository;
+
+    @Autowired
+    private LastMinuteOfferSearchRepository lastMinuteOfferSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -66,7 +70,7 @@ public class LastMinuteOfferResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final LastMinuteOfferResource lastMinuteOfferResource = new LastMinuteOfferResource(lastMinuteOfferRepository);
+        final LastMinuteOfferResource lastMinuteOfferResource = new LastMinuteOfferResource(lastMinuteOfferRepository, lastMinuteOfferSearchRepository);
         this.restLastMinuteOfferMockMvc = MockMvcBuilders.standaloneSetup(lastMinuteOfferResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -89,6 +93,7 @@ public class LastMinuteOfferResourceIntTest {
 
     @Before
     public void initTest() {
+        lastMinuteOfferSearchRepository.deleteAll();
         lastMinuteOffer = createEntity(em);
     }
 
@@ -109,6 +114,10 @@ public class LastMinuteOfferResourceIntTest {
         LastMinuteOffer testLastMinuteOffer = lastMinuteOfferList.get(lastMinuteOfferList.size() - 1);
         assertThat(testLastMinuteOffer.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testLastMinuteOffer.getProfile()).isEqualTo(DEFAULT_PROFILE);
+
+        // Validate the LastMinuteOffer in Elasticsearch
+        LastMinuteOffer lastMinuteOfferEs = lastMinuteOfferSearchRepository.findOne(testLastMinuteOffer.getId());
+        assertThat(lastMinuteOfferEs).isEqualToIgnoringGivenFields(testLastMinuteOffer);
     }
 
     @Test
@@ -142,7 +151,7 @@ public class LastMinuteOfferResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(lastMinuteOffer.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE)));
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE.toString())));
     }
 
     @Test
@@ -157,7 +166,7 @@ public class LastMinuteOfferResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(lastMinuteOffer.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE));
+            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE.toString()));
     }
 
     @Test
@@ -173,6 +182,7 @@ public class LastMinuteOfferResourceIntTest {
     public void updateLastMinuteOffer() throws Exception {
         // Initialize the database
         lastMinuteOfferRepository.saveAndFlush(lastMinuteOffer);
+        lastMinuteOfferSearchRepository.save(lastMinuteOffer);
         int databaseSizeBeforeUpdate = lastMinuteOfferRepository.findAll().size();
 
         // Update the lastMinuteOffer
@@ -194,6 +204,10 @@ public class LastMinuteOfferResourceIntTest {
         LastMinuteOffer testLastMinuteOffer = lastMinuteOfferList.get(lastMinuteOfferList.size() - 1);
         assertThat(testLastMinuteOffer.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testLastMinuteOffer.getProfile()).isEqualTo(UPDATED_PROFILE);
+
+        // Validate the LastMinuteOffer in Elasticsearch
+        LastMinuteOffer lastMinuteOfferEs = lastMinuteOfferSearchRepository.findOne(testLastMinuteOffer.getId());
+        assertThat(lastMinuteOfferEs).isEqualToIgnoringGivenFields(testLastMinuteOffer);
     }
 
     @Test
@@ -219,6 +233,7 @@ public class LastMinuteOfferResourceIntTest {
     public void deleteLastMinuteOffer() throws Exception {
         // Initialize the database
         lastMinuteOfferRepository.saveAndFlush(lastMinuteOffer);
+        lastMinuteOfferSearchRepository.save(lastMinuteOffer);
         int databaseSizeBeforeDelete = lastMinuteOfferRepository.findAll().size();
 
         // Get the lastMinuteOffer
@@ -226,9 +241,29 @@ public class LastMinuteOfferResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean lastMinuteOfferExistsInEs = lastMinuteOfferSearchRepository.exists(lastMinuteOffer.getId());
+        assertThat(lastMinuteOfferExistsInEs).isFalse();
+
         // Validate the database is empty
         List<LastMinuteOffer> lastMinuteOfferList = lastMinuteOfferRepository.findAll();
         assertThat(lastMinuteOfferList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchLastMinuteOffer() throws Exception {
+        // Initialize the database
+        lastMinuteOfferRepository.saveAndFlush(lastMinuteOffer);
+        lastMinuteOfferSearchRepository.save(lastMinuteOffer);
+
+        // Search the lastMinuteOffer
+        restLastMinuteOfferMockMvc.perform(get("/api/_search/last-minute-offers?query=id:" + lastMinuteOffer.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(lastMinuteOffer.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE.toString())));
     }
 
     @Test

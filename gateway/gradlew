@@ -6,7 +6,7 @@
 ##
 ##############################################################################
 
-# Try to start the docker container needed for app. DB, Jregistry, etc...
+# Starts docker containers
 docker-compose -f src/main/docker/appDev.yml up -d
 
 # Attempt to set APP_HOME

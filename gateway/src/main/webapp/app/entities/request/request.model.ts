@@ -10,7 +10,7 @@ export class Request implements BaseEntity {
         public expPrice?: number,
         public imageContentType?: string,
         public image?: any,
-        public profile?: number,
+        public profile?: string,
         public posted?: any,
         public offers?: BaseEntity[],
     ) {

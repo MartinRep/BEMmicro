@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-import { BemTestModule } from '../../../test.module';
+import { GatewayTestModule } from '../../../test.module';
 import { JhiHealthCheckComponent } from '../../../../../../main/webapp/app/admin/health/health.component';
 import { JhiHealthService } from '../../../../../../main/webapp/app/admin/health/health.service';
 
@@ -14,7 +14,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [BemTestModule],
+                imports: [GatewayTestModule],
                 declarations: [JhiHealthCheckComponent],
                 providers: [
                     JhiHealthService

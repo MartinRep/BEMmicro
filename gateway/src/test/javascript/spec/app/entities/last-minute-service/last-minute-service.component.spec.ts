@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
-import { BemTestModule } from '../../../test.module';
+import { GatewayTestModule } from '../../../test.module';
 import { LastMinuteServiceComponent } from '../../../../../../main/webapp/app/entities/last-minute-service/last-minute-service.component';
 import { LastMinuteServiceService } from '../../../../../../main/webapp/app/entities/last-minute-service/last-minute-service.service';
 import { LastMinuteService } from '../../../../../../main/webapp/app/entities/last-minute-service/last-minute-service.model';
@@ -17,7 +17,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [BemTestModule],
+                imports: [GatewayTestModule],
                 declarations: [LastMinuteServiceComponent],
                 providers: [
                     LastMinuteServiceService

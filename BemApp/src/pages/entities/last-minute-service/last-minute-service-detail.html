@@ -1,0 +1,64 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Last Minute Service</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>Category</ion-label>
+            <div item-content>
+                <span>{{lastMinuteService.category}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Description</ion-label>
+            <div item-content>
+                <span>{{lastMinuteService.description}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Available</ion-label>
+            <div item-content>
+                <span>{{lastMinuteService.available | date:'medium'}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Location</ion-label>
+            <div item-content>
+                <span>{{lastMinuteService.location}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Price</ion-label>
+            <div item-content>
+                <span>{{lastMinuteService.price}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Address</ion-label>
+            <div item-content>
+                <span>{{lastMinuteService.address}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Image</ion-label>
+            <div item-content>
+                <div *ngIf="lastMinuteService.image">
+                    <a (click)="openFile(lastMinuteService.imageContentType, lastMinuteService.image)">
+                        <img [src]="'data:' + lastMinuteService.imageContentType + ';base64,' + lastMinuteService.image" style="max-width: 100%;" alt="lastMinuteService image"/>
+                    </a>
+                    {{lastMinuteService.imageContentType}}, {{byteSize(lastMinuteService.image)}}
+                </div>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Profile</ion-label>
+            <div item-content>
+                <span>{{lastMinuteService.profile}}</span>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <button ion-button block (click)="open(lastMinuteService)">{{ 'EDIT_BUTTON' | translate }}</button>
+</ion-content>

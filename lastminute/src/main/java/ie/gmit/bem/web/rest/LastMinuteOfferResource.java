@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import ie.gmit.bem.domain.LastMinuteOffer;
 
 import ie.gmit.bem.repository.LastMinuteOfferRepository;
+import ie.gmit.bem.repository.search.LastMinuteOfferSearchRepository;
 import ie.gmit.bem.web.rest.errors.BadRequestAlertException;
 import ie.gmit.bem.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -17,6 +18,10 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing LastMinuteOffer.
@@ -31,8 +36,11 @@ public class LastMinuteOfferResource {
 
     private final LastMinuteOfferRepository lastMinuteOfferRepository;
 
-    public LastMinuteOfferResource(LastMinuteOfferRepository lastMinuteOfferRepository) {
+    private final LastMinuteOfferSearchRepository lastMinuteOfferSearchRepository;
+
+    public LastMinuteOfferResource(LastMinuteOfferRepository lastMinuteOfferRepository, LastMinuteOfferSearchRepository lastMinuteOfferSearchRepository) {
         this.lastMinuteOfferRepository = lastMinuteOfferRepository;
+        this.lastMinuteOfferSearchRepository = lastMinuteOfferSearchRepository;
     }
 
     /**
@@ -50,6 +58,7 @@ public class LastMinuteOfferResource {
             throw new BadRequestAlertException("A new lastMinuteOffer cannot already have an ID", ENTITY_NAME, "idexists");
         }
         LastMinuteOffer result = lastMinuteOfferRepository.save(lastMinuteOffer);
+        lastMinuteOfferSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/last-minute-offers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,6 +81,7 @@ public class LastMinuteOfferResource {
             return createLastMinuteOffer(lastMinuteOffer);
         }
         LastMinuteOffer result = lastMinuteOfferRepository.save(lastMinuteOffer);
+        lastMinuteOfferSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, lastMinuteOffer.getId().toString()))
             .body(result);
@@ -114,6 +124,24 @@ public class LastMinuteOfferResource {
     public ResponseEntity<Void> deleteLastMinuteOffer(@PathVariable Long id) {
         log.debug("REST request to delete LastMinuteOffer : {}", id);
         lastMinuteOfferRepository.delete(id);
+        lastMinuteOfferSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/last-minute-offers?query=:query : search for the lastMinuteOffer corresponding
+     * to the query.
+     *
+     * @param query the query of the lastMinuteOffer search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/last-minute-offers")
+    @Timed
+    public List<LastMinuteOffer> searchLastMinuteOffers(@RequestParam String query) {
+        log.debug("REST request to search LastMinuteOffers for query {}", query);
+        return StreamSupport
+            .stream(lastMinuteOfferSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
+    }
+
 }

@@ -1,7 +1,7 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myMessageLabel" jhiTranslate="bemApp.message.home.createOrEditLabel">Create or edit a Message</h4>
+        <h4 class="modal-title" id="myMessageLabel" jhiTranslate="gatewayApp.message.home.createOrEditLabel">Create or edit a Message</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
@@ -13,14 +13,14 @@
                    [(ngModel)]="message.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.message.time" for="field_time">Time</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.message.time" for="field_time">Time</label>
             <div class="d-flex">
                 <input id="field_time" type="datetime-local" class="form-control" name="time" [(ngModel)]="message.time"
                 />
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.message.content" for="field_content">Content</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.message.content" for="field_content">Content</label>
             <input type="text" class="form-control" name="content" id="field_content"
                 [(ngModel)]="message.content" required/>
             <div [hidden]="!(editForm.controls.content?.dirty && editForm.controls.content?.invalid)">
@@ -32,10 +32,9 @@
         </div>
 
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.message.appointment" for="field_appointment">Appointment</label>
-            <select class="form-control" id="field_appointment" name="appointment" [(ngModel)]="message.appointment" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="appointmentOption.id === message.appointment?.id ? message.appointment : appointmentOption" *ngFor="let appointmentOption of appointments; trackBy: trackAppointmentById">{{appointmentOption.name}}</option>
+            <label jhiTranslate="gatewayApp.message.appointment" for="field_appointment">Appointment</label>
+            <select class="form-control" id="field_appointment" multiple name="appointment" [(ngModel)]="message.appointments">
+                <option [ngValue]="getSelected(message.appointments, appointmentOption)" *ngFor="let appointmentOption of appointments; trackBy: trackAppointmentById">{{appointmentOption.name}}</option>
             </select>
         </div>
     </div>

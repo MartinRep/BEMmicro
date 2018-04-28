@@ -1,7 +1,7 @@
 package ie.gmit.bem.service;
 import ie.gmit.bem.config.Constants;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 import ie.gmit.bem.domain.User;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.Before;
@@ -30,7 +30,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 public class MailServiceIntTest {
 
     @Autowired

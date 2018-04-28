@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BemTestModule } from '../../../test.module';
+import { GatewayTestModule } from '../../../test.module';
 import { OfferDeleteDialogComponent } from '../../../../../../main/webapp/app/entities/offer/offer-delete-dialog.component';
 import { OfferService } from '../../../../../../main/webapp/app/entities/offer/offer.service';
 
@@ -19,7 +19,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [BemTestModule],
+                imports: [GatewayTestModule],
                 declarations: [OfferDeleteDialogComponent],
                 providers: [
                     OfferService

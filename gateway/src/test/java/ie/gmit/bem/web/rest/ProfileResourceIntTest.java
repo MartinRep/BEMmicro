@@ -1,9 +1,10 @@
 package ie.gmit.bem.web.rest;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 
 import ie.gmit.bem.domain.Profile;
 import ie.gmit.bem.repository.ProfileRepository;
+import ie.gmit.bem.repository.search.ProfileSearchRepository;
 import ie.gmit.bem.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -36,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see ProfileResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 public class ProfileResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
@@ -52,6 +53,9 @@ public class ProfileResourceIntTest {
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    @Autowired
+    private ProfileSearchRepository profileSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -72,7 +76,7 @@ public class ProfileResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ProfileResource profileResource = new ProfileResource(profileRepository);
+        final ProfileResource profileResource = new ProfileResource(profileRepository, profileSearchRepository);
         this.restProfileMockMvc = MockMvcBuilders.standaloneSetup(profileResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -97,6 +101,7 @@ public class ProfileResourceIntTest {
 
     @Before
     public void initTest() {
+        profileSearchRepository.deleteAll();
         profile = createEntity(em);
     }
 
@@ -119,6 +124,10 @@ public class ProfileResourceIntTest {
         assertThat(testProfile.getPhNumber()).isEqualTo(DEFAULT_PH_NUMBER);
         assertThat(testProfile.getPicture()).isEqualTo(DEFAULT_PICTURE);
         assertThat(testProfile.getPictureContentType()).isEqualTo(DEFAULT_PICTURE_CONTENT_TYPE);
+
+        // Validate the Profile in Elasticsearch
+        Profile profileEs = profileSearchRepository.findOne(testProfile.getId());
+        assertThat(profileEs).isEqualToIgnoringGivenFields(testProfile);
     }
 
     @Test
@@ -187,6 +196,7 @@ public class ProfileResourceIntTest {
     public void updateProfile() throws Exception {
         // Initialize the database
         profileRepository.saveAndFlush(profile);
+        profileSearchRepository.save(profile);
         int databaseSizeBeforeUpdate = profileRepository.findAll().size();
 
         // Update the profile
@@ -212,6 +222,10 @@ public class ProfileResourceIntTest {
         assertThat(testProfile.getPhNumber()).isEqualTo(UPDATED_PH_NUMBER);
         assertThat(testProfile.getPicture()).isEqualTo(UPDATED_PICTURE);
         assertThat(testProfile.getPictureContentType()).isEqualTo(UPDATED_PICTURE_CONTENT_TYPE);
+
+        // Validate the Profile in Elasticsearch
+        Profile profileEs = profileSearchRepository.findOne(testProfile.getId());
+        assertThat(profileEs).isEqualToIgnoringGivenFields(testProfile);
     }
 
     @Test
@@ -237,6 +251,7 @@ public class ProfileResourceIntTest {
     public void deleteProfile() throws Exception {
         // Initialize the database
         profileRepository.saveAndFlush(profile);
+        profileSearchRepository.save(profile);
         int databaseSizeBeforeDelete = profileRepository.findAll().size();
 
         // Get the profile
@@ -244,9 +259,31 @@ public class ProfileResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean profileExistsInEs = profileSearchRepository.exists(profile.getId());
+        assertThat(profileExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Profile> profileList = profileRepository.findAll();
         assertThat(profileList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchProfile() throws Exception {
+        // Initialize the database
+        profileRepository.saveAndFlush(profile);
+        profileSearchRepository.save(profile);
+
+        // Search the profile
+        restProfileMockMvc.perform(get("/api/_search/profiles?query=id:" + profile.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(profile.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].phNumber").value(hasItem(DEFAULT_PH_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].pictureContentType").value(hasItem(DEFAULT_PICTURE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].picture").value(hasItem(Base64Utils.encodeToString(DEFAULT_PICTURE))));
     }
 
     @Test

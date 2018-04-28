@@ -6,8 +6,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -16,6 +19,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "message")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "message")
 public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,8 +35,12 @@ public class Message implements Serializable {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @ManyToOne
-    private Appointment appointment;
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "message_appointment",
+               joinColumns = @JoinColumn(name="messages_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="appointments_id", referencedColumnName="id"))
+    private Set<Appointment> appointments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -69,17 +77,27 @@ public class Message implements Serializable {
         this.content = content;
     }
 
-    public Appointment getAppointment() {
-        return appointment;
+    public Set<Appointment> getAppointments() {
+        return appointments;
     }
 
-    public Message appointment(Appointment appointment) {
-        this.appointment = appointment;
+    public Message appointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
         return this;
     }
 
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
+    public Message addAppointment(Appointment appointment) {
+        this.appointments.add(appointment);
+        return this;
+    }
+
+    public Message removeAppointment(Appointment appointment) {
+        this.appointments.remove(appointment);
+        return this;
+    }
+
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

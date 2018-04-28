@@ -10,6 +10,7 @@ export class Profile implements BaseEntity {
         public user?: User,
         public location?: BaseEntity,
         public appointments?: BaseEntity[],
+        public categories?: BaseEntity[],
     ) {
     }
 }

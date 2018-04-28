@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Profile.
+    -->
+    <changeSet id="20180427234546-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="profile"
+                                 constraintName="fk_profile_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="location_id"
+                                 baseTableName="profile"
+                                 constraintName="fk_profile_location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="location"/>
+
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_appointment"
+                                 constraintName="fk_profile_appointment_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="appointments_id"
+                                 baseTableName="profile_appointment"
+                                 constraintName="fk_profile_appointment_appointments_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="appointment"/>
+        
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="profile_category"
+                                 constraintName="fk_profile_category_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        <addForeignKeyConstraint baseColumnNames="categories_id"
+                                 baseTableName="profile_category"
+                                 constraintName="fk_profile_category_categories_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"/>
+        
+    </changeSet>
+</databaseChangeLog>

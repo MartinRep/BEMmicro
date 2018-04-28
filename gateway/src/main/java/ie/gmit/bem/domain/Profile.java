@@ -1,11 +1,11 @@
 package ie.gmit.bem.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "profile")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "profile")
 public class Profile implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,10 +45,19 @@ public class Profile implements Serializable {
     @ManyToOne
     private Location location;
 
-    @ManyToMany(mappedBy = "profiles")
-    @JsonIgnore
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "profile_appointment",
+               joinColumns = @JoinColumn(name="profiles_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="appointments_id", referencedColumnName="id"))
     private Set<Appointment> appointments = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "profile_category",
+               joinColumns = @JoinColumn(name="profiles_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="categories_id", referencedColumnName="id"))
+    private Set<Category> categories = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -147,18 +157,39 @@ public class Profile implements Serializable {
 
     public Profile addAppointment(Appointment appointment) {
         this.appointments.add(appointment);
-        appointment.getProfiles().add(this);
         return this;
     }
 
     public Profile removeAppointment(Appointment appointment) {
         this.appointments.remove(appointment);
-        appointment.getProfiles().remove(this);
         return this;
     }
 
     public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public Profile categories(Set<Category> categories) {
+        this.categories = categories;
+        return this;
+    }
+
+    public Profile addCategory(Category category) {
+        this.categories.add(category);
+        return this;
+    }
+
+    public Profile removeCategory(Category category) {
+        this.categories.remove(category);
+        return this;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

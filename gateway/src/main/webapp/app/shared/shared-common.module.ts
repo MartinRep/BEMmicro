@@ -4,7 +4,7 @@ import { registerLocaleData } from '@angular/common';
 import locale from '@angular/common/locales/en';
 
 import {
-    BemSharedLibsModule,
+    GatewaySharedLibsModule,
     JhiLanguageHelper,
     FindLanguageFromKeyPipe,
     JhiAlertComponent,
@@ -13,7 +13,7 @@ import {
 
 @NgModule({
     imports: [
-        BemSharedLibsModule
+        GatewaySharedLibsModule
     ],
     declarations: [
         FindLanguageFromKeyPipe,
@@ -29,13 +29,13 @@ import {
         },
     ],
     exports: [
-        BemSharedLibsModule,
+        GatewaySharedLibsModule,
         FindLanguageFromKeyPipe,
         JhiAlertComponent,
         JhiAlertErrorComponent
     ]
 })
-export class BemSharedCommonModule {
+export class GatewaySharedCommonModule {
     constructor() {
         registerLocaleData(locale);
     }

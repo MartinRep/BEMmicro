@@ -1,9 +1,10 @@
 package ie.gmit.bem.web.rest;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 
 import ie.gmit.bem.domain.Location;
 import ie.gmit.bem.repository.LocationRepository;
+import ie.gmit.bem.repository.search.LocationSearchRepository;
 import ie.gmit.bem.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -35,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see LocationResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 public class LocationResourceIntTest {
 
     private static final String DEFAULT_REGION = "AAAAAAAAAA";
@@ -43,6 +44,9 @@ public class LocationResourceIntTest {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private LocationSearchRepository locationSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -63,7 +67,7 @@ public class LocationResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final LocationResource locationResource = new LocationResource(locationRepository);
+        final LocationResource locationResource = new LocationResource(locationRepository, locationSearchRepository);
         this.restLocationMockMvc = MockMvcBuilders.standaloneSetup(locationResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -85,6 +89,7 @@ public class LocationResourceIntTest {
 
     @Before
     public void initTest() {
+        locationSearchRepository.deleteAll();
         location = createEntity(em);
     }
 
@@ -104,6 +109,10 @@ public class LocationResourceIntTest {
         assertThat(locationList).hasSize(databaseSizeBeforeCreate + 1);
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getRegion()).isEqualTo(DEFAULT_REGION);
+
+        // Validate the Location in Elasticsearch
+        Location locationEs = locationSearchRepository.findOne(testLocation.getId());
+        assertThat(locationEs).isEqualToIgnoringGivenFields(testLocation);
     }
 
     @Test
@@ -184,6 +193,7 @@ public class LocationResourceIntTest {
     public void updateLocation() throws Exception {
         // Initialize the database
         locationRepository.saveAndFlush(location);
+        locationSearchRepository.save(location);
         int databaseSizeBeforeUpdate = locationRepository.findAll().size();
 
         // Update the location
@@ -203,6 +213,10 @@ public class LocationResourceIntTest {
         assertThat(locationList).hasSize(databaseSizeBeforeUpdate);
         Location testLocation = locationList.get(locationList.size() - 1);
         assertThat(testLocation.getRegion()).isEqualTo(UPDATED_REGION);
+
+        // Validate the Location in Elasticsearch
+        Location locationEs = locationSearchRepository.findOne(testLocation.getId());
+        assertThat(locationEs).isEqualToIgnoringGivenFields(testLocation);
     }
 
     @Test
@@ -228,6 +242,7 @@ public class LocationResourceIntTest {
     public void deleteLocation() throws Exception {
         // Initialize the database
         locationRepository.saveAndFlush(location);
+        locationSearchRepository.save(location);
         int databaseSizeBeforeDelete = locationRepository.findAll().size();
 
         // Get the location
@@ -235,9 +250,28 @@ public class LocationResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean locationExistsInEs = locationSearchRepository.exists(location.getId());
+        assertThat(locationExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Location> locationList = locationRepository.findAll();
         assertThat(locationList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchLocation() throws Exception {
+        // Initialize the database
+        locationRepository.saveAndFlush(location);
+        locationSearchRepository.save(location);
+
+        // Search the location
+        restLocationMockMvc.perform(get("/api/_search/locations?query=id:" + location.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(location.getId().intValue())))
+            .andExpect(jsonPath("$.[*].region").value(hasItem(DEFAULT_REGION.toString())));
     }
 
     @Test

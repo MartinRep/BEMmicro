@@ -1,6 +1,6 @@
 package ie.gmit.bem.web.rest.errors;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see ExceptionTranslator
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 public class ExceptionTranslatorIntTest {
 
     @Autowired

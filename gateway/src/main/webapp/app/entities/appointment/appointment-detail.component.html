@@ -1,25 +1,43 @@
 
 <div *ngIf="appointment">
-    <h2><span jhiTranslate="bemApp.appointment.detail.title">Appointment</span> {{appointment.id}}</h2>
+    <h2><span jhiTranslate="gatewayApp.appointment.detail.title">Appointment</span> {{appointment.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.appointment.name">Name</span></dt>
+        <dt><span jhiTranslate="gatewayApp.appointment.name">Name</span></dt>
         <dd>
             <span>{{appointment.name}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.appointment.address">Address</span></dt>
+        <dt><span jhiTranslate="gatewayApp.appointment.address">Address</span></dt>
         <dd>
             <span>{{appointment.address}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.appointment.time">Time</span></dt>
+        <dt><span jhiTranslate="gatewayApp.appointment.time">Time</span></dt>
         <dd>
             <span>{{appointment.time | date:'medium'}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.appointment.profile">Profile</span></dt>
+        <dt><span jhiTranslate="gatewayApp.appointment.location">Location</span></dt>
+        <dd>
+            <div *ngIf="appointment.location">
+                <a [routerLink]="['/location', appointment.location?.id]">{{appointment.location?.region}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.appointment.category">Category</span></dt>
+        <dd>
+            <div *ngIf="appointment.category">
+                <a [routerLink]="['/category', appointment.category?.id]">{{appointment.category?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.appointment.profile">Profile</span></dt>
         <dd>
             <span *ngFor="let profile of appointment.profiles; let last = last">
                 <a [routerLink]="['/profile', profile?.id ]">{{profile.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span jhiTranslate="gatewayApp.appointment.message">Message</span></dt>
+        <dd>
+            <span *ngFor="let message of appointment.messages; let last = last">
+                <a [routerLink]="['/message', message?.id ]">{{message.time}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
     </dl>

@@ -21,7 +21,7 @@ describe('Profile e2e test', () => {
         navBarPage.goToEntity('profile');
         profileComponentsPage = new ProfileComponentsPage();
         expect(profileComponentsPage.getTitle())
-            .toMatch(/bemApp.profile.home.title/);
+            .toMatch(/gatewayApp.profile.home.title/);
 
     });
 
@@ -29,7 +29,7 @@ describe('Profile e2e test', () => {
         profileComponentsPage.clickOnCreateButton();
         profileDialogPage = new ProfileDialogPage();
         expect(profileDialogPage.getModalTitle())
-            .toMatch(/bemApp.profile.home.createOrEditLabel/);
+            .toMatch(/gatewayApp.profile.home.createOrEditLabel/);
         profileDialogPage.close();
     });
 
@@ -42,6 +42,8 @@ describe('Profile e2e test', () => {
         profileDialogPage.setPictureInput(absolutePath);
         profileDialogPage.userSelectLastOption();
         profileDialogPage.locationSelectLastOption();
+        // profileDialogPage.appointmentSelectLastOption();
+        // profileDialogPage.categorySelectLastOption();
         profileDialogPage.save();
         expect(profileDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -73,6 +75,8 @@ export class ProfileDialogPage {
     pictureInput = element(by.css('input#file_picture'));
     userSelect = element(by.css('select#field_user'));
     locationSelect = element(by.css('select#field_location'));
+    appointmentSelect = element(by.css('select#field_appointment'));
+    categorySelect = element(by.css('select#field_category'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
@@ -132,6 +136,38 @@ export class ProfileDialogPage {
 
     getLocationSelectedOption = function() {
         return this.locationSelect.element(by.css('option:checked')).getText();
+    };
+
+    appointmentSelectLastOption = function() {
+        this.appointmentSelect.all(by.tagName('option')).last().click();
+    };
+
+    appointmentSelectOption = function(option) {
+        this.appointmentSelect.sendKeys(option);
+    };
+
+    getAppointmentSelect = function() {
+        return this.appointmentSelect;
+    };
+
+    getAppointmentSelectedOption = function() {
+        return this.appointmentSelect.element(by.css('option:checked')).getText();
+    };
+
+    categorySelectLastOption = function() {
+        this.categorySelect.all(by.tagName('option')).last().click();
+    };
+
+    categorySelectOption = function(option) {
+        this.categorySelect.sendKeys(option);
+    };
+
+    getCategorySelect = function() {
+        return this.categorySelect;
+    };
+
+    getCategorySelectedOption = function() {
+        return this.categorySelect.element(by.css('option:checked')).getText();
     };
 
     save() {

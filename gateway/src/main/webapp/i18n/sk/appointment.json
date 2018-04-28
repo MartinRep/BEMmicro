@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "appointment" : {
             "home": {
                 "title": "Appointments",
                 "createLabel": "Pridať Appointment",
-                "createOrEditLabel": "Pridať alebo upraviť Appointment"
+                "createOrEditLabel": "Pridať alebo upraviť Appointment",
+                "search": "Vyhľadať Appointment"
             },
             "created": "Bol vytvorený potomok entity Appointment s identifikátorom {{ param }}",
             "updated": "Potomok entity Appointment s identifikátorom {{ param }} bol upravený.",
@@ -19,7 +20,8 @@
             "name": "Name",
             "address": "Address",
             "time": "Time",
-            "categories": "Categories",
+            "location": "Location",
+            "category": "Category",
             "profile": "Profile",
             "message": "Message"
         }

@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "lastMinuteOffer" : {
             "home": {
                 "title": "Last Minute Offers",
                 "createLabel": "Dodaj Last Minute Offer",
-                "createOrEditLabel": "Dodaj lub edytuj: Last Minute Offer"
+                "createOrEditLabel": "Dodaj lub edytuj: Last Minute Offer",
+                "search": "Szukaj Last Minute Offer"
             },
             "delete": {
                 "question": "Czy na pewno chcesz usunąć Last Minute Offer {{ id }}?"
@@ -15,7 +16,7 @@
             },
             "name": "Name",
             "profile": "Profile",
-            "service": "Service"
+            "lastMinuteService": "Last Minute Service"
         }
     },
     "lastminuteApp": {

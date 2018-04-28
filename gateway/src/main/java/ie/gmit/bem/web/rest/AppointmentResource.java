@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import ie.gmit.bem.domain.Appointment;
 
 import ie.gmit.bem.repository.AppointmentRepository;
+import ie.gmit.bem.repository.search.AppointmentSearchRepository;
 import ie.gmit.bem.web.rest.errors.BadRequestAlertException;
 import ie.gmit.bem.web.rest.util.HeaderUtil;
 import ie.gmit.bem.web.rest.util.PaginationUtil;
@@ -22,6 +23,10 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Appointment.
@@ -36,8 +41,11 @@ public class AppointmentResource {
 
     private final AppointmentRepository appointmentRepository;
 
-    public AppointmentResource(AppointmentRepository appointmentRepository) {
+    private final AppointmentSearchRepository appointmentSearchRepository;
+
+    public AppointmentResource(AppointmentRepository appointmentRepository, AppointmentSearchRepository appointmentSearchRepository) {
         this.appointmentRepository = appointmentRepository;
+        this.appointmentSearchRepository = appointmentSearchRepository;
     }
 
     /**
@@ -55,6 +63,7 @@ public class AppointmentResource {
             throw new BadRequestAlertException("A new appointment cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Appointment result = appointmentRepository.save(appointment);
+        appointmentSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/appointments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -77,6 +86,7 @@ public class AppointmentResource {
             return createAppointment(appointment);
         }
         Appointment result = appointmentRepository.save(appointment);
+        appointmentSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, appointment.getId().toString()))
             .body(result);
@@ -122,6 +132,25 @@ public class AppointmentResource {
     public ResponseEntity<Void> deleteAppointment(@PathVariable Long id) {
         log.debug("REST request to delete Appointment : {}", id);
         appointmentRepository.delete(id);
+        appointmentSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/appointments?query=:query : search for the appointment corresponding
+     * to the query.
+     *
+     * @param query the query of the appointment search
+     * @param pageable the pagination information
+     * @return the result of the search
+     */
+    @GetMapping("/_search/appointments")
+    @Timed
+    public ResponseEntity<List<Appointment>> searchAppointments(@RequestParam String query, Pageable pageable) {
+        log.debug("REST request to search for a page of Appointments for query {}", query);
+        Page<Appointment> page = appointmentSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/appointments");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
 }

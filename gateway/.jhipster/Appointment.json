@@ -2,24 +2,34 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "categories",
-            "otherEntityName": "categories",
+            "relationshipType": "one-to-one",
+            "relationshipName": "location",
+            "otherEntityName": "location",
+            "otherEntityField": "region",
+            "ownerSide": true,
             "otherEntityRelationshipName": "appointment"
         },
         {
+            "relationshipType": "many-to-one",
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "otherEntityField": "name"
+        },
+        {
             "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "appointment",
+            "otherEntityRelationshipName": "",
             "relationshipName": "profile",
             "otherEntityName": "profile",
             "otherEntityField": "name",
             "ownerSide": true
         },
         {
-            "relationshipType": "one-to-many",
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
             "relationshipName": "message",
             "otherEntityName": "message",
-            "otherEntityRelationshipName": "appointment"
+            "otherEntityField": "time",
+            "ownerSide": true
         }
     ],
     "fields": [
@@ -36,10 +46,10 @@
             "fieldType": "ZonedDateTime"
         }
     ],
-    "changelogDate": "20180418093537",
+    "changelogDate": "20180427234547",
     "entityTableName": "appointment",
     "dto": "no",
-    "pagination": "pagination",
+    "pagination": "infinite-scroll",
     "service": "no",
     "jpaMetamodelFiltering": false
 }

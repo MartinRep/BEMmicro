@@ -12,6 +12,7 @@ export type EntityResponseType = HttpResponse<Profile>;
 export class ProfileService {
 
     private resourceUrl =  SERVER_API_URL + 'api/profiles';
+    private resourceSearchUrl = SERVER_API_URL + 'api/_search/profiles';
 
     constructor(private http: HttpClient) { }
 
@@ -40,6 +41,12 @@ export class ProfileService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+    }
+
+    search(req?: any): Observable<HttpResponse<Profile[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<Profile[]>(this.resourceSearchUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<Profile[]>) => this.convertArrayResponse(res));
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {

@@ -1,7 +1,7 @@
 {
-  "name": "bem",
+  "name": "gateway",
   "version": "0.0.0",
-  "description": "Description for Bem",
+  "description": "Description for gateway",
   "private": true,
   "license": "UNLICENSED",
   "cacheDirectories": [
@@ -47,7 +47,7 @@
     "exports-loader": "0.6.4",
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.5",
-    "generator-jhipster": "4.14.3",
+    "generator-jhipster": "4.14.1",
     "html-loader": "0.5.0",
     "html-webpack-plugin": "2.30.1",
     "jasmine-core": "2.7.0",
@@ -80,7 +80,6 @@
     "sass-loader": "6.0.6",
     "node-sass": "4.5.3",
     "postcss-loader": "2.0.9",
-    "generator-jhipster-ionic": "3.1.2",
     "uglifyjs-webpack-plugin": "1.1.5",
     "webpack": "3.10.0",
     "webpack-dev-server": "2.9.5",

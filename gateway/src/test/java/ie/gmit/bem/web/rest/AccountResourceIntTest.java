@@ -1,7 +1,7 @@
 package ie.gmit.bem.web.rest;
 
 import ie.gmit.bem.config.Constants;
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 import ie.gmit.bem.domain.Authority;
 import ie.gmit.bem.domain.User;
 import ie.gmit.bem.repository.AuthorityRepository;
@@ -49,7 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see AccountResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 public class AccountResourceIntTest {
 
     @Autowired

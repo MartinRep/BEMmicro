@@ -1,9 +1,10 @@
 package ie.gmit.bem.web.rest;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 
 import ie.gmit.bem.domain.Appointment;
 import ie.gmit.bem.repository.AppointmentRepository;
+import ie.gmit.bem.repository.search.AppointmentSearchRepository;
 import ie.gmit.bem.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -40,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see AppointmentResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 public class AppointmentResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
@@ -54,6 +55,9 @@ public class AppointmentResourceIntTest {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private AppointmentSearchRepository appointmentSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -74,7 +78,7 @@ public class AppointmentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AppointmentResource appointmentResource = new AppointmentResource(appointmentRepository);
+        final AppointmentResource appointmentResource = new AppointmentResource(appointmentRepository, appointmentSearchRepository);
         this.restAppointmentMockMvc = MockMvcBuilders.standaloneSetup(appointmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -98,6 +102,7 @@ public class AppointmentResourceIntTest {
 
     @Before
     public void initTest() {
+        appointmentSearchRepository.deleteAll();
         appointment = createEntity(em);
     }
 
@@ -119,6 +124,11 @@ public class AppointmentResourceIntTest {
         assertThat(testAppointment.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testAppointment.getAddress()).isEqualTo(DEFAULT_ADDRESS);
         assertThat(testAppointment.getTime()).isEqualTo(DEFAULT_TIME);
+
+        // Validate the Appointment in Elasticsearch
+        Appointment appointmentEs = appointmentSearchRepository.findOne(testAppointment.getId());
+        assertThat(testAppointment.getTime()).isEqualTo(testAppointment.getTime());
+        assertThat(appointmentEs).isEqualToIgnoringGivenFields(testAppointment, "time");
     }
 
     @Test
@@ -185,6 +195,7 @@ public class AppointmentResourceIntTest {
     public void updateAppointment() throws Exception {
         // Initialize the database
         appointmentRepository.saveAndFlush(appointment);
+        appointmentSearchRepository.save(appointment);
         int databaseSizeBeforeUpdate = appointmentRepository.findAll().size();
 
         // Update the appointment
@@ -208,6 +219,11 @@ public class AppointmentResourceIntTest {
         assertThat(testAppointment.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testAppointment.getAddress()).isEqualTo(UPDATED_ADDRESS);
         assertThat(testAppointment.getTime()).isEqualTo(UPDATED_TIME);
+
+        // Validate the Appointment in Elasticsearch
+        Appointment appointmentEs = appointmentSearchRepository.findOne(testAppointment.getId());
+        assertThat(testAppointment.getTime()).isEqualTo(testAppointment.getTime());
+        assertThat(appointmentEs).isEqualToIgnoringGivenFields(testAppointment, "time");
     }
 
     @Test
@@ -233,6 +249,7 @@ public class AppointmentResourceIntTest {
     public void deleteAppointment() throws Exception {
         // Initialize the database
         appointmentRepository.saveAndFlush(appointment);
+        appointmentSearchRepository.save(appointment);
         int databaseSizeBeforeDelete = appointmentRepository.findAll().size();
 
         // Get the appointment
@@ -240,9 +257,30 @@ public class AppointmentResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean appointmentExistsInEs = appointmentSearchRepository.exists(appointment.getId());
+        assertThat(appointmentExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Appointment> appointmentList = appointmentRepository.findAll();
         assertThat(appointmentList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchAppointment() throws Exception {
+        // Initialize the database
+        appointmentRepository.saveAndFlush(appointment);
+        appointmentSearchRepository.save(appointment);
+
+        // Search the appointment
+        restAppointmentMockMvc.perform(get("/api/_search/appointments?query=id:" + appointment.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(appointment.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))));
     }
 
     @Test

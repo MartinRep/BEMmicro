@@ -1,11 +1,11 @@
 package ie.gmit.bem.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -18,6 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "appointment")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "appointment")
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,10 +36,12 @@ public class Appointment implements Serializable {
     @Column(name = "jhi_time")
     private ZonedDateTime time;
 
-    @OneToMany(mappedBy = "appointment")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Categories> categories = new HashSet<>();
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Location location;
+
+    @ManyToOne
+    private Category category;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -47,9 +50,11 @@ public class Appointment implements Serializable {
                inverseJoinColumns = @JoinColumn(name="profiles_id", referencedColumnName="id"))
     private Set<Profile> profiles = new HashSet<>();
 
-    @OneToMany(mappedBy = "appointment")
-    @JsonIgnore
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "appointment_message",
+               joinColumns = @JoinColumn(name="appointments_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="messages_id", referencedColumnName="id"))
     private Set<Message> messages = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -100,29 +105,30 @@ public class Appointment implements Serializable {
         this.time = time;
     }
 
-    public Set<Categories> getCategories() {
-        return categories;
+    public Location getLocation() {
+        return location;
     }
 
-    public Appointment categories(Set<Categories> categories) {
-        this.categories = categories;
+    public Appointment location(Location location) {
+        this.location = location;
         return this;
     }
 
-    public Appointment addCategories(Categories categories) {
-        this.categories.add(categories);
-        categories.setAppointment(this);
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public Appointment category(Category category) {
+        this.category = category;
         return this;
     }
 
-    public Appointment removeCategories(Categories categories) {
-        this.categories.remove(categories);
-        categories.setAppointment(null);
-        return this;
-    }
-
-    public void setCategories(Set<Categories> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Set<Profile> getProfiles() {
@@ -136,13 +142,11 @@ public class Appointment implements Serializable {
 
     public Appointment addProfile(Profile profile) {
         this.profiles.add(profile);
-        profile.getAppointments().add(this);
         return this;
     }
 
     public Appointment removeProfile(Profile profile) {
         this.profiles.remove(profile);
-        profile.getAppointments().remove(this);
         return this;
     }
 
@@ -161,13 +165,11 @@ public class Appointment implements Serializable {
 
     public Appointment addMessage(Message message) {
         this.messages.add(message);
-        message.setAppointment(this);
         return this;
     }
 
     public Appointment removeMessage(Message message) {
         this.messages.remove(message);
-        message.setAppointment(null);
         return this;
     }
 

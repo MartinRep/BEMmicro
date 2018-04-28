@@ -19,7 +19,7 @@ describe('LastMinuteOffer e2e test', () => {
         navBarPage.goToEntity('last-minute-offer');
         lastMinuteOfferComponentsPage = new LastMinuteOfferComponentsPage();
         expect(lastMinuteOfferComponentsPage.getTitle())
-            .toMatch(/bemApp.lastMinuteOffer.home.title/);
+            .toMatch(/gatewayApp.lastMinuteOffer.home.title/);
 
     });
 
@@ -27,7 +27,7 @@ describe('LastMinuteOffer e2e test', () => {
         lastMinuteOfferComponentsPage.clickOnCreateButton();
         lastMinuteOfferDialogPage = new LastMinuteOfferDialogPage();
         expect(lastMinuteOfferDialogPage.getModalTitle())
-            .toMatch(/bemApp.lastMinuteOffer.home.createOrEditLabel/);
+            .toMatch(/gatewayApp.lastMinuteOffer.home.createOrEditLabel/);
         lastMinuteOfferDialogPage.close();
     });
 
@@ -35,9 +35,9 @@ describe('LastMinuteOffer e2e test', () => {
         lastMinuteOfferComponentsPage.clickOnCreateButton();
         lastMinuteOfferDialogPage.setNameInput('name');
         expect(lastMinuteOfferDialogPage.getNameInput()).toMatch('name');
-        lastMinuteOfferDialogPage.setProfileInput('5');
-        expect(lastMinuteOfferDialogPage.getProfileInput()).toMatch('5');
-        lastMinuteOfferDialogPage.serviceSelectLastOption();
+        lastMinuteOfferDialogPage.setProfileInput('profile');
+        expect(lastMinuteOfferDialogPage.getProfileInput()).toMatch('profile');
+        lastMinuteOfferDialogPage.lastMinuteServiceSelectLastOption();
         lastMinuteOfferDialogPage.save();
         expect(lastMinuteOfferDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -66,7 +66,7 @@ export class LastMinuteOfferDialogPage {
     closeButton = element(by.css('button.close'));
     nameInput = element(by.css('input#field_name'));
     profileInput = element(by.css('input#field_profile'));
-    serviceSelect = element(by.css('select#field_service'));
+    lastMinuteServiceSelect = element(by.css('select#field_lastMinuteService'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
@@ -88,20 +88,20 @@ export class LastMinuteOfferDialogPage {
         return this.profileInput.getAttribute('value');
     };
 
-    serviceSelectLastOption = function() {
-        this.serviceSelect.all(by.tagName('option')).last().click();
+    lastMinuteServiceSelectLastOption = function() {
+        this.lastMinuteServiceSelect.all(by.tagName('option')).last().click();
     };
 
-    serviceSelectOption = function(option) {
-        this.serviceSelect.sendKeys(option);
+    lastMinuteServiceSelectOption = function(option) {
+        this.lastMinuteServiceSelect.sendKeys(option);
     };
 
-    getServiceSelect = function() {
-        return this.serviceSelect;
+    getLastMinuteServiceSelect = function() {
+        return this.lastMinuteServiceSelect;
     };
 
-    getServiceSelectedOption = function() {
-        return this.serviceSelect.element(by.css('option:checked')).getText();
+    getLastMinuteServiceSelectedOption = function() {
+        return this.lastMinuteServiceSelect.element(by.css('option:checked')).getText();
     };
 
     save() {

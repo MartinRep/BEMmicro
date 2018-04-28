@@ -1,13 +1,13 @@
 version: '2'
 services:
-    bem-mariadb:
+    gateway-mariadb:
         image: mariadb:10.1.17
-        volumes:
-            - ~/volumes/jhipster/Bem/mysql/:/var/lib/mysql/
+        # volumes:
+        #     - ~/volumes/jhipster/gateway/mysql/:/var/lib/mysql/
         environment:
             - MYSQL_USER=root
             - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-            - MYSQL_DATABASE=bem
+            - MYSQL_DATABASE=gateway
         ports:
             - 3306:3306
         command: mysqld --lower_case_table_names=1 --skip-ssl

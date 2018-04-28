@@ -1,6 +1,6 @@
 package ie.gmit.bem.web.rest;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 import ie.gmit.bem.config.audit.AuditEventConverter;
 import ie.gmit.bem.domain.PersistentAuditEvent;
 import ie.gmit.bem.repository.PersistenceAuditEventRepository;
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see AuditResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 @Transactional
 public class AuditResourceIntTest {
 

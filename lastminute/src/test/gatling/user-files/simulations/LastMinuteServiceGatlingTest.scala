@@ -68,7 +68,7 @@ class LastMinuteServiceGatlingTest extends Simulation {
             .exec(http("Create new lastMinuteService")
             .post("/lastminute/api/last-minute-services")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "category":"0", "description":"SAMPLE_TEXT", "available":"2020-01-01T00:00:00.000Z", "location":"SAMPLE_TEXT", "price":null, "address":"SAMPLE_TEXT", "image":null, "profile":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "category":"0", "description":"SAMPLE_TEXT", "available":"2020-01-01T00:00:00.000Z", "location":"SAMPLE_TEXT", "price":null, "address":"SAMPLE_TEXT", "image":null, "profile":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_lastMinuteService_url"))).exitHereIfFailed
             .pause(10)

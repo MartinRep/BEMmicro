@@ -1,7 +1,7 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myProfileLabel" jhiTranslate="bemApp.profile.home.createOrEditLabel">Create or edit a Profile</h4>
+        <h4 class="modal-title" id="myProfileLabel" jhiTranslate="gatewayApp.profile.home.createOrEditLabel">Create or edit a Profile</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
@@ -13,17 +13,17 @@
                    [(ngModel)]="profile.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.profile.name" for="field_name">Name</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.profile.name" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
                 [(ngModel)]="profile.name" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.profile.phNumber" for="field_phNumber">Ph Number</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.profile.phNumber" for="field_phNumber">Ph Number</label>
             <input type="text" class="form-control" name="phNumber" id="field_phNumber"
                 [(ngModel)]="profile.phNumber" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.profile.picture" for="field_picture">Picture</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.profile.picture" for="field_picture">Picture</label>
             <div>
                 <img [src]="'data:' + profile.pictureContentType + ';base64,' + profile.picture" style="max-height: 100px;" *ngIf="profile.picture" alt="profile image"/>
                 <div *ngIf="profile.picture" class="form-text text-danger clearfix">
@@ -41,17 +41,29 @@
         </div>
 
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.profile.user" for="field_user">User</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.profile.user" for="field_user">User</label>
             <select class="form-control" id="field_user" name="user" [(ngModel)]="profile.user" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="userOption.id === profile.user?.id ? profile.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                <option [ngValue]="userOption.id === profile.user?.id ? profile.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.email}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.profile.location" for="field_location">Location</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.profile.location" for="field_location">Location</label>
             <select class="form-control" id="field_location" name="location" [(ngModel)]="profile.location" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="locationOption.id === profile.location?.id ? profile.location : locationOption" *ngFor="let locationOption of locations; trackBy: trackLocationById">{{locationOption.region}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="gatewayApp.profile.appointment" for="field_appointment">Appointment</label>
+            <select class="form-control" id="field_appointment" multiple name="appointment" [(ngModel)]="profile.appointments">
+                <option [ngValue]="getSelected(profile.appointments, appointmentOption)" *ngFor="let appointmentOption of appointments; trackBy: trackAppointmentById">{{appointmentOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="gatewayApp.profile.category" for="field_category">Category</label>
+            <select class="form-control" id="field_category" multiple name="category" [(ngModel)]="profile.categories">
+                <option [ngValue]="getSelected(profile.categories, categoryOption)" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</option>
             </select>
         </div>
     </div>

@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "request" : {
             "home": {
                 "title": "Requests",
                 "createLabel": "Pridať Request",
-                "createOrEditLabel": "Pridať alebo upraviť Request"
+                "createOrEditLabel": "Pridať alebo upraviť Request",
+                "search": "Vyhľadať Request"
             },
             "delete": {
                 "question": "Ste si istý, že chcete vymazať Request {{ id }}?"

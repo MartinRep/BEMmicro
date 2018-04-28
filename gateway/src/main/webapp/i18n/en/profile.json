@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "profile" : {
             "home": {
                 "title": "Profiles",
                 "createLabel": "Create a new Profile",
-                "createOrEditLabel": "Create or edit a Profile"
+                "createOrEditLabel": "Create or edit a Profile",
+                "search": "Search for Profile"
             },
             "created": "A new Profile is created with identifier {{ param }}",
             "updated": "A Profile is updated with identifier {{ param }}",
@@ -21,7 +22,8 @@
             "picture": "Picture",
             "user": "User",
             "location": "Location",
-            "appointment": "Appointment"
+            "appointment": "Appointment",
+            "category": "Category"
         }
     }
 }

@@ -19,7 +19,7 @@ describe('Message e2e test', () => {
         navBarPage.goToEntity('message');
         messageComponentsPage = new MessageComponentsPage();
         expect(messageComponentsPage.getTitle())
-            .toMatch(/bemApp.message.home.title/);
+            .toMatch(/gatewayApp.message.home.title/);
 
     });
 
@@ -27,7 +27,7 @@ describe('Message e2e test', () => {
         messageComponentsPage.clickOnCreateButton();
         messageDialogPage = new MessageDialogPage();
         expect(messageDialogPage.getModalTitle())
-            .toMatch(/bemApp.message.home.createOrEditLabel/);
+            .toMatch(/gatewayApp.message.home.createOrEditLabel/);
         messageDialogPage.close();
     });
 
@@ -37,7 +37,7 @@ describe('Message e2e test', () => {
         expect(messageDialogPage.getTimeInput()).toMatch('2001-12-31T02:30');
         messageDialogPage.setContentInput('content');
         expect(messageDialogPage.getContentInput()).toMatch('content');
-        messageDialogPage.appointmentSelectLastOption();
+        // messageDialogPage.appointmentSelectLastOption();
         messageDialogPage.save();
         expect(messageDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });

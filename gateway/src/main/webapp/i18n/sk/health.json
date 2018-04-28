@@ -18,6 +18,7 @@
             "hystrix": "Hystrix",
             "diskSpace": "Diskový priestor",
             "mail": "Email",
+            "elasticsearch": "Elasticsearch",
             "db": "Databáza"
         },
         "table": {

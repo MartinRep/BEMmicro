@@ -1,6 +1,6 @@
 {
     "global": {
-        "title": "Bem",
+        "title": "Gateway",
         "browsehappy": "Používate <strong>zastaraný</strong> prehliadač. Prosím <a href=\"http://browsehappy.com/?locale=en\">aktualizujte svoj prehliadač</a> pre zlepšenie použiteľnosti.",
         "menu": {
             "home": "Domov",
@@ -10,12 +10,12 @@
                 "profile": "Profile",
                 "appointment": "Appointment",
                 "message": "Message",
+                "category": "Category",
+                "location": "Location",
                 "request": "Request",
                 "offer": "Offer",
                 "lastMinuteService": "Last Minute Service",
                 "lastMinuteOffer": "Last Minute Offer",
-                "location": "Location",
-                "categories": "Categories",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

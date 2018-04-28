@@ -2,10 +2,12 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "many-to-one",
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
             "relationshipName": "appointment",
             "otherEntityName": "appointment",
-            "otherEntityField": "name"
+            "otherEntityField": "name",
+            "ownerSide": true
         }
     ],
     "fields": [
@@ -21,7 +23,7 @@
             ]
         }
     ],
-    "changelogDate": "20180418093538",
+    "changelogDate": "20180427234548",
     "entityTableName": "message",
     "dto": "no",
     "pagination": "infinite-scroll",

@@ -19,7 +19,7 @@ describe('Location e2e test', () => {
         navBarPage.goToEntity('location');
         locationComponentsPage = new LocationComponentsPage();
         expect(locationComponentsPage.getTitle())
-            .toMatch(/bemApp.location.home.title/);
+            .toMatch(/gatewayApp.location.home.title/);
 
     });
 
@@ -27,7 +27,7 @@ describe('Location e2e test', () => {
         locationComponentsPage.clickOnCreateButton();
         locationDialogPage = new LocationDialogPage();
         expect(locationDialogPage.getModalTitle())
-            .toMatch(/bemApp.location.home.createOrEditLabel/);
+            .toMatch(/gatewayApp.location.home.createOrEditLabel/);
         locationDialogPage.close();
     });
 

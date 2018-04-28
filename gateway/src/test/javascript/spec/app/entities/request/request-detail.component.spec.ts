@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-import { BemTestModule } from '../../../test.module';
+import { GatewayTestModule } from '../../../test.module';
 import { RequestDetailComponent } from '../../../../../../main/webapp/app/entities/request/request-detail.component';
 import { RequestService } from '../../../../../../main/webapp/app/entities/request/request.service';
 import { Request } from '../../../../../../main/webapp/app/entities/request/request.model';
@@ -17,7 +17,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [BemTestModule],
+                imports: [GatewayTestModule],
                 declarations: [RequestDetailComponent],
                 providers: [
                     RequestService

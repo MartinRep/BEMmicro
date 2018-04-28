@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "last_minute_offer")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "lastminuteoffer")
 public class LastMinuteOffer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,10 +28,10 @@ public class LastMinuteOffer implements Serializable {
     private String name;
 
     @Column(name = "jhi_profile")
-    private Integer profile;
+    private String profile;
 
     @ManyToOne
-    private LastMinuteService service;
+    private LastMinuteService lastMinuteService;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -53,30 +55,30 @@ public class LastMinuteOffer implements Serializable {
         this.name = name;
     }
 
-    public Integer getProfile() {
+    public String getProfile() {
         return profile;
     }
 
-    public LastMinuteOffer profile(Integer profile) {
+    public LastMinuteOffer profile(String profile) {
         this.profile = profile;
         return this;
     }
 
-    public void setProfile(Integer profile) {
+    public void setProfile(String profile) {
         this.profile = profile;
     }
 
-    public LastMinuteService getService() {
-        return service;
+    public LastMinuteService getLastMinuteService() {
+        return lastMinuteService;
     }
 
-    public LastMinuteOffer service(LastMinuteService lastMinuteService) {
-        this.service = lastMinuteService;
+    public LastMinuteOffer lastMinuteService(LastMinuteService lastMinuteService) {
+        this.lastMinuteService = lastMinuteService;
         return this;
     }
 
-    public void setService(LastMinuteService lastMinuteService) {
-        this.service = lastMinuteService;
+    public void setLastMinuteService(LastMinuteService lastMinuteService) {
+        this.lastMinuteService = lastMinuteService;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -105,7 +107,7 @@ public class LastMinuteOffer implements Serializable {
         return "LastMinuteOffer{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", profile=" + getProfile() +
+            ", profile='" + getProfile() + "'" +
             "}";
     }
 }

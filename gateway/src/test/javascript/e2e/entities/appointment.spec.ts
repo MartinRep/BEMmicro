@@ -19,7 +19,7 @@ describe('Appointment e2e test', () => {
         navBarPage.goToEntity('appointment');
         appointmentComponentsPage = new AppointmentComponentsPage();
         expect(appointmentComponentsPage.getTitle())
-            .toMatch(/bemApp.appointment.home.title/);
+            .toMatch(/gatewayApp.appointment.home.title/);
 
     });
 
@@ -27,7 +27,7 @@ describe('Appointment e2e test', () => {
         appointmentComponentsPage.clickOnCreateButton();
         appointmentDialogPage = new AppointmentDialogPage();
         expect(appointmentDialogPage.getModalTitle())
-            .toMatch(/bemApp.appointment.home.createOrEditLabel/);
+            .toMatch(/gatewayApp.appointment.home.createOrEditLabel/);
         appointmentDialogPage.close();
     });
 
@@ -39,7 +39,10 @@ describe('Appointment e2e test', () => {
         expect(appointmentDialogPage.getAddressInput()).toMatch('address');
         appointmentDialogPage.setTimeInput(12310020012301);
         expect(appointmentDialogPage.getTimeInput()).toMatch('2001-12-31T02:30');
+        appointmentDialogPage.locationSelectLastOption();
+        appointmentDialogPage.categorySelectLastOption();
         // appointmentDialogPage.profileSelectLastOption();
+        // appointmentDialogPage.messageSelectLastOption();
         appointmentDialogPage.save();
         expect(appointmentDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -69,7 +72,10 @@ export class AppointmentDialogPage {
     nameInput = element(by.css('input#field_name'));
     addressInput = element(by.css('input#field_address'));
     timeInput = element(by.css('input#field_time'));
+    locationSelect = element(by.css('select#field_location'));
+    categorySelect = element(by.css('select#field_category'));
     profileSelect = element(by.css('select#field_profile'));
+    messageSelect = element(by.css('select#field_message'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
@@ -99,6 +105,38 @@ export class AppointmentDialogPage {
         return this.timeInput.getAttribute('value');
     };
 
+    locationSelectLastOption = function() {
+        this.locationSelect.all(by.tagName('option')).last().click();
+    };
+
+    locationSelectOption = function(option) {
+        this.locationSelect.sendKeys(option);
+    };
+
+    getLocationSelect = function() {
+        return this.locationSelect;
+    };
+
+    getLocationSelectedOption = function() {
+        return this.locationSelect.element(by.css('option:checked')).getText();
+    };
+
+    categorySelectLastOption = function() {
+        this.categorySelect.all(by.tagName('option')).last().click();
+    };
+
+    categorySelectOption = function(option) {
+        this.categorySelect.sendKeys(option);
+    };
+
+    getCategorySelect = function() {
+        return this.categorySelect;
+    };
+
+    getCategorySelectedOption = function() {
+        return this.categorySelect.element(by.css('option:checked')).getText();
+    };
+
     profileSelectLastOption = function() {
         this.profileSelect.all(by.tagName('option')).last().click();
     };
@@ -113,6 +151,22 @@ export class AppointmentDialogPage {
 
     getProfileSelectedOption = function() {
         return this.profileSelect.element(by.css('option:checked')).getText();
+    };
+
+    messageSelectLastOption = function() {
+        this.messageSelect.all(by.tagName('option')).last().click();
+    };
+
+    messageSelectOption = function(option) {
+        this.messageSelect.sendKeys(option);
+    };
+
+    getMessageSelect = function() {
+        return this.messageSelect;
+    };
+
+    getMessageSelectedOption = function() {
+        return this.messageSelect.element(by.css('option:checked')).getText();
     };
 
     save() {

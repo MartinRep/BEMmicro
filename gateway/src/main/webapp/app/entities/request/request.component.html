@@ -1,15 +1,28 @@
 <div>
     <h2>
-        <span jhiTranslate="bemApp.request.home.title">Requests</span>
+        <span jhiTranslate="gatewayApp.request.home.title">Requests</span>
         <button class="btn btn-primary float-right jh-create-entity create-request" [routerLink]="['/', { outlets: { popup: ['request-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="bemApp.request.home.createLabel">
+            <span class="hidden-sm-down"  jhiTranslate="gatewayApp.request.home.createLabel">
             Create new Request
             </span>
         </button>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'gatewayApp.request.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
     <br/>
     <div class="table-responsive" *ngIf="requests">
@@ -17,14 +30,14 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="bemApp.request.category">Category</span></th>
-            <th><span jhiTranslate="bemApp.request.region">Region</span></th>
-            <th><span jhiTranslate="bemApp.request.description">Description</span></th>
-            <th><span jhiTranslate="bemApp.request.duration">Duration</span></th>
-            <th><span jhiTranslate="bemApp.request.expPrice">Exp Price</span></th>
-            <th><span jhiTranslate="bemApp.request.image">Image</span></th>
-            <th><span jhiTranslate="bemApp.request.profile">Profile</span></th>
-            <th><span jhiTranslate="bemApp.request.posted">Posted</span></th>
+            <th><span jhiTranslate="gatewayApp.request.category">Category</span></th>
+            <th><span jhiTranslate="gatewayApp.request.region">Region</span></th>
+            <th><span jhiTranslate="gatewayApp.request.description">Description</span></th>
+            <th><span jhiTranslate="gatewayApp.request.duration">Duration</span></th>
+            <th><span jhiTranslate="gatewayApp.request.expPrice">Exp Price</span></th>
+            <th><span jhiTranslate="gatewayApp.request.image">Image</span></th>
+            <th><span jhiTranslate="gatewayApp.request.profile">Profile</span></th>
+            <th><span jhiTranslate="gatewayApp.request.posted">Posted</span></th>
             <th></th>
             </tr>
             </thead>

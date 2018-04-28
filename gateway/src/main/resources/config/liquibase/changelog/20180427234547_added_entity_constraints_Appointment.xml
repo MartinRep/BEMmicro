@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Appointment.
+    -->
+    <changeSet id="20180427234547-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="location_id"
+                                 baseTableName="appointment"
+                                 constraintName="fk_appointment_location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="location"/>
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="appointment"
+                                 constraintName="fk_appointment_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"/>
+
+        <addForeignKeyConstraint baseColumnNames="appointments_id"
+                                 baseTableName="appointment_profile"
+                                 constraintName="fk_appointment_profile_appointments_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="appointment"/>
+        <addForeignKeyConstraint baseColumnNames="profiles_id"
+                                 baseTableName="appointment_profile"
+                                 constraintName="fk_appointment_profile_profiles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profile"/>
+        
+        <addForeignKeyConstraint baseColumnNames="appointments_id"
+                                 baseTableName="appointment_message"
+                                 constraintName="fk_appointment_message_appointments_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="appointment"/>
+        <addForeignKeyConstraint baseColumnNames="messages_id"
+                                 baseTableName="appointment_message"
+                                 constraintName="fk_appointment_message_messages_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="message"/>
+        
+    </changeSet>
+</databaseChangeLog>

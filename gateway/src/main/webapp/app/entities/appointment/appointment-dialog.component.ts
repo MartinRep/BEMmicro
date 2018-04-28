@@ -9,7 +9,10 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Appointment } from './appointment.model';
 import { AppointmentPopupService } from './appointment-popup.service';
 import { AppointmentService } from './appointment.service';
+import { Location, LocationService } from '../location';
+import { Category, CategoryService } from '../category';
 import { Profile, ProfileService } from '../profile';
+import { Message, MessageService } from '../message';
 
 @Component({
     selector: 'jhi-appointment-dialog',
@@ -20,21 +23,47 @@ export class AppointmentDialogComponent implements OnInit {
     appointment: Appointment;
     isSaving: boolean;
 
+    locations: Location[];
+
+    categories: Category[];
+
     profiles: Profile[];
+
+    messages: Message[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private appointmentService: AppointmentService,
+        private locationService: LocationService,
+        private categoryService: CategoryService,
         private profileService: ProfileService,
+        private messageService: MessageService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.locationService
+            .query({filter: 'appointment-is-null'})
+            .subscribe((res: HttpResponse<Location[]>) => {
+                if (!this.appointment.location || !this.appointment.location.id) {
+                    this.locations = res.body;
+                } else {
+                    this.locationService
+                        .find(this.appointment.location.id)
+                        .subscribe((subRes: HttpResponse<Location>) => {
+                            this.locations = [subRes.body].concat(res.body);
+                        }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
+                }
+            }, (res: HttpErrorResponse) => this.onError(res.message));
+        this.categoryService.query()
+            .subscribe((res: HttpResponse<Category[]>) => { this.categories = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.profileService.query()
             .subscribe((res: HttpResponse<Profile[]>) => { this.profiles = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+        this.messageService.query()
+            .subscribe((res: HttpResponse<Message[]>) => { this.messages = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -71,7 +100,19 @@ export class AppointmentDialogComponent implements OnInit {
         this.jhiAlertService.error(error.message, null, null);
     }
 
+    trackLocationById(index: number, item: Location) {
+        return item.id;
+    }
+
+    trackCategoryById(index: number, item: Category) {
+        return item.id;
+    }
+
     trackProfileById(index: number, item: Profile) {
+        return item.id;
+    }
+
+    trackMessageById(index: number, item: Message) {
         return item.id;
     }
 

@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "location" : {
             "home": {
                 "title": "Locations",
                 "createLabel": "Dodaj Location",
-                "createOrEditLabel": "Dodaj lub edytuj: Location"
+                "createOrEditLabel": "Dodaj lub edytuj: Location",
+                "search": "Szukaj Location"
             },
             "created": "Utworzono nowy Location z identyfikatorem {{ param }}",
             "updated": "Uaktualniono Location z identyfikatorem {{ param }}",
@@ -16,8 +17,7 @@
             "detail": {
                 "title": "Location"
             },
-            "region": "Region",
-            "profile": "Profile"
+            "region": "Region"
         }
     }
 }

@@ -1,9 +1,13 @@
 version: '2'
 services:
-    bem-mariadb:
+    gateway-mariadb:
         extends:
             file: mariadb.yml
-            service: bem-mariadb
+            service: gateway-mariadb
+    gateway-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: gateway-elasticsearch
     kafka:
         extends:
             file: kafka.yml
@@ -14,9 +18,3 @@ services:
         extends:
             file: kafka.yml
             service: zookeeper
-    jhipster-registry:
-        extends:
-            file: jhipster-registry.yml
-            service: jhipster-registry
-        environment:
-            - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:./central-config/docker-config/

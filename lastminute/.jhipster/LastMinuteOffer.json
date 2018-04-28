@@ -3,7 +3,7 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "service",
+            "relationshipName": "lastMinuteService",
             "otherEntityName": "lastMinuteService",
             "otherEntityField": "description"
         }
@@ -15,10 +15,10 @@
         },
         {
             "fieldName": "profile",
-            "fieldType": "Integer"
+            "fieldType": "String"
         }
     ],
-    "changelogDate": "20180419213150",
+    "changelogDate": "20180428133217",
     "entityTableName": "last_minute_offer",
     "dto": "no",
     "pagination": "no",

@@ -1,6 +1,6 @@
 {
     "global": {
-        "title": "Bem",
+        "title": "Gateway",
         "browsehappy": "Używasz <strong>przestarzałej</strong> przeglądarki. Proszę <a href=\"http://browsehappy.com/\">uaktualnij swoją przeglądarkę</a> aby poprawić wrażenia z użytkowania tej aplikacji.",
         "menu": {
             "home": "Strona domowa",
@@ -10,12 +10,12 @@
                 "profile": "Profile",
                 "appointment": "Appointment",
                 "message": "Message",
+                "category": "Category",
+                "location": "Location",
                 "request": "Request",
                 "offer": "Offer",
                 "lastMinuteService": "Last Minute Service",
                 "lastMinuteOffer": "Last Minute Offer",
-                "location": "Location",
-                "categories": "Categories",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

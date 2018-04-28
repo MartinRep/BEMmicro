@@ -1,21 +1,21 @@
 
 <div *ngIf="lastMinuteOffer">
-    <h2><span jhiTranslate="bemApp.lastMinuteOffer.detail.title">Last Minute Offer</span> {{lastMinuteOffer.id}}</h2>
+    <h2><span jhiTranslate="gatewayApp.lastMinuteOffer.detail.title">Last Minute Offer</span> {{lastMinuteOffer.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.lastMinuteOffer.name">Name</span></dt>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteOffer.name">Name</span></dt>
         <dd>
             <span>{{lastMinuteOffer.name}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteOffer.profile">Profile</span></dt>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteOffer.profile">Profile</span></dt>
         <dd>
             <span>{{lastMinuteOffer.profile}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.lastMinuteOffer.service">Service</span></dt>
+        <dt><span jhiTranslate="gatewayApp.lastMinuteOffer.lastMinuteService">Last Minute Service</span></dt>
         <dd>
-            <div *ngIf="lastMinuteOffer.service">
-                <a [routerLink]="['/last-minute-service', lastMinuteOffer.service?.id]">{{lastMinuteOffer.service?.name}}</a>
+            <div *ngIf="lastMinuteOffer.lastMinuteService">
+                <a [routerLink]="['/last-minute-service', lastMinuteOffer.lastMinuteService?.id]">{{lastMinuteOffer.lastMinuteService?.description}}</a>
             </div>
         </dd>
     </dl>

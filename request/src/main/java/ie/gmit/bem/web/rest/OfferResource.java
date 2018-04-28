@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import ie.gmit.bem.domain.Offer;
 
 import ie.gmit.bem.repository.OfferRepository;
+import ie.gmit.bem.repository.search.OfferSearchRepository;
 import ie.gmit.bem.web.rest.errors.BadRequestAlertException;
 import ie.gmit.bem.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -18,6 +19,10 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Offer.
@@ -32,8 +37,11 @@ public class OfferResource {
 
     private final OfferRepository offerRepository;
 
-    public OfferResource(OfferRepository offerRepository) {
+    private final OfferSearchRepository offerSearchRepository;
+
+    public OfferResource(OfferRepository offerRepository, OfferSearchRepository offerSearchRepository) {
         this.offerRepository = offerRepository;
+        this.offerSearchRepository = offerSearchRepository;
     }
 
     /**
@@ -51,6 +59,7 @@ public class OfferResource {
             throw new BadRequestAlertException("A new offer cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Offer result = offerRepository.save(offer);
+        offerSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/offers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -73,6 +82,7 @@ public class OfferResource {
             return createOffer(offer);
         }
         Offer result = offerRepository.save(offer);
+        offerSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offer.getId().toString()))
             .body(result);
@@ -115,6 +125,24 @@ public class OfferResource {
     public ResponseEntity<Void> deleteOffer(@PathVariable Long id) {
         log.debug("REST request to delete Offer : {}", id);
         offerRepository.delete(id);
+        offerSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/offers?query=:query : search for the offer corresponding
+     * to the query.
+     *
+     * @param query the query of the offer search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/offers")
+    @Timed
+    public List<Offer> searchOffers(@RequestParam String query) {
+        log.debug("REST request to search Offers for query {}", query);
+        return StreamSupport
+            .stream(offerSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
+    }
+
 }

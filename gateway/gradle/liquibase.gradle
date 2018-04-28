@@ -46,7 +46,7 @@ def liquibaseCommand(command) {
         args "--referenceUrl=hibernate:spring:ie.gmit.bem.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
         args "--username=root"
         args "--password="
-        args "--url=jdbc:mariadb://localhost:3306/Bem"
+        args "--url=jdbc:mariadb://localhost:3306/gateway"
         args "--driver=org.mariadb.jdbc.Driver"
         args command
     }

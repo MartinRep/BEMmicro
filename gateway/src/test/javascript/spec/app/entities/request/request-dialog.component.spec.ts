@@ -5,7 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BemTestModule } from '../../../test.module';
+import { GatewayTestModule } from '../../../test.module';
 import { RequestDialogComponent } from '../../../../../../main/webapp/app/entities/request/request-dialog.component';
 import { RequestService } from '../../../../../../main/webapp/app/entities/request/request.service';
 import { Request } from '../../../../../../main/webapp/app/entities/request/request.model';
@@ -21,7 +21,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [BemTestModule],
+                imports: [GatewayTestModule],
                 declarations: [RequestDialogComponent],
                 providers: [
                     RequestService

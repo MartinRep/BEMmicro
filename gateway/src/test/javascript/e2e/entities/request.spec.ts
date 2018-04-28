@@ -21,7 +21,7 @@ describe('Request e2e test', () => {
         navBarPage.goToEntity('request');
         requestComponentsPage = new RequestComponentsPage();
         expect(requestComponentsPage.getTitle())
-            .toMatch(/bemApp.request.home.title/);
+            .toMatch(/gatewayApp.request.home.title/);
 
     });
 
@@ -29,7 +29,7 @@ describe('Request e2e test', () => {
         requestComponentsPage.clickOnCreateButton();
         requestDialogPage = new RequestDialogPage();
         expect(requestDialogPage.getModalTitle())
-            .toMatch(/bemApp.request.home.createOrEditLabel/);
+            .toMatch(/gatewayApp.request.home.createOrEditLabel/);
         requestDialogPage.close();
     });
 
@@ -46,8 +46,8 @@ describe('Request e2e test', () => {
         requestDialogPage.setExpPriceInput('5');
         expect(requestDialogPage.getExpPriceInput()).toMatch('5');
         requestDialogPage.setImageInput(absolutePath);
-        requestDialogPage.setProfileInput('5');
-        expect(requestDialogPage.getProfileInput()).toMatch('5');
+        requestDialogPage.setProfileInput('profile');
+        expect(requestDialogPage.getProfileInput()).toMatch('profile');
         requestDialogPage.setPostedInput(12310020012301);
         expect(requestDialogPage.getPostedInput()).toMatch('2001-12-31T02:30');
         requestDialogPage.save();

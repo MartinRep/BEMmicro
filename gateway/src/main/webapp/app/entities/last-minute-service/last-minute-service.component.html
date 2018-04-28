@@ -1,15 +1,28 @@
 <div>
     <h2>
-        <span jhiTranslate="bemApp.lastMinuteService.home.title">Last Minute Services</span>
+        <span jhiTranslate="gatewayApp.lastMinuteService.home.title">Last Minute Services</span>
         <button class="btn btn-primary float-right jh-create-entity create-last-minute-service" [routerLink]="['/', { outlets: { popup: ['last-minute-service-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="bemApp.lastMinuteService.home.createLabel">
+            <span class="hidden-sm-down"  jhiTranslate="gatewayApp.lastMinuteService.home.createLabel">
             Create new Last Minute Service
             </span>
         </button>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'gatewayApp.lastMinuteService.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
     <br/>
     <div class="table-responsive" *ngIf="lastMinuteServices">
@@ -17,26 +30,26 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="price"><span jhiTranslate="bemApp.lastMinuteService.price">Price</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="address"><span jhiTranslate="bemApp.lastMinuteService.address">Address</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="category"><span jhiTranslate="bemApp.lastMinuteService.category">Category</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="description"><span jhiTranslate="bemApp.lastMinuteService.description">Description</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="available"><span jhiTranslate="bemApp.lastMinuteService.available">Available</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="location"><span jhiTranslate="bemApp.lastMinuteService.location">Location</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="image"><span jhiTranslate="bemApp.lastMinuteService.image">Image</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="profile"><span jhiTranslate="bemApp.lastMinuteService.profile">Profile</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="category"><span jhiTranslate="gatewayApp.lastMinuteService.category">Category</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="description"><span jhiTranslate="gatewayApp.lastMinuteService.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="available"><span jhiTranslate="gatewayApp.lastMinuteService.available">Available</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="location"><span jhiTranslate="gatewayApp.lastMinuteService.location">Location</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="price"><span jhiTranslate="gatewayApp.lastMinuteService.price">Price</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="address"><span jhiTranslate="gatewayApp.lastMinuteService.address">Address</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="image"><span jhiTranslate="gatewayApp.lastMinuteService.image">Image</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="profile"><span jhiTranslate="gatewayApp.lastMinuteService.profile">Profile</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let lastMinuteService of lastMinuteServices ;trackBy: trackId">
                 <td><a [routerLink]="['../last-minute-service', lastMinuteService.id ]">{{lastMinuteService.id}}</a></td>
-                <td>{{lastMinuteService.price}}</td>
-                <td>{{lastMinuteService.address}}</td>
                 <td>{{lastMinuteService.category}}</td>
                 <td>{{lastMinuteService.description}}</td>
                 <td>{{lastMinuteService.available | date:'medium'}}</td>
                 <td>{{lastMinuteService.location}}</td>
+                <td>{{lastMinuteService.price}}</td>
+                <td>{{lastMinuteService.address}}</td>
                 <td>
                     <a *ngIf="lastMinuteService.image" (click)="openFile(lastMinuteService.imageContentType, lastMinuteService.image)">
                         <img [src]="'data:' + lastMinuteService.imageContentType + ';base64,' + lastMinuteService.image" style="max-height: 30px;" alt="lastMinuteService image"/>

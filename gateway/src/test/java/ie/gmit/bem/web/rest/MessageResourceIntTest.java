@@ -1,9 +1,10 @@
 package ie.gmit.bem.web.rest;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 
 import ie.gmit.bem.domain.Message;
 import ie.gmit.bem.repository.MessageRepository;
+import ie.gmit.bem.repository.search.MessageSearchRepository;
 import ie.gmit.bem.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -37,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see MessageResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 public class MessageResourceIntTest {
 
     private static final Instant DEFAULT_TIME = Instant.ofEpochMilli(0L);
@@ -48,6 +49,9 @@ public class MessageResourceIntTest {
 
     @Autowired
     private MessageRepository messageRepository;
+
+    @Autowired
+    private MessageSearchRepository messageSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -68,7 +72,7 @@ public class MessageResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MessageResource messageResource = new MessageResource(messageRepository);
+        final MessageResource messageResource = new MessageResource(messageRepository, messageSearchRepository);
         this.restMessageMockMvc = MockMvcBuilders.standaloneSetup(messageResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -91,6 +95,7 @@ public class MessageResourceIntTest {
 
     @Before
     public void initTest() {
+        messageSearchRepository.deleteAll();
         message = createEntity(em);
     }
 
@@ -111,6 +116,10 @@ public class MessageResourceIntTest {
         Message testMessage = messageList.get(messageList.size() - 1);
         assertThat(testMessage.getTime()).isEqualTo(DEFAULT_TIME);
         assertThat(testMessage.getContent()).isEqualTo(DEFAULT_CONTENT);
+
+        // Validate the Message in Elasticsearch
+        Message messageEs = messageSearchRepository.findOne(testMessage.getId());
+        assertThat(messageEs).isEqualToIgnoringGivenFields(testMessage);
     }
 
     @Test
@@ -193,6 +202,7 @@ public class MessageResourceIntTest {
     public void updateMessage() throws Exception {
         // Initialize the database
         messageRepository.saveAndFlush(message);
+        messageSearchRepository.save(message);
         int databaseSizeBeforeUpdate = messageRepository.findAll().size();
 
         // Update the message
@@ -214,6 +224,10 @@ public class MessageResourceIntTest {
         Message testMessage = messageList.get(messageList.size() - 1);
         assertThat(testMessage.getTime()).isEqualTo(UPDATED_TIME);
         assertThat(testMessage.getContent()).isEqualTo(UPDATED_CONTENT);
+
+        // Validate the Message in Elasticsearch
+        Message messageEs = messageSearchRepository.findOne(testMessage.getId());
+        assertThat(messageEs).isEqualToIgnoringGivenFields(testMessage);
     }
 
     @Test
@@ -239,6 +253,7 @@ public class MessageResourceIntTest {
     public void deleteMessage() throws Exception {
         // Initialize the database
         messageRepository.saveAndFlush(message);
+        messageSearchRepository.save(message);
         int databaseSizeBeforeDelete = messageRepository.findAll().size();
 
         // Get the message
@@ -246,9 +261,29 @@ public class MessageResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean messageExistsInEs = messageSearchRepository.exists(message.getId());
+        assertThat(messageExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Message> messageList = messageRepository.findAll();
         assertThat(messageList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchMessage() throws Exception {
+        // Initialize the database
+        messageRepository.saveAndFlush(message);
+        messageSearchRepository.save(message);
+
+        // Search the message
+        restMessageMockMvc.perform(get("/api/_search/messages?query=id:" + message.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(message.getId().intValue())))
+            .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME.toString())))
+            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())));
     }
 
     @Test

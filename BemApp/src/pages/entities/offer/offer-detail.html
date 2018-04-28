@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Offer</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>Description</ion-label>
+            <div item-content>
+                <span>{{offer.description}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Available On</ion-label>
+            <div item-content>
+                <span>{{offer.availableOn | date:'medium'}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Price</ion-label>
+            <div item-content>
+                <span>{{offer.price}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Profile</ion-label>
+            <div item-content>
+                <span>{{offer.profile}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Request</ion-label>
+            <div item-content *ngIf="offer.request">
+                <a>{{offer.request?.description}}</a>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <button ion-button block (click)="open(offer)">{{ 'EDIT_BUTTON' | translate }}</button>
+</ion-content>

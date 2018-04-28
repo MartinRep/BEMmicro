@@ -45,14 +45,17 @@
         },
         {
             "fieldName": "profile",
-            "fieldType": "Integer"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "posted",
             "fieldType": "Instant"
         }
     ],
-    "changelogDate": "20180419202510",
+    "changelogDate": "20180428092025",
     "entityTableName": "request",
     "dto": "no",
     "pagination": "no",

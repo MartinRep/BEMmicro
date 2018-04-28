@@ -4,10 +4,6 @@ entity Profile {
     picture ImageBlob
 }
 
-entity Location {
-	region String required
-}
-
 entity Appointment {
     name String,
     address String,
@@ -19,23 +15,31 @@ entity Message {
     content String required
 }
 
-entity Categories {
-	category String required
+entity Category {
+	name String required
+}
+
+entity Location {
+	region String required
 }
 
 relationship ManyToMany {
-	Appointment{profile(name)} to Profile{appointment(name)}
+	Profile{appointment(name)} to Appointment,
+    Appointment{profile(name)} to Profile,
+    Appointment{message(time)} to Message,
+    Message{appointment(name)} to Appointment,
+    Profile{category(name)} to Category
 }
 
-relationship OneToMany {
-	Appointment{categories(category)} to Categories
+relationship OneToOne {
+	Appointment{location(region)} to Location
 }
 
 relationship ManyToOne{
-	Profile{user(login)} to User,
-    Profile{location(region)} to Location{profile(location)},
-    Message{appointment(name)} to Appointment{message(time)}
+	Profile{user(email)} to User{profile(name)},
+    Appointment{category(name)} to Category,
+    Profile{location(region)} to Location
 }
 
-paginate Appointment with pagination
+paginate Appointment with infinite-scroll
 paginate Message with infinite-scroll

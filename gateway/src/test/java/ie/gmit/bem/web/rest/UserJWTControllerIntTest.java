@@ -1,6 +1,6 @@
 package ie.gmit.bem.web.rest;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 import ie.gmit.bem.domain.User;
 import ie.gmit.bem.repository.UserRepository;
 import ie.gmit.bem.security.jwt.TokenProvider;
@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.not;
  * @see UserJWTController
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 public class UserJWTControllerIntTest {
 
     @Autowired

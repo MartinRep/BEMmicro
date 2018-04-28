@@ -1,13 +1,6 @@
 {
     "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "profile",
-            "otherEntityName": "profile",
-            "otherEntityRelationshipName": "location"
-        }
-    ],
+    "relationships": [],
     "fields": [
         {
             "fieldName": "region",
@@ -17,7 +10,7 @@
             ]
         }
     ],
-    "changelogDate": "20180422200556",
+    "changelogDate": "20180427234550",
     "entityTableName": "location",
     "dto": "no",
     "pagination": "no",

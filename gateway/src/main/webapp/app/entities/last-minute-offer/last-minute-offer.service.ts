@@ -12,6 +12,7 @@ export type EntityResponseType = HttpResponse<LastMinuteOffer>;
 export class LastMinuteOfferService {
 
     private resourceUrl =  SERVER_API_URL + 'lastminute/api/last-minute-offers';
+    private resourceSearchUrl = SERVER_API_URL + 'lastminute/api/_search/last-minute-offers';
 
     constructor(private http: HttpClient) { }
 
@@ -40,6 +41,12 @@ export class LastMinuteOfferService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+    }
+
+    search(req?: any): Observable<HttpResponse<LastMinuteOffer[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<LastMinuteOffer[]>(this.resourceSearchUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<LastMinuteOffer[]>) => this.convertArrayResponse(res));
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {

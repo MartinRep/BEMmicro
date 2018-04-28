@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "profile" : {
             "home": {
                 "title": "Profiles",
                 "createLabel": "Pridať Profile",
-                "createOrEditLabel": "Pridať alebo upraviť Profile"
+                "createOrEditLabel": "Pridať alebo upraviť Profile",
+                "search": "Vyhľadať Profile"
             },
             "created": "Bol vytvorený potomok entity Profile s identifikátorom {{ param }}",
             "updated": "Potomok entity Profile s identifikátorom {{ param }} bol upravený.",
@@ -21,7 +22,8 @@
             "picture": "Picture",
             "user": "User",
             "location": "Location",
-            "appointment": "Appointment"
+            "appointment": "Appointment",
+            "category": "Category"
         }
     }
 }

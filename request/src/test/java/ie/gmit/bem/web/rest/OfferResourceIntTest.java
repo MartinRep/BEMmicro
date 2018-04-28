@@ -4,6 +4,7 @@ import ie.gmit.bem.RequestApp;
 
 import ie.gmit.bem.domain.Offer;
 import ie.gmit.bem.repository.OfferRepository;
+import ie.gmit.bem.repository.search.OfferSearchRepository;
 import ie.gmit.bem.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -52,11 +53,14 @@ public class OfferResourceIntTest {
     private static final Double DEFAULT_PRICE = 1D;
     private static final Double UPDATED_PRICE = 2D;
 
-    private static final Integer DEFAULT_PROFILE = 1;
-    private static final Integer UPDATED_PROFILE = 2;
+    private static final String DEFAULT_PROFILE = "AAAAAAAAAA";
+    private static final String UPDATED_PROFILE = "BBBBBBBBBB";
 
     @Autowired
     private OfferRepository offerRepository;
+
+    @Autowired
+    private OfferSearchRepository offerSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -77,7 +81,7 @@ public class OfferResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OfferResource offerResource = new OfferResource(offerRepository);
+        final OfferResource offerResource = new OfferResource(offerRepository, offerSearchRepository);
         this.restOfferMockMvc = MockMvcBuilders.standaloneSetup(offerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -102,6 +106,7 @@ public class OfferResourceIntTest {
 
     @Before
     public void initTest() {
+        offerSearchRepository.deleteAll();
         offer = createEntity(em);
     }
 
@@ -124,6 +129,11 @@ public class OfferResourceIntTest {
         assertThat(testOffer.getAvailableOn()).isEqualTo(DEFAULT_AVAILABLE_ON);
         assertThat(testOffer.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testOffer.getProfile()).isEqualTo(DEFAULT_PROFILE);
+
+        // Validate the Offer in Elasticsearch
+        Offer offerEs = offerSearchRepository.findOne(testOffer.getId());
+        assertThat(testOffer.getAvailableOn()).isEqualTo(testOffer.getAvailableOn());
+        assertThat(offerEs).isEqualToIgnoringGivenFields(testOffer, "availableOn");
     }
 
     @Test
@@ -165,6 +175,24 @@ public class OfferResourceIntTest {
 
     @Test
     @Transactional
+    public void checkProfileIsRequired() throws Exception {
+        int databaseSizeBeforeTest = offerRepository.findAll().size();
+        // set the field null
+        offer.setProfile(null);
+
+        // Create the Offer, which fails.
+
+        restOfferMockMvc.perform(post("/api/offers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(offer)))
+            .andExpect(status().isBadRequest());
+
+        List<Offer> offerList = offerRepository.findAll();
+        assertThat(offerList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllOffers() throws Exception {
         // Initialize the database
         offerRepository.saveAndFlush(offer);
@@ -177,7 +205,7 @@ public class OfferResourceIntTest {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].availableOn").value(hasItem(sameInstant(DEFAULT_AVAILABLE_ON))))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
-            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE)));
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE.toString())));
     }
 
     @Test
@@ -194,7 +222,7 @@ public class OfferResourceIntTest {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.availableOn").value(sameInstant(DEFAULT_AVAILABLE_ON)))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
-            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE));
+            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE.toString()));
     }
 
     @Test
@@ -210,6 +238,7 @@ public class OfferResourceIntTest {
     public void updateOffer() throws Exception {
         // Initialize the database
         offerRepository.saveAndFlush(offer);
+        offerSearchRepository.save(offer);
         int databaseSizeBeforeUpdate = offerRepository.findAll().size();
 
         // Update the offer
@@ -235,6 +264,11 @@ public class OfferResourceIntTest {
         assertThat(testOffer.getAvailableOn()).isEqualTo(UPDATED_AVAILABLE_ON);
         assertThat(testOffer.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testOffer.getProfile()).isEqualTo(UPDATED_PROFILE);
+
+        // Validate the Offer in Elasticsearch
+        Offer offerEs = offerSearchRepository.findOne(testOffer.getId());
+        assertThat(testOffer.getAvailableOn()).isEqualTo(testOffer.getAvailableOn());
+        assertThat(offerEs).isEqualToIgnoringGivenFields(testOffer, "availableOn");
     }
 
     @Test
@@ -260,6 +294,7 @@ public class OfferResourceIntTest {
     public void deleteOffer() throws Exception {
         // Initialize the database
         offerRepository.saveAndFlush(offer);
+        offerSearchRepository.save(offer);
         int databaseSizeBeforeDelete = offerRepository.findAll().size();
 
         // Get the offer
@@ -267,9 +302,31 @@ public class OfferResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean offerExistsInEs = offerSearchRepository.exists(offer.getId());
+        assertThat(offerExistsInEs).isFalse();
+
         // Validate the database is empty
         List<Offer> offerList = offerRepository.findAll();
         assertThat(offerList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchOffer() throws Exception {
+        // Initialize the database
+        offerRepository.saveAndFlush(offer);
+        offerSearchRepository.save(offer);
+
+        // Search the offer
+        restOfferMockMvc.perform(get("/api/_search/offers?query=id:" + offer.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(offer.getId().intValue())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].availableOn").value(hasItem(sameInstant(DEFAULT_AVAILABLE_ON))))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE.toString())));
     }
 
     @Test

@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { BemSharedModule } from '../../shared';
+import { GatewaySharedModule } from '../../shared';
 import {
     LastMinuteServiceService,
     LastMinuteServicePopupService,
@@ -23,7 +23,7 @@ const ENTITY_STATES = [
 
 @NgModule({
     imports: [
-        BemSharedModule,
+        GatewaySharedModule,
         RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
@@ -48,4 +48,4 @@ const ENTITY_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class BemLastMinuteServiceModule {}
+export class GatewayLastMinuteServiceModule {}

@@ -17,12 +17,12 @@ eureka:
     client:
         enabled: true
     instance:
-        appname: Bem
-        instanceId: Bem:${spring.application.instance-id:${random.value}}
+        appname: gateway
+        instanceId: gateway:${spring.application.instance-id:${random.value}}
 
 spring:
     application:
-        name: Bem
+        name: gateway
     jackson:
         serialization.write_dates_as_timestamps: false
     cache:
@@ -38,7 +38,7 @@ spring:
                     destination: topic-jhipster
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:mem:Bem;DB_CLOSE_DELAY=-1
+        url: jdbc:h2:mem:gateway;DB_CLOSE_DELAY=-1
         name:
         username:
         password:
@@ -58,6 +58,14 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
             hibernate.hbm2ddl.auto: validate
+    data:
+        elasticsearch:
+            cluster-name:
+            cluster-nodes:
+            properties:
+                path:
+                    logs: build/elasticsearch/log
+                    data: build/elasticsearch/data
     mail:
         host: localhost
     messages:
@@ -103,7 +111,7 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: 34c7e4b2b28fcc6e94b8facc3c02ea4669ef579e
+                secret: ecd8aae62c6a1e983ec92bf711890ea7248cf25a
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration

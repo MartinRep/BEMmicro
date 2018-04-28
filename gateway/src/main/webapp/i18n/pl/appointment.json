@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "appointment" : {
             "home": {
                 "title": "Appointments",
                 "createLabel": "Dodaj Appointment",
-                "createOrEditLabel": "Dodaj lub edytuj: Appointment"
+                "createOrEditLabel": "Dodaj lub edytuj: Appointment",
+                "search": "Szukaj Appointment"
             },
             "created": "Utworzono nowy Appointment z identyfikatorem {{ param }}",
             "updated": "Uaktualniono Appointment z identyfikatorem {{ param }}",
@@ -19,7 +20,8 @@
             "name": "Name",
             "address": "Address",
             "time": "Time",
-            "categories": "Categories",
+            "location": "Location",
+            "category": "Category",
             "profile": "Profile",
             "message": "Message"
         }

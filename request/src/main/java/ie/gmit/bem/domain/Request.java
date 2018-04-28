@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -20,6 +21,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "request")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "request")
 public class Request implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,8 +55,9 @@ public class Request implements Serializable {
     @Column(name = "image_content_type")
     private String imageContentType;
 
-    @Column(name = "jhi_profile")
-    private Integer profile;
+    @NotNull
+    @Column(name = "jhi_profile", nullable = false)
+    private String profile;
 
     @Column(name = "posted")
     private Instant posted;
@@ -164,16 +167,16 @@ public class Request implements Serializable {
         this.imageContentType = imageContentType;
     }
 
-    public Integer getProfile() {
+    public String getProfile() {
         return profile;
     }
 
-    public Request profile(Integer profile) {
+    public Request profile(String profile) {
         this.profile = profile;
         return this;
     }
 
-    public void setProfile(Integer profile) {
+    public void setProfile(String profile) {
         this.profile = profile;
     }
 
@@ -247,7 +250,7 @@ public class Request implements Serializable {
             ", expPrice=" + getExpPrice() +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
-            ", profile=" + getProfile() +
+            ", profile='" + getProfile() + "'" +
             ", posted='" + getPosted() + "'" +
             "}";
     }

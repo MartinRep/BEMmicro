@@ -5,13 +5,14 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BemTestModule } from '../../../test.module';
+import { GatewayTestModule } from '../../../test.module';
 import { ProfileDialogComponent } from '../../../../../../main/webapp/app/entities/profile/profile-dialog.component';
 import { ProfileService } from '../../../../../../main/webapp/app/entities/profile/profile.service';
 import { Profile } from '../../../../../../main/webapp/app/entities/profile/profile.model';
 import { UserService } from '../../../../../../main/webapp/app/shared';
 import { LocationService } from '../../../../../../main/webapp/app/entities/location';
 import { AppointmentService } from '../../../../../../main/webapp/app/entities/appointment';
+import { CategoryService } from '../../../../../../main/webapp/app/entities/category';
 
 describe('Component Tests', () => {
 
@@ -24,12 +25,13 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [BemTestModule],
+                imports: [GatewayTestModule],
                 declarations: [ProfileDialogComponent],
                 providers: [
                     UserService,
                     LocationService,
                     AppointmentService,
+                    CategoryService,
                     ProfileService
                 ]
             })

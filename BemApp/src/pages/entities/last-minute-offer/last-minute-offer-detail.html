@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Last Minute Offer</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>Name</ion-label>
+            <div item-content>
+                <span>{{lastMinuteOffer.name}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Profile</ion-label>
+            <div item-content>
+                <span>{{lastMinuteOffer.profile}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Last Minute Service</ion-label>
+            <div item-content *ngIf="lastMinuteOffer.lastMinuteService">
+                <a>{{lastMinuteOffer.lastMinuteService?.description}}</a>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <button ion-button block (click)="open(lastMinuteOffer)">{{ 'EDIT_BUTTON' | translate }}</button>
+</ion-content>

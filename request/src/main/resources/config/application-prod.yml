@@ -56,6 +56,10 @@ spring:
             hibernate.cache.hazelcast.instance_name: request
             hibernate.cache.use_minimal_puts: true
             hibernate.cache.hazelcast.use_lite_member: true
+    data:
+        elasticsearch:
+            cluster-name:
+            cluster-nodes: localhost:9300
     mail:
         host: localhost
         port: 25
@@ -121,7 +125,7 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: 02a25c635f2f9a59abed713c9defbd1ec133ae37
+                secret: 7a82c15fb253f3f40665cd34d4c33e2561202e12
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000

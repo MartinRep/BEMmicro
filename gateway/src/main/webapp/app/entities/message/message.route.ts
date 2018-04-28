@@ -12,7 +12,7 @@ export const messageRoute: Routes = [
         component: MessageComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.message.home.title'
+            pageTitle: 'gatewayApp.message.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const messageRoute: Routes = [
         component: MessageDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.message.home.title'
+            pageTitle: 'gatewayApp.message.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const messagePopupRoute: Routes = [
         component: MessagePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.message.home.title'
+            pageTitle: 'gatewayApp.message.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const messagePopupRoute: Routes = [
         component: MessagePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.message.home.title'
+            pageTitle: 'gatewayApp.message.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const messagePopupRoute: Routes = [
         component: MessageDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.message.home.title'
+            pageTitle: 'gatewayApp.message.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

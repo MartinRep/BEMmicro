@@ -5,9 +5,10 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180419213149_added_entity_LastMinuteService.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180419213150_added_entity_LastMinuteOffer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180428133216_added_entity_LastMinuteService.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180428133217_added_entity_LastMinuteOffer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180428134421_added_entity_LastMinuteSevice.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20180419213150_added_entity_constraints_LastMinuteOffer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180428133217_added_entity_constraints_LastMinuteOffer.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

@@ -1,15 +1,28 @@
 <div>
     <h2>
-        <span jhiTranslate="bemApp.lastMinuteOffer.home.title">Last Minute Offers</span>
+        <span jhiTranslate="gatewayApp.lastMinuteOffer.home.title">Last Minute Offers</span>
         <button class="btn btn-primary float-right jh-create-entity create-last-minute-offer" [routerLink]="['/', { outlets: { popup: ['last-minute-offer-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="bemApp.lastMinuteOffer.home.createLabel">
+            <span class="hidden-sm-down"  jhiTranslate="gatewayApp.lastMinuteOffer.home.createLabel">
             Create new Last Minute Offer
             </span>
         </button>
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'gatewayApp.lastMinuteOffer.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
     <br/>
     <div class="table-responsive" *ngIf="lastMinuteOffers">
@@ -17,9 +30,9 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="bemApp.lastMinuteOffer.name">Name</span></th>
-            <th><span jhiTranslate="bemApp.lastMinuteOffer.profile">Profile</span></th>
-            <th><span jhiTranslate="bemApp.lastMinuteOffer.service">Service</span></th>
+            <th><span jhiTranslate="gatewayApp.lastMinuteOffer.name">Name</span></th>
+            <th><span jhiTranslate="gatewayApp.lastMinuteOffer.profile">Profile</span></th>
+            <th><span jhiTranslate="gatewayApp.lastMinuteOffer.lastMinuteService">Last Minute Service</span></th>
             <th></th>
             </tr>
             </thead>
@@ -29,8 +42,8 @@
                 <td>{{lastMinuteOffer.name}}</td>
                 <td>{{lastMinuteOffer.profile}}</td>
                 <td>
-                    <div *ngIf="lastMinuteOffer.service">
-                        <a [routerLink]="['../last-minute-service', lastMinuteOffer.service?.id ]" >{{lastMinuteOffer.service?.name}}</a>
+                    <div *ngIf="lastMinuteOffer.lastMinuteService">
+                        <a [routerLink]="['../last-minute-service', lastMinuteOffer.lastMinuteService?.id ]" >{{lastMinuteOffer.lastMinuteService?.description}}</a>
                     </div>
                 </td>
                 <td class="text-right">

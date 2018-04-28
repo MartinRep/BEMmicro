@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "request" : {
             "home": {
                 "title": "Requests",
                 "createLabel": "Dodaj Request",
-                "createOrEditLabel": "Dodaj lub edytuj: Request"
+                "createOrEditLabel": "Dodaj lub edytuj: Request",
+                "search": "Szukaj Request"
             },
             "delete": {
                 "question": "Czy na pewno chcesz usunąć Request {{ id }}?"

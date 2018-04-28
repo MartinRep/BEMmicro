@@ -12,7 +12,7 @@ export const offerRoute: Routes = [
         component: OfferComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.offer.home.title'
+            pageTitle: 'gatewayApp.offer.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const offerRoute: Routes = [
         component: OfferDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.offer.home.title'
+            pageTitle: 'gatewayApp.offer.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const offerPopupRoute: Routes = [
         component: OfferPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.offer.home.title'
+            pageTitle: 'gatewayApp.offer.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const offerPopupRoute: Routes = [
         component: OfferPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.offer.home.title'
+            pageTitle: 'gatewayApp.offer.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const offerPopupRoute: Routes = [
         component: OfferDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.offer.home.title'
+            pageTitle: 'gatewayApp.offer.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

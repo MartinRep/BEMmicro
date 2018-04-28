@@ -24,8 +24,8 @@ eureka:
         instance-info-replication-interval-seconds: 10
         registry-fetch-interval-seconds: 10
     instance:
-        appname: Bem
-        instanceId: Bem:${spring.application.instance-id:${random.value}}
+        appname: gateway
+        instanceId: gateway:${spring.application.instance-id:${random.value}}
         lease-renewal-interval-in-seconds: 5
         lease-expiration-duration-in-seconds: 10
         status-page-url-path: ${management.context-path}/info
@@ -68,7 +68,7 @@ management:
             enabled: true
 spring:
     application:
-        name: Bem
+        name: gateway
     jackson:
         serialization.write_dates_as_timestamps: false
     jpa:
@@ -118,11 +118,11 @@ jhipster:
         #allow-credentials: true
         #max-age: 1800
     mail:
-        from: Bem@localhost
+        from: gateway@localhost
     swagger:
         default-include-pattern: /api/.*
-        title: Bem API
-        description: Bem API documentation
+        title: gateway API
+        description: gateway API documentation
         version: 0.0.1
         terms-of-service-url:
         contact-name:

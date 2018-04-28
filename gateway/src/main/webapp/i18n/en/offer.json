@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "offer" : {
             "home": {
                 "title": "Offers",
                 "createLabel": "Create a new Offer",
-                "createOrEditLabel": "Create or edit a Offer"
+                "createOrEditLabel": "Create or edit a Offer",
+                "search": "Search for Offer"
             },
             "delete": {
                 "question": "Are you sure you want to delete Offer {{ id }}?"
@@ -13,9 +14,9 @@
             "detail": {
                 "title": "Offer"
             },
-            "price": "Price",
             "description": "Description",
             "availableOn": "Available On",
+            "price": "Price",
             "profile": "Profile",
             "request": "Request"
         }

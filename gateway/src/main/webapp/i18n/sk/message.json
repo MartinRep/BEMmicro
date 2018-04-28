@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "message" : {
             "home": {
                 "title": "Messages",
                 "createLabel": "Pridať Message",
-                "createOrEditLabel": "Pridať alebo upraviť Message"
+                "createOrEditLabel": "Pridať alebo upraviť Message",
+                "search": "Vyhľadať Message"
             },
             "created": "Bol vytvorený potomok entity Message s identifikátorom {{ param }}",
             "updated": "Potomok entity Message s identifikátorom {{ param }} bol upravený.",

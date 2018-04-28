@@ -33,7 +33,7 @@ export const lastMinuteServiceRoute: Routes = [
         },
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteService.home.title'
+            pageTitle: 'gatewayApp.lastMinuteService.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -41,7 +41,7 @@ export const lastMinuteServiceRoute: Routes = [
         component: LastMinuteServiceDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteService.home.title'
+            pageTitle: 'gatewayApp.lastMinuteService.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -53,7 +53,7 @@ export const lastMinuteServicePopupRoute: Routes = [
         component: LastMinuteServicePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteService.home.title'
+            pageTitle: 'gatewayApp.lastMinuteService.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -63,7 +63,7 @@ export const lastMinuteServicePopupRoute: Routes = [
         component: LastMinuteServicePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteService.home.title'
+            pageTitle: 'gatewayApp.lastMinuteService.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -73,7 +73,7 @@ export const lastMinuteServicePopupRoute: Routes = [
         component: LastMinuteServiceDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteService.home.title'
+            pageTitle: 'gatewayApp.lastMinuteService.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

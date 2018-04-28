@@ -12,7 +12,7 @@ export const lastMinuteOfferRoute: Routes = [
         component: LastMinuteOfferComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteOffer.home.title'
+            pageTitle: 'gatewayApp.lastMinuteOffer.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const lastMinuteOfferRoute: Routes = [
         component: LastMinuteOfferDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteOffer.home.title'
+            pageTitle: 'gatewayApp.lastMinuteOffer.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const lastMinuteOfferPopupRoute: Routes = [
         component: LastMinuteOfferPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteOffer.home.title'
+            pageTitle: 'gatewayApp.lastMinuteOffer.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const lastMinuteOfferPopupRoute: Routes = [
         component: LastMinuteOfferPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteOffer.home.title'
+            pageTitle: 'gatewayApp.lastMinuteOffer.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const lastMinuteOfferPopupRoute: Routes = [
         component: LastMinuteOfferDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.lastMinuteOffer.home.title'
+            pageTitle: 'gatewayApp.lastMinuteOffer.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

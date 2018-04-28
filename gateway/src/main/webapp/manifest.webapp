@@ -1,6 +1,6 @@
 {
-  "name": "Bem",
-  "short_name": "Bem",
+  "name": "Gateway",
+  "short_name": "Gateway",
   "icons": [
       {
           "src": "./content/images/logo-jhipster.png",

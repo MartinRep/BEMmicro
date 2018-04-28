@@ -1,0 +1,13 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [],
+    "changelogDate": "20180428134421",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "last_minute_sevice",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll",
+    "microserviceName": "lastminute",
+    "searchEngine": "elasticsearch"
+}

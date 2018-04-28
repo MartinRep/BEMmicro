@@ -6,7 +6,8 @@ export class Appointment implements BaseEntity {
         public name?: string,
         public address?: string,
         public time?: any,
-        public categories?: BaseEntity[],
+        public location?: BaseEntity,
+        public category?: BaseEntity,
         public profiles?: BaseEntity[],
         public messages?: BaseEntity[],
     ) {

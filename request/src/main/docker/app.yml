@@ -8,10 +8,15 @@ services:
             - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
             - SPRING_DATASOURCE_URL=jdbc:mariadb://request-mariadb:3306/request
             - JHIPSTER_SLEEP=30 # gives time for the JHipster Registry to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=request-elasticsearch:9300
     request-mariadb:
         extends:
             file: mariadb.yml
             service: request-mariadb
+    request-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: request-elasticsearch
     jhipster-registry:
         extends:
             file: jhipster-registry.yml

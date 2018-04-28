@@ -1,6 +1,6 @@
 package ie.gmit.bem.repository;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 import ie.gmit.bem.config.Constants;
 import ie.gmit.bem.config.audit.AuditEventConverter;
 import ie.gmit.bem.domain.PersistentAuditEvent;
@@ -32,7 +32,7 @@ import static ie.gmit.bem.repository.CustomAuditEventRepository.EVENT_DATA_COLUM
  * @see CustomAuditEventRepository
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 @Transactional
 public class CustomAuditEventRepositoryIntTest {
 

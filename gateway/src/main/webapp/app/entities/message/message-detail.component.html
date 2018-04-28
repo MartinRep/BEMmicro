@@ -1,22 +1,22 @@
 
 <div *ngIf="message">
-    <h2><span jhiTranslate="bemApp.message.detail.title">Message</span> {{message.id}}</h2>
+    <h2><span jhiTranslate="gatewayApp.message.detail.title">Message</span> {{message.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.message.time">Time</span></dt>
+        <dt><span jhiTranslate="gatewayApp.message.time">Time</span></dt>
         <dd>
             <span>{{message.time | date:'medium'}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.message.content">Content</span></dt>
+        <dt><span jhiTranslate="gatewayApp.message.content">Content</span></dt>
         <dd>
             <span>{{message.content}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.message.appointment">Appointment</span></dt>
+        <dt><span jhiTranslate="gatewayApp.message.appointment">Appointment</span></dt>
         <dd>
-            <div *ngIf="message.appointment">
-                <a [routerLink]="['/appointment', message.appointment?.id]">{{message.appointment?.name}}</a>
-            </div>
+            <span *ngFor="let appointment of message.appointments; let last = last">
+                <a [routerLink]="['/appointment', appointment?.id ]">{{appointment.name}}</a>{{last ? '' : ', '}}
+            </span>
         </dd>
     </dl>
 

@@ -5,7 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BemTestModule } from '../../../test.module';
+import { GatewayTestModule } from '../../../test.module';
 import { LastMinuteServiceDialogComponent } from '../../../../../../main/webapp/app/entities/last-minute-service/last-minute-service-dialog.component';
 import { LastMinuteServiceService } from '../../../../../../main/webapp/app/entities/last-minute-service/last-minute-service.service';
 import { LastMinuteService } from '../../../../../../main/webapp/app/entities/last-minute-service/last-minute-service.model';
@@ -21,7 +21,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [BemTestModule],
+                imports: [GatewayTestModule],
                 declarations: [LastMinuteServiceDialogComponent],
                 providers: [
                     LastMinuteServiceService

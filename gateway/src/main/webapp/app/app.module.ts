@@ -10,12 +10,12 @@ import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
-import { BemSharedModule, UserRouteAccessService } from './shared';
-import { BemAppRoutingModule} from './app-routing.module';
-import { BemHomeModule } from './home/home.module';
-import { BemAdminModule } from './admin/admin.module';
-import { BemAccountModule } from './account/account.module';
-import { BemEntityModule } from './entities/entity.module';
+import { GatewaySharedModule, UserRouteAccessService } from './shared';
+import { GatewayAppRoutingModule} from './app-routing.module';
+import { GatewayHomeModule } from './home/home.module';
+import { GatewayAdminModule } from './admin/admin.module';
+import { GatewayAccountModule } from './account/account.module';
+import { GatewayEntityModule } from './entities/entity.module';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import {
@@ -31,13 +31,13 @@ import {
 @NgModule({
     imports: [
         BrowserModule,
-        BemAppRoutingModule,
+        GatewayAppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
-        BemSharedModule,
-        BemHomeModule,
-        BemAdminModule,
-        BemAccountModule,
-        BemEntityModule,
+        GatewaySharedModule,
+        GatewayHomeModule,
+        GatewayAdminModule,
+        GatewayAccountModule,
+        GatewayEntityModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
@@ -88,4 +88,4 @@ import {
     ],
     bootstrap: [ JhiMainComponent ]
 })
-export class BemAppModule {}
+export class GatewayAppModule {}

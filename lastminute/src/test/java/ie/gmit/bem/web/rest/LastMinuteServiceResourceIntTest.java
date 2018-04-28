@@ -4,6 +4,7 @@ import ie.gmit.bem.LastminuteApp;
 
 import ie.gmit.bem.domain.LastMinuteService;
 import ie.gmit.bem.repository.LastMinuteServiceRepository;
+import ie.gmit.bem.repository.search.LastMinuteServiceSearchRepository;
 import ie.gmit.bem.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -67,11 +68,14 @@ public class LastMinuteServiceResourceIntTest {
     private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_IMAGE_CONTENT_TYPE = "image/png";
 
-    private static final Integer DEFAULT_PROFILE = 1;
-    private static final Integer UPDATED_PROFILE = 2;
+    private static final String DEFAULT_PROFILE = "AAAAAAAAAA";
+    private static final String UPDATED_PROFILE = "BBBBBBBBBB";
 
     @Autowired
     private LastMinuteServiceRepository lastMinuteServiceRepository;
+
+    @Autowired
+    private LastMinuteServiceSearchRepository lastMinuteServiceSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -92,7 +96,7 @@ public class LastMinuteServiceResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final LastMinuteServiceResource lastMinuteServiceResource = new LastMinuteServiceResource(lastMinuteServiceRepository);
+        final LastMinuteServiceResource lastMinuteServiceResource = new LastMinuteServiceResource(lastMinuteServiceRepository, lastMinuteServiceSearchRepository);
         this.restLastMinuteServiceMockMvc = MockMvcBuilders.standaloneSetup(lastMinuteServiceResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -122,6 +126,7 @@ public class LastMinuteServiceResourceIntTest {
 
     @Before
     public void initTest() {
+        lastMinuteServiceSearchRepository.deleteAll();
         lastMinuteService = createEntity(em);
     }
 
@@ -149,6 +154,11 @@ public class LastMinuteServiceResourceIntTest {
         assertThat(testLastMinuteService.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testLastMinuteService.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
         assertThat(testLastMinuteService.getProfile()).isEqualTo(DEFAULT_PROFILE);
+
+        // Validate the LastMinuteService in Elasticsearch
+        LastMinuteService lastMinuteServiceEs = lastMinuteServiceSearchRepository.findOne(testLastMinuteService.getId());
+        assertThat(testLastMinuteService.getAvailable()).isEqualTo(testLastMinuteService.getAvailable());
+        assertThat(lastMinuteServiceEs).isEqualToIgnoringGivenFields(testLastMinuteService, "available");
     }
 
     @Test
@@ -279,7 +289,7 @@ public class LastMinuteServiceResourceIntTest {
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
-            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE)));
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE.toString())));
     }
 
     @Test
@@ -301,7 +311,7 @@ public class LastMinuteServiceResourceIntTest {
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
-            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE));
+            .andExpect(jsonPath("$.profile").value(DEFAULT_PROFILE.toString()));
     }
 
     @Test
@@ -317,6 +327,7 @@ public class LastMinuteServiceResourceIntTest {
     public void updateLastMinuteService() throws Exception {
         // Initialize the database
         lastMinuteServiceRepository.saveAndFlush(lastMinuteService);
+        lastMinuteServiceSearchRepository.save(lastMinuteService);
         int databaseSizeBeforeUpdate = lastMinuteServiceRepository.findAll().size();
 
         // Update the lastMinuteService
@@ -352,6 +363,11 @@ public class LastMinuteServiceResourceIntTest {
         assertThat(testLastMinuteService.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testLastMinuteService.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
         assertThat(testLastMinuteService.getProfile()).isEqualTo(UPDATED_PROFILE);
+
+        // Validate the LastMinuteService in Elasticsearch
+        LastMinuteService lastMinuteServiceEs = lastMinuteServiceSearchRepository.findOne(testLastMinuteService.getId());
+        assertThat(testLastMinuteService.getAvailable()).isEqualTo(testLastMinuteService.getAvailable());
+        assertThat(lastMinuteServiceEs).isEqualToIgnoringGivenFields(testLastMinuteService, "available");
     }
 
     @Test
@@ -377,6 +393,7 @@ public class LastMinuteServiceResourceIntTest {
     public void deleteLastMinuteService() throws Exception {
         // Initialize the database
         lastMinuteServiceRepository.saveAndFlush(lastMinuteService);
+        lastMinuteServiceSearchRepository.save(lastMinuteService);
         int databaseSizeBeforeDelete = lastMinuteServiceRepository.findAll().size();
 
         // Get the lastMinuteService
@@ -384,9 +401,36 @@ public class LastMinuteServiceResourceIntTest {
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
+        // Validate Elasticsearch is empty
+        boolean lastMinuteServiceExistsInEs = lastMinuteServiceSearchRepository.exists(lastMinuteService.getId());
+        assertThat(lastMinuteServiceExistsInEs).isFalse();
+
         // Validate the database is empty
         List<LastMinuteService> lastMinuteServiceList = lastMinuteServiceRepository.findAll();
         assertThat(lastMinuteServiceList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void searchLastMinuteService() throws Exception {
+        // Initialize the database
+        lastMinuteServiceRepository.saveAndFlush(lastMinuteService);
+        lastMinuteServiceSearchRepository.save(lastMinuteService);
+
+        // Search the lastMinuteService
+        restLastMinuteServiceMockMvc.perform(get("/api/_search/last-minute-services?query=id:" + lastMinuteService.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(lastMinuteService.getId().intValue())))
+            .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].available").value(hasItem(sameInstant(DEFAULT_AVAILABLE))))
+            .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION.toString())))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
+            .andExpect(jsonPath("$.[*].profile").value(hasItem(DEFAULT_PROFILE.toString())));
     }
 
     @Test

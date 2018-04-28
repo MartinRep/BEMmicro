@@ -1,8 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { BemSharedModule } from '../../shared';
-import { BemAdminModule } from '../../admin/admin.module';
+import { GatewaySharedModule } from '../../shared';
+import { GatewayAdminModule } from '../../admin/admin.module';
 import {
     ProfileService,
     ProfilePopupService,
@@ -23,8 +23,8 @@ const ENTITY_STATES = [
 
 @NgModule({
     imports: [
-        BemSharedModule,
-        BemAdminModule,
+        GatewaySharedModule,
+        GatewayAdminModule,
         RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
@@ -48,4 +48,4 @@ const ENTITY_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class BemProfileModule {}
+export class GatewayProfileModule {}

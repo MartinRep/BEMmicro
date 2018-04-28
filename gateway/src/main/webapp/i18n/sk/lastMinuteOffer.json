@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "lastMinuteOffer" : {
             "home": {
                 "title": "Last Minute Offers",
                 "createLabel": "Pridať Last Minute Offer",
-                "createOrEditLabel": "Pridať alebo upraviť Last Minute Offer"
+                "createOrEditLabel": "Pridať alebo upraviť Last Minute Offer",
+                "search": "Vyhľadať Last Minute Offer"
             },
             "delete": {
                 "question": "Ste si istý, že chcete vymazať Last Minute Offer {{ id }}?"
@@ -15,7 +16,7 @@
             },
             "name": "Name",
             "profile": "Profile",
-            "service": "Service"
+            "lastMinuteService": "Last Minute Service"
         }
     },
     "lastminuteApp": {

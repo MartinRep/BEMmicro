@@ -13,7 +13,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
             if (err instanceof HttpErrorResponse) {
                 if (!(err.status === 401 && (err.message === '' || (err.url && err.url.indexOf('/api/account') === 0)))) {
                     if (this.eventManager !== undefined) {
-                        this.eventManager.broadcast({name: 'bemApp.httpError', content: err});
+                        this.eventManager.broadcast({name: 'gatewayApp.httpError', content: err});
                     }
                 }
             }

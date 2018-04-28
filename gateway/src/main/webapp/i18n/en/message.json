@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "message" : {
             "home": {
                 "title": "Messages",
                 "createLabel": "Create a new Message",
-                "createOrEditLabel": "Create or edit a Message"
+                "createOrEditLabel": "Create or edit a Message",
+                "search": "Search for Message"
             },
             "created": "A new Message is created with identifier {{ param }}",
             "updated": "A Message is updated with identifier {{ param }}",

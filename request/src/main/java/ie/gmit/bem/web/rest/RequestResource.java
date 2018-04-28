@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import ie.gmit.bem.domain.Request;
 
 import ie.gmit.bem.repository.RequestRepository;
+import ie.gmit.bem.repository.search.RequestSearchRepository;
 import ie.gmit.bem.web.rest.errors.BadRequestAlertException;
 import ie.gmit.bem.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -18,6 +19,10 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Request.
@@ -32,8 +37,11 @@ public class RequestResource {
 
     private final RequestRepository requestRepository;
 
-    public RequestResource(RequestRepository requestRepository) {
+    private final RequestSearchRepository requestSearchRepository;
+
+    public RequestResource(RequestRepository requestRepository, RequestSearchRepository requestSearchRepository) {
         this.requestRepository = requestRepository;
+        this.requestSearchRepository = requestSearchRepository;
     }
 
     /**
@@ -51,6 +59,7 @@ public class RequestResource {
             throw new BadRequestAlertException("A new request cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Request result = requestRepository.save(request);
+        requestSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -73,6 +82,7 @@ public class RequestResource {
             return createRequest(request);
         }
         Request result = requestRepository.save(request);
+        requestSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, request.getId().toString()))
             .body(result);
@@ -115,6 +125,24 @@ public class RequestResource {
     public ResponseEntity<Void> deleteRequest(@PathVariable Long id) {
         log.debug("REST request to delete Request : {}", id);
         requestRepository.delete(id);
+        requestSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/requests?query=:query : search for the request corresponding
+     * to the query.
+     *
+     * @param query the query of the request search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/requests")
+    @Timed
+    public List<Request> searchRequests(@RequestParam String query) {
+        log.debug("REST request to search Requests for query {}", query);
+        return StreamSupport
+            .stream(requestSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
+    }
+
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -16,6 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "offer")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "offer")
 public class Offer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,8 +36,9 @@ public class Offer implements Serializable {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "jhi_profile")
-    private Integer profile;
+    @NotNull
+    @Column(name = "jhi_profile", nullable = false)
+    private String profile;
 
     @ManyToOne
     private Request request;
@@ -88,16 +91,16 @@ public class Offer implements Serializable {
         this.price = price;
     }
 
-    public Integer getProfile() {
+    public String getProfile() {
         return profile;
     }
 
-    public Offer profile(Integer profile) {
+    public Offer profile(String profile) {
         this.profile = profile;
         return this;
     }
 
-    public void setProfile(Integer profile) {
+    public void setProfile(String profile) {
         this.profile = profile;
     }
 
@@ -142,7 +145,7 @@ public class Offer implements Serializable {
             ", description='" + getDescription() + "'" +
             ", availableOn='" + getAvailableOn() + "'" +
             ", price=" + getPrice() +
-            ", profile=" + getProfile() +
+            ", profile='" + getProfile() + "'" +
             "}";
     }
 }

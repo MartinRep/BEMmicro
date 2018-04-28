@@ -1,11 +1,12 @@
 
 {
-    "bemApp": {
+    "gatewayApp": {
         "lastMinuteService" : {
             "home": {
                 "title": "Last Minute Services",
                 "createLabel": "Pridať Last Minute Service",
-                "createOrEditLabel": "Pridať alebo upraviť Last Minute Service"
+                "createOrEditLabel": "Pridať alebo upraviť Last Minute Service",
+                "search": "Vyhľadať Last Minute Service"
             },
             "delete": {
                 "question": "Ste si istý, že chcete vymazať Last Minute Service {{ id }}?"
@@ -13,15 +14,15 @@
             "detail": {
                 "title": "Last Minute Service"
             },
-            "price": "Price",
-            "address": "Address",
             "category": "Category",
             "description": "Description",
             "available": "Available",
             "location": "Location",
+            "price": "Price",
+            "address": "Address",
             "image": "Image",
             "profile": "Profile",
-            "lastMinuteOffer": "Last Minute Offer"
+            "lastminuteOffer": "Lastminute Offer"
         }
     },
     "lastminuteApp": {

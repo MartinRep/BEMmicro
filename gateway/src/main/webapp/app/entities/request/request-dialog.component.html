@@ -1,7 +1,7 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myRequestLabel" jhiTranslate="bemApp.request.home.createOrEditLabel">Create or edit a Request</h4>
+        <h4 class="modal-title" id="myRequestLabel" jhiTranslate="gatewayApp.request.home.createOrEditLabel">Create or edit a Request</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
@@ -13,7 +13,7 @@
                    [(ngModel)]="request.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.request.category" for="field_category">Category</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.request.category" for="field_category">Category</label>
             <input type="text" class="form-control" name="category" id="field_category"
                 [(ngModel)]="request.category" required/>
             <div [hidden]="!(editForm.controls.category?.dirty && editForm.controls.category?.invalid)">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.request.region" for="field_region">Region</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.request.region" for="field_region">Region</label>
             <input type="text" class="form-control" name="region" id="field_region"
                 [(ngModel)]="request.region" required/>
             <div [hidden]="!(editForm.controls.region?.dirty && editForm.controls.region?.invalid)">
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.request.description" for="field_description">Description</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.request.description" for="field_description">Description</label>
             <input type="text" class="form-control" name="description" id="field_description"
                 [(ngModel)]="request.description" required/>
             <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
@@ -46,19 +46,19 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.request.duration" for="field_duration">Duration</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.request.duration" for="field_duration">Duration</label>
             <div class="d-flex">
                 <input id="field_duration" type="datetime-local" class="form-control" name="duration" [(ngModel)]="request.duration"
                 />
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.request.expPrice" for="field_expPrice">Exp Price</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.request.expPrice" for="field_expPrice">Exp Price</label>
             <input type="number" class="form-control" name="expPrice" id="field_expPrice"
                 [(ngModel)]="request.expPrice" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.request.image" for="field_image">Image</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.request.image" for="field_image">Image</label>
             <div>
                 <img [src]="'data:' + request.imageContentType + ';base64,' + request.image" style="max-height: 100px;" *ngIf="request.image" alt="request image"/>
                 <div *ngIf="request.image" class="form-text text-danger clearfix">
@@ -75,12 +75,18 @@
                 [(ngModel)]="request.imageContentType" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.request.profile" for="field_profile">Profile</label>
-            <input type="number" class="form-control" name="profile" id="field_profile"
-                [(ngModel)]="request.profile" />
+            <label class="form-control-label" jhiTranslate="gatewayApp.request.profile" for="field_profile">Profile</label>
+            <input type="text" class="form-control" name="profile" id="field_profile"
+                [(ngModel)]="request.profile" required/>
+            <div [hidden]="!(editForm.controls.profile?.dirty && editForm.controls.profile?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.profile?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="bemApp.request.posted" for="field_posted">Posted</label>
+            <label class="form-control-label" jhiTranslate="gatewayApp.request.posted" for="field_posted">Posted</label>
             <div class="d-flex">
                 <input id="field_posted" type="datetime-local" class="form-control" name="posted" [(ngModel)]="request.posted"
                 />

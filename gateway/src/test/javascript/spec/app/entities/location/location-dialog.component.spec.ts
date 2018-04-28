@@ -5,7 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BemTestModule } from '../../../test.module';
+import { GatewayTestModule } from '../../../test.module';
 import { LocationDialogComponent } from '../../../../../../main/webapp/app/entities/location/location-dialog.component';
 import { LocationService } from '../../../../../../main/webapp/app/entities/location/location.service';
 import { Location } from '../../../../../../main/webapp/app/entities/location/location.model';
@@ -21,7 +21,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [BemTestModule],
+                imports: [GatewayTestModule],
                 declarations: [LocationDialogComponent],
                 providers: [
                     LocationService

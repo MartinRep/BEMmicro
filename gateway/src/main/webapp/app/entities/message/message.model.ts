@@ -5,7 +5,7 @@ export class Message implements BaseEntity {
         public id?: number,
         public time?: any,
         public content?: string,
-        public appointment?: BaseEntity,
+        public appointments?: BaseEntity[],
     ) {
     }
 }

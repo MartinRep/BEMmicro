@@ -26,10 +26,13 @@
         },
         {
             "fieldName": "profile",
-            "fieldType": "Integer"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
-    "changelogDate": "20180419202511",
+    "changelogDate": "20180428092026",
     "entityTableName": "offer",
     "dto": "no",
     "pagination": "no",

@@ -1,6 +1,6 @@
 package ie.gmit.bem.service;
 
-import ie.gmit.bem.BemApp;
+import ie.gmit.bem.GatewayApp;
 import ie.gmit.bem.config.Constants;
 import ie.gmit.bem.domain.User;
 import ie.gmit.bem.repository.UserRepository;
@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see UserService
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = BemApp.class)
+@SpringBootTest(classes = GatewayApp.class)
 @Transactional
 public class UserServiceIntTest {
 

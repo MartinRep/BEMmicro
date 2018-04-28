@@ -1,0 +1,64 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Request</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>Category</ion-label>
+            <div item-content>
+                <span>{{request.category}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Region</ion-label>
+            <div item-content>
+                <span>{{request.region}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Description</ion-label>
+            <div item-content>
+                <span>{{request.description}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Duration</ion-label>
+            <div item-content>
+                <span>{{request.duration | date:'medium'}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Exp Price</ion-label>
+            <div item-content>
+                <span>{{request.expPrice}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Image</ion-label>
+            <div item-content>
+                <div *ngIf="request.image">
+                    <a (click)="openFile(request.imageContentType, request.image)">
+                        <img [src]="'data:' + request.imageContentType + ';base64,' + request.image" style="max-width: 100%;" alt="request image"/>
+                    </a>
+                    {{request.imageContentType}}, {{byteSize(request.image)}}
+                </div>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Profile</ion-label>
+            <div item-content>
+                <span>{{request.profile}}</span>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>Posted</ion-label>
+            <div item-content>
+                <span>{{request.posted | date:'medium'}}</span>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <button ion-button block (click)="open(request)">{{ 'EDIT_BUTTON' | translate }}</button>
+</ion-content>

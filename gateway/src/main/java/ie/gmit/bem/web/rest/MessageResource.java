@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import ie.gmit.bem.domain.Message;
 
 import ie.gmit.bem.repository.MessageRepository;
+import ie.gmit.bem.repository.search.MessageSearchRepository;
 import ie.gmit.bem.web.rest.errors.BadRequestAlertException;
 import ie.gmit.bem.web.rest.util.HeaderUtil;
 import ie.gmit.bem.web.rest.util.PaginationUtil;
@@ -23,6 +24,10 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Message.
@@ -37,8 +42,11 @@ public class MessageResource {
 
     private final MessageRepository messageRepository;
 
-    public MessageResource(MessageRepository messageRepository) {
+    private final MessageSearchRepository messageSearchRepository;
+
+    public MessageResource(MessageRepository messageRepository, MessageSearchRepository messageSearchRepository) {
         this.messageRepository = messageRepository;
+        this.messageSearchRepository = messageSearchRepository;
     }
 
     /**
@@ -56,6 +64,7 @@ public class MessageResource {
             throw new BadRequestAlertException("A new message cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Message result = messageRepository.save(message);
+        messageSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/messages/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -78,6 +87,7 @@ public class MessageResource {
             return createMessage(message);
         }
         Message result = messageRepository.save(message);
+        messageSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, message.getId().toString()))
             .body(result);
@@ -108,7 +118,7 @@ public class MessageResource {
     @Timed
     public ResponseEntity<Message> getMessage(@PathVariable Long id) {
         log.debug("REST request to get Message : {}", id);
-        Message message = messageRepository.findOne(id);
+        Message message = messageRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(message));
     }
 
@@ -123,6 +133,25 @@ public class MessageResource {
     public ResponseEntity<Void> deleteMessage(@PathVariable Long id) {
         log.debug("REST request to delete Message : {}", id);
         messageRepository.delete(id);
+        messageSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/messages?query=:query : search for the message corresponding
+     * to the query.
+     *
+     * @param query the query of the message search
+     * @param pageable the pagination information
+     * @return the result of the search
+     */
+    @GetMapping("/_search/messages")
+    @Timed
+    public ResponseEntity<List<Message>> searchMessages(@RequestParam String query, Pageable pageable) {
+        log.debug("REST request to search for a page of Messages for query {}", query);
+        Page<Message> page = messageSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/messages");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
 }

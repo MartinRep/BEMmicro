@@ -21,7 +21,7 @@ describe('LastMinuteService e2e test', () => {
         navBarPage.goToEntity('last-minute-service');
         lastMinuteServiceComponentsPage = new LastMinuteServiceComponentsPage();
         expect(lastMinuteServiceComponentsPage.getTitle())
-            .toMatch(/bemApp.lastMinuteService.home.title/);
+            .toMatch(/gatewayApp.lastMinuteService.home.title/);
 
     });
 
@@ -29,16 +29,12 @@ describe('LastMinuteService e2e test', () => {
         lastMinuteServiceComponentsPage.clickOnCreateButton();
         lastMinuteServiceDialogPage = new LastMinuteServiceDialogPage();
         expect(lastMinuteServiceDialogPage.getModalTitle())
-            .toMatch(/bemApp.lastMinuteService.home.createOrEditLabel/);
+            .toMatch(/gatewayApp.lastMinuteService.home.createOrEditLabel/);
         lastMinuteServiceDialogPage.close();
     });
 
     it('should create and save LastMinuteServices', () => {
         lastMinuteServiceComponentsPage.clickOnCreateButton();
-        lastMinuteServiceDialogPage.setPriceInput('5');
-        expect(lastMinuteServiceDialogPage.getPriceInput()).toMatch('5');
-        lastMinuteServiceDialogPage.setAddressInput('address');
-        expect(lastMinuteServiceDialogPage.getAddressInput()).toMatch('address');
         lastMinuteServiceDialogPage.setCategoryInput('5');
         expect(lastMinuteServiceDialogPage.getCategoryInput()).toMatch('5');
         lastMinuteServiceDialogPage.setDescriptionInput('description');
@@ -47,9 +43,13 @@ describe('LastMinuteService e2e test', () => {
         expect(lastMinuteServiceDialogPage.getAvailableInput()).toMatch('2001-12-31T02:30');
         lastMinuteServiceDialogPage.setLocationInput('location');
         expect(lastMinuteServiceDialogPage.getLocationInput()).toMatch('location');
+        lastMinuteServiceDialogPage.setPriceInput('5');
+        expect(lastMinuteServiceDialogPage.getPriceInput()).toMatch('5');
+        lastMinuteServiceDialogPage.setAddressInput('address');
+        expect(lastMinuteServiceDialogPage.getAddressInput()).toMatch('address');
         lastMinuteServiceDialogPage.setImageInput(absolutePath);
-        lastMinuteServiceDialogPage.setProfileInput('5');
-        expect(lastMinuteServiceDialogPage.getProfileInput()).toMatch('5');
+        lastMinuteServiceDialogPage.setProfileInput('profile');
+        expect(lastMinuteServiceDialogPage.getProfileInput()).toMatch('profile');
         lastMinuteServiceDialogPage.save();
         expect(lastMinuteServiceDialogPage.getSaveButton().isPresent()).toBeFalsy();
     });
@@ -76,34 +76,18 @@ export class LastMinuteServiceDialogPage {
     modalTitle = element(by.css('h4#myLastMinuteServiceLabel'));
     saveButton = element(by.css('.modal-footer .btn.btn-primary'));
     closeButton = element(by.css('button.close'));
-    priceInput = element(by.css('input#field_price'));
-    addressInput = element(by.css('input#field_address'));
     categoryInput = element(by.css('input#field_category'));
     descriptionInput = element(by.css('input#field_description'));
     availableInput = element(by.css('input#field_available'));
     locationInput = element(by.css('input#field_location'));
+    priceInput = element(by.css('input#field_price'));
+    addressInput = element(by.css('input#field_address'));
     imageInput = element(by.css('input#file_image'));
     profileInput = element(by.css('input#field_profile'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
     }
-
-    setPriceInput = function(price) {
-        this.priceInput.sendKeys(price);
-    };
-
-    getPriceInput = function() {
-        return this.priceInput.getAttribute('value');
-    };
-
-    setAddressInput = function(address) {
-        this.addressInput.sendKeys(address);
-    };
-
-    getAddressInput = function() {
-        return this.addressInput.getAttribute('value');
-    };
 
     setCategoryInput = function(category) {
         this.categoryInput.sendKeys(category);
@@ -135,6 +119,22 @@ export class LastMinuteServiceDialogPage {
 
     getLocationInput = function() {
         return this.locationInput.getAttribute('value');
+    };
+
+    setPriceInput = function(price) {
+        this.priceInput.sendKeys(price);
+    };
+
+    getPriceInput = function() {
+        return this.priceInput.getAttribute('value');
+    };
+
+    setAddressInput = function(address) {
+        this.addressInput.sendKeys(address);
+    };
+
+    getAddressInput = function() {
+        return this.addressInput.getAttribute('value');
     };
 
     setImageInput = function(image) {

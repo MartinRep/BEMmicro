@@ -1,30 +1,30 @@
 
 <div *ngIf="request">
-    <h2><span jhiTranslate="bemApp.request.detail.title">Request</span> {{request.id}}</h2>
+    <h2><span jhiTranslate="gatewayApp.request.detail.title">Request</span> {{request.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="bemApp.request.category">Category</span></dt>
+        <dt><span jhiTranslate="gatewayApp.request.category">Category</span></dt>
         <dd>
             <span>{{request.category}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.request.region">Region</span></dt>
+        <dt><span jhiTranslate="gatewayApp.request.region">Region</span></dt>
         <dd>
             <span>{{request.region}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.request.description">Description</span></dt>
+        <dt><span jhiTranslate="gatewayApp.request.description">Description</span></dt>
         <dd>
             <span>{{request.description}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.request.duration">Duration</span></dt>
+        <dt><span jhiTranslate="gatewayApp.request.duration">Duration</span></dt>
         <dd>
             <span>{{request.duration | date:'medium'}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.request.expPrice">Exp Price</span></dt>
+        <dt><span jhiTranslate="gatewayApp.request.expPrice">Exp Price</span></dt>
         <dd>
             <span>{{request.expPrice}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.request.image">Image</span></dt>
+        <dt><span jhiTranslate="gatewayApp.request.image">Image</span></dt>
         <dd>
             <div *ngIf="request.image">
                 <a (click)="openFile(request.imageContentType, request.image)">
@@ -33,11 +33,11 @@
                 {{request.imageContentType}}, {{byteSize(request.image)}}
             </div>
         </dd>
-        <dt><span jhiTranslate="bemApp.request.profile">Profile</span></dt>
+        <dt><span jhiTranslate="gatewayApp.request.profile">Profile</span></dt>
         <dd>
             <span>{{request.profile}}</span>
         </dd>
-        <dt><span jhiTranslate="bemApp.request.posted">Posted</span></dt>
+        <dt><span jhiTranslate="gatewayApp.request.posted">Posted</span></dt>
         <dd>
             <span>{{request.posted | date:'medium'}}</span>
         </dd>

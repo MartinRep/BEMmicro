@@ -12,7 +12,7 @@ export const profileRoute: Routes = [
         component: ProfileComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.profile.home.title'
+            pageTitle: 'gatewayApp.profile.home.title'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +20,7 @@ export const profileRoute: Routes = [
         component: ProfileDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.profile.home.title'
+            pageTitle: 'gatewayApp.profile.home.title'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +32,7 @@ export const profilePopupRoute: Routes = [
         component: ProfilePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.profile.home.title'
+            pageTitle: 'gatewayApp.profile.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +42,7 @@ export const profilePopupRoute: Routes = [
         component: ProfilePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.profile.home.title'
+            pageTitle: 'gatewayApp.profile.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +52,7 @@ export const profilePopupRoute: Routes = [
         component: ProfileDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'bemApp.profile.home.title'
+            pageTitle: 'gatewayApp.profile.home.title'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

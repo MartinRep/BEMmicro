@@ -1,14 +1,23 @@
+
 {
-    "bemApp": {
-        "Category" : {
-            "null": "",
-            "FACE": "FACE",
-            "BODY": "BODY",
-            "MEN": "MEN",
-            "DENTAL": "DENTAL",
-            "HAIR": "HAIR",
-            "HEALTH": "HEALTH",
-            "WELLBEING": "WELLBEING"
+    "gatewayApp": {
+        "category" : {
+            "home": {
+                "title": "Categories",
+                "createLabel": "Pridať Category",
+                "createOrEditLabel": "Pridať alebo upraviť Category",
+                "search": "Vyhľadať Category"
+            },
+            "created": "Bol vytvorený potomok entity Category s identifikátorom {{ param }}",
+            "updated": "Potomok entity Category s identifikátorom {{ param }} bol upravený.",
+            "deleted": "Potomok entity Category s identifikátorom {{ param }} bol vymazaný.",
+            "delete": {
+                "question": "Ste si istý, že chcete vymazať Category {{ id }}?"
+            },
+            "detail": {
+                "title": "Category"
+            },
+            "name": "Name"
         }
     }
 }

@@ -67,13 +67,13 @@ public class CacheConfiguration {
     @Bean
     public HazelcastInstance hazelcastInstance(JHipsterProperties jHipsterProperties) {
         log.debug("Configuring Hazelcast");
-        HazelcastInstance hazelCastInstance = Hazelcast.getHazelcastInstanceByName("Bem");
+        HazelcastInstance hazelCastInstance = Hazelcast.getHazelcastInstanceByName("gateway");
         if (hazelCastInstance != null) {
             log.debug("Hazelcast already initialized");
             return hazelCastInstance;
         }
         Config config = new Config();
-        config.setInstanceName("Bem");
+        config.setInstanceName("gateway");
         config.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
         if (this.registration == null) {
             log.warn("No discovery service is set up, Hazelcast cannot create a cluster.");

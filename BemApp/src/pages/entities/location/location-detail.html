@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Location</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label>Region</ion-label>
+            <div item-content>
+                <span>{{location.region}}</span>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <button ion-button block (click)="open(location)">{{ 'EDIT_BUTTON' | translate }}</button>
+</ion-content>

@@ -4,7 +4,7 @@
       "packageName": "ie.gmit.bem",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "4.14.3",
+    "jhipsterVersion": "4.14.1",
     "baseName": "lastminute",
     "packageName": "ie.gmit.bem",
     "packageFolder": "ie/gmit/bem",
@@ -16,17 +16,18 @@
     "databaseType": "sql",
     "devDatabaseType": "mariadb",
     "prodDatabaseType": "mariadb",
-    "searchEngine": false,
+    "searchEngine": "elasticsearch",
     "messageBroker": false,
     "serviceDiscoveryType": "eureka",
     "buildTool": "gradle",
     "enableSocialSignIn": false,
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "0212232e8bfaff07fd0d8c04f3a1d92221f92d29",
+    "jwtSecretKey": "666588d497b918357dc486dbcc8a13171b6815ef",
     "enableTranslation": true,
     "applicationType": "microservice",
     "testFrameworks": [
-      "gatling"
+      "gatling",
+      "cucumber"
     ],
     "jhiPrefix": "jhi",
     "nativeLanguage": "en",
