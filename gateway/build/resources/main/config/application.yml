@@ -24,7 +24,7 @@ eureka:
         instance-info-replication-interval-seconds: 10
         registry-fetch-interval-seconds: 10
     instance:
-        appname: gateway
+        appname: BEM gateway
         instanceId: gateway:${spring.application.instance-id:${random.value}}
         lease-renewal-interval-in-seconds: 5
         lease-expiration-duration-in-seconds: 10
@@ -63,7 +63,7 @@ management:
             mode: full
     health:
         mail:
-            enabled: false # When using the MailService, configure an SMTP server and set this to true
+            enabled: true # When using the MailService, configure an SMTP server and set this to true
         binders:
             enabled: true
 spring:
@@ -121,13 +121,13 @@ jhipster:
         from: gateway@localhost
     swagger:
         default-include-pattern: /api/.*
-        title: gateway API
-        description: gateway API documentation
+        title: BEM gateway API
+        description: BEM gateway API documentation
         version: 0.0.1
         terms-of-service-url:
         contact-name:
         contact-url:
-        contact-email:
+        contact-email: bestevermeplatform@gmail.com
         license:
         license-url:
     ribbon:

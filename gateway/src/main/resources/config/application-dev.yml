@@ -79,10 +79,16 @@ spring:
                     logs: build/elasticsearch/log
                     data: build/elasticsearch/data
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.gmail.com
+        port: 587
+        username: bestevermeplatform@gmail.com
+        password: BestEverMePassword
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
     messages:
         cache-seconds: 1
     thymeleaf:
@@ -143,7 +149,7 @@ jhipster:
                 url: http://localhost:8180/mancenter
     # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
     cors:
-        allowed-origins: "http://localhost:8100"
+        allowed-origins: "*"
         allowed-methods: "*"
         allowed-headers: "*"
         exposed-headers: "Authorization,Link,X-Total-Count"
