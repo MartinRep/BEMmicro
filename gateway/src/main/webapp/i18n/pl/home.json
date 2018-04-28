@@ -1,13 +1,13 @@
 {
     "home": {
-        "title": "Witamy, Java Hipsterze!",
+        "title": "Witamy, Best Ever Me Platform",
         "subtitle": "To jest twoja strona domowa",
         "logged": {
             "message": "Jesteś zalogowany jako użytkownik \"{{username}}\"."
         },
-        "question": "Jeśli masz jakiekolwiek pytania na temat JHipster:",
+        "question": "Jeśli masz jakiekolwiek pytania na temat Best Ever Me:",
         "link": {
-            "homepage": "Strona domowa JHipster",
+            "homepage": "Strona domowa Best Ever Me",
             "stackoverflow": "JHipster na Stack Overflow",
             "bugtracker": "JHipster bug tracker",
             "chat": "Publiczny chat room JHipster",

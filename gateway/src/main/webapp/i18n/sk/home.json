@@ -1,13 +1,13 @@
 {
     "home": {
-        "title": "Vitajte, Java Hipster!",
+        "title": "Vitajte, Best Ever Me",
         "subtitle": "Toto je vaša domovská stránka",
         "logged": {
             "message": "Ste prihlásený ako \"{{username}}\"."
         },
-        "question": "Ak máte nejaké otázky o JHipster:",
+        "question": "Ak máte nejaké otázky o Best Ever Me:",
         "link": {
-            "homepage": "Domovská stránka JHipster",
+            "homepage": "Domovská stránka Best Ever Me",
             "stackoverflow": "JHipster v službe Stack Overflow",
             "bugtracker": "Nahlasovanie chýb JHipster",
             "chat": "Verejná chatovacia miestnosť JHipster",
