@@ -149,7 +149,7 @@ jhipster:
                 url: http://localhost:8180/mancenter
     # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
     cors:
-        allowed-origins: "http://localhost:8100"
+        allowed-origins: "*"
         allowed-methods: "*"
         allowed-headers: "*"
         exposed-headers: "Authorization,Link,X-Total-Count"

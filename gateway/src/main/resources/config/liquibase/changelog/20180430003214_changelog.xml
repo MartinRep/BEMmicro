@@ -1,0 +1,72 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="MartinRep (generated)" id="1525044740935-1">
+        <dropForeignKeyConstraint baseTableName="message_appointment" constraintName="fk_message_appointment_appointments_id"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-2">
+        <dropForeignKeyConstraint baseTableName="message_appointment" constraintName="fk_message_appointment_messages_id"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-3">
+        <dropTable tableName="message_appointment"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-4">
+        <dropForeignKeyConstraint baseTableName="jhi_user_authority" constraintName="FK290okww5jujghp4el5i7mgwu0"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FK290okww5jujghp4el5i7mgwu0" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-5">
+        <dropForeignKeyConstraint baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m"/>
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-6">
+        <dropForeignKeyConstraint baseTableName="appointment_message" constraintName="FK3fb0mn4t2mk5d0okfix1ywvhj"/>
+        <addForeignKeyConstraint baseColumnNames="appointments_id" baseTableName="appointment_message" constraintName="FK3fb0mn4t2mk5d0okfix1ywvhj" referencedColumnNames="id" referencedTableName="appointment"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-7">
+        <dropForeignKeyConstraint baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc"/>
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc" referencedColumnNames="name" referencedTableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-8">
+        <dropForeignKeyConstraint baseTableName="profile_category" constraintName="FK5thd3dekefku7ax17pssrfg46"/>
+        <addForeignKeyConstraint baseColumnNames="categories_id" baseTableName="profile_category" constraintName="FK5thd3dekefku7ax17pssrfg46" referencedColumnNames="id" referencedTableName="category"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-9">
+        <dropForeignKeyConstraint baseTableName="appointment_message" constraintName="FK843kascvjui6nf5s8ynj4ogfb"/>
+        <addForeignKeyConstraint baseColumnNames="messages_id" baseTableName="appointment_message" constraintName="FK843kascvjui6nf5s8ynj4ogfb" referencedColumnNames="id" referencedTableName="message"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-10">
+        <dropForeignKeyConstraint baseTableName="profile_category" constraintName="FK9fj9424rnmhf7imk24u1wjkpx"/>
+        <addForeignKeyConstraint baseColumnNames="profiles_id" baseTableName="profile_category" constraintName="FK9fj9424rnmhf7imk24u1wjkpx" referencedColumnNames="id" referencedTableName="profile"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-11">
+        <dropForeignKeyConstraint baseTableName="profile_appointment" constraintName="FK9l9p45jpp4uxypqfy2oac7j3g"/>
+        <addForeignKeyConstraint baseColumnNames="appointments_id" baseTableName="profile_appointment" constraintName="FK9l9p45jpp4uxypqfy2oac7j3g" referencedColumnNames="id" referencedTableName="appointment"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-12">
+        <dropForeignKeyConstraint baseTableName="appointment" constraintName="FKa30vwio9213c884pka7hqitlg"/>
+        <addForeignKeyConstraint baseColumnNames="location_id" baseTableName="appointment" constraintName="FKa30vwio9213c884pka7hqitlg" referencedColumnNames="id" referencedTableName="location"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-13">
+        <dropForeignKeyConstraint baseTableName="appointment_profile" constraintName="FKaf22bcq3dcxh296rhcuci8txe"/>
+        <addForeignKeyConstraint baseColumnNames="appointments_id" baseTableName="appointment_profile" constraintName="FKaf22bcq3dcxh296rhcuci8txe" referencedColumnNames="id" referencedTableName="appointment"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-14">
+        <dropForeignKeyConstraint baseTableName="profile_appointment" constraintName="FKfxo1lvtyded97a6leeexl3swd"/>
+        <addForeignKeyConstraint baseColumnNames="profiles_id" baseTableName="profile_appointment" constraintName="FKfxo1lvtyded97a6leeexl3swd" referencedColumnNames="id" referencedTableName="profile"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-15">
+        <dropForeignKeyConstraint baseTableName="profile" constraintName="FKhpks30secbw6ww6sjplw9xtth"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="profile" constraintName="FKhpks30secbw6ww6sjplw9xtth" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-16">
+        <dropForeignKeyConstraint baseTableName="profile" constraintName="FKla9kopl4kgeg1jr3iq5t9ii0t"/>
+        <addForeignKeyConstraint baseColumnNames="location_id" baseTableName="profile" constraintName="FKla9kopl4kgeg1jr3iq5t9ii0t" referencedColumnNames="id" referencedTableName="location"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-17">
+        <dropForeignKeyConstraint baseTableName="appointment_profile" constraintName="FKricwh70dvydjpwe4o5lghb1aj"/>
+        <addForeignKeyConstraint baseColumnNames="profiles_id" baseTableName="appointment_profile" constraintName="FKricwh70dvydjpwe4o5lghb1aj" referencedColumnNames="id" referencedTableName="profile"/>
+    </changeSet>
+    <changeSet author="MartinRep (generated)" id="1525044740935-18">
+        <dropForeignKeyConstraint baseTableName="appointment" constraintName="FKt7iac8n5nrj1uuf2urnr99eyu"/>
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="appointment" constraintName="FKt7iac8n5nrj1uuf2urnr99eyu" referencedColumnNames="id" referencedTableName="category"/>
+    </changeSet>
+</databaseChangeLog>
