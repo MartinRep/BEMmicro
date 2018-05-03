@@ -24,7 +24,6 @@
                 <p>{{request.expPrice}}</p>
                 <ion-avatar *ngIf="request.image">
                     <img [src]="'data:' + request.imageContentType + ';base64,' + request.image" />
-                    <span *ngIf="request.image">{{request.imageContentType}}, {{byteSize(request.image)}}</span>
                 </ion-avatar>
                 <!-- todo: what to do when it's a byte[] or ByteBuffer? In normal entity generatory, an open link is rendered -->
                 <p>{{request.profile}}</p>

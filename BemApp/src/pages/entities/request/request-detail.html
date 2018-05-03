@@ -42,7 +42,6 @@
                     <a (click)="openFile(request.imageContentType, request.image)">
                         <img [src]="'data:' + request.imageContentType + ';base64,' + request.image" style="max-width: 100%;" alt="request image"/>
                     </a>
-                    {{request.imageContentType}}, {{byteSize(request.image)}}
                 </div>
             </div>
         </ion-item>

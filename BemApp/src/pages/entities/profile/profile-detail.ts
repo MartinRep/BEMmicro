@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, ModalController, NavParams, ToastController, Option } from 'ionic-angular';
 import { Profile } from './profile.model';
 import { ProfileService } from './profile.provider';
-import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 @IonicPage({
     segment: 'profile-detail/:id'
@@ -14,7 +14,7 @@ import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 export class ProfileDetailPage {
     profile: Profile;
 
-    constructor(private modalCtrl: ModalController, private dataUtils: JhiDataUtils, private params: NavParams,
+    constructor(private modalCtrl: ModalController, private params: NavParams, private imagePicker: ImagePicker,
                 private profileService: ProfileService, private toastCtrl: ToastController) {
         this.profile = new Profile();
         this.profile.id = params.get('id');
@@ -39,7 +39,16 @@ export class ProfileDetailPage {
         modal.present();
     }
 
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
+    openFile(picture : any) {
+        let option = {maximumImagesCount:1}
+        this.imagePicker.getPictures(option).then((results) => {
+            for (var i = 0; i < results.length; i++) {
+                console.log('Image URI: ' + results[i]);
+            }
+          }, (err) => {
+              console.log(err);
+           });
     }
+
+
 }
