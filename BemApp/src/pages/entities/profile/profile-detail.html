@@ -24,7 +24,7 @@
                     <a (click)="openFile(profile.pictureContentType, profile.picture)">
                         <img [src]="'data:' + profile.pictureContentType + ';base64,' + profile.picture" style="max-width: 100%;" alt="profile image"/>
                     </a>
-                    {{profile.pictureContentType}}, {{byteSize(profile.picture)}}
+                    
                 </div>
             </div>
         </ion-item>

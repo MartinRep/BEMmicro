@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, ToastController } from 'ionic-angular';
 import { Profile } from './profile.model';
 import { ProfileService } from './profile.provider';
+import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,7 @@ export class ProfilePage {
 
     // todo: add pagination
 
-    constructor(private navCtrl: NavController, private profileService: ProfileService,
+    constructor(private navCtrl: NavController, private profileService: ProfileService, private dataUtils: JhiDataUtils,
                 private modalCtrl: ModalController, private toastCtrl: ToastController) {
         this.profiles = [];
     }
@@ -77,5 +78,9 @@ export class ProfilePage {
 
     detail(profile: Profile) {
         this.navCtrl.push('ProfileDetailPage', {id: profile.id});
+    }
+
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
     }
 }

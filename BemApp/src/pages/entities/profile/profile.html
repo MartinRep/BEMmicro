@@ -17,12 +17,13 @@
     <ion-list>
         <ion-item-sliding *ngFor="let profile of profiles; trackBy: trackId" #slidingItem>
             <button ion-item (click)="detail(profile)">
-                <h2>{{profile.name}}</h2>
-                <p>{{profile.phNumber}}</p>
                 <ion-avatar *ngIf="profile.picture">
-                    <img [src]="'data:' + profile.pictureContentType + ';base64,' + profile.picture" />
-                    <span *ngIf="profile.picture">{{profile.pictureContentType}}, {{byteSize(profile.picture)}}</span>
+                    <img [src]="'data:' + profile.pictureContentType + ';base64,' + profile.picture" />                
                 </ion-avatar>
+                <div>
+                    <p>{{profile.name}}</p>
+                    <p>{{profile.phNumber}}</p>
+                </div>
                 <!-- todo: what to do when it's a byte[] or ByteBuffer? In normal entity generatory, an open link is rendered -->
             </button>
             <ion-item-options>
