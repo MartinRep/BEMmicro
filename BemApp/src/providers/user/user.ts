@@ -46,7 +46,7 @@ export class User {
   }
 
   findAll(): Observable<any> {
-    return this.api.get('users');
+    return this.api.get('api/users');
   }
 
   /**
