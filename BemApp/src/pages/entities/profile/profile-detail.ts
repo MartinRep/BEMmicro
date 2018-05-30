@@ -39,6 +39,13 @@ export class ProfileDetailPage {
         modal.present();
     }
 
+    delete(id) {
+        this.profileService.delete(id)
+        .subscribe(data => {
+            this.profile = data;
+        })
+    }
+
     openFile(picture : any) {
         let option = {maximumImagesCount:1}
         this.imagePicker.getPictures(option).then((results) => {

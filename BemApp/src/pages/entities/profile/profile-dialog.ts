@@ -8,6 +8,8 @@ import { User as UserService } from '../../../providers/user/user';
 import { Location, LocationService } from '../location';
 import { Appointment, AppointmentService } from '../appointment';
 import { Category, CategoryService } from '../category';
+import { Observable } from 'rxjs/Observable';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @IonicPage()
 @Component({
@@ -66,6 +68,23 @@ export class ProfileDialogPage {
             .subscribe(data => { this.categories = data; }, (error) => this.onError(error));
     }
 
+    // save() {
+    //     this.isSaving = true;
+    //     if (this.profile.id !== undefined) {
+    //         this.subscribeToSaveResponse(
+    //             this.profileService.update(this.profile));
+    //     } else {
+    //         this.subscribeToSaveResponse(
+    //             this.profileService.create(this.profile));
+    //     }
+    // }
+    
+
+    // private subscribeToSaveResponse(result: Observable<HttpResponse<Profile>>) {
+    //     result.subscribe((res: HttpResponse<Profile>) =>
+    //         this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
+    // }
+
     /**
      * The user cancelled, dismiss without sending data back.
      */
@@ -80,6 +99,13 @@ export class ProfileDialogPage {
     done() {
         if (!this.form.valid) { return; }
         this.viewCtrl.dismiss(this.form.value);
+    }
+
+    delete(id) {
+        this.profileService.delete(id)
+        .subscribe(data => {
+            this.profile = data;
+        })
     }
 
     onError(error) {
