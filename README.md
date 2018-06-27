@@ -1,7 +1,7 @@
 # Best Ever Me Platform
 This is a project created for Best Ever Me world ltd. to incorporate existing and future services and products of the business. It is based on microservices architecture.
 
-This application is configured for Service Discovery and Configuration with the JHipster-Registry. On launch, it will refuse to start if it is not able to connect to the JHipster-Registry at [http://localhost:8761](http://localhost:8761). For more information, read our documentation on [Service Discovery and Configuration with the JHipster-Registry][].
+This application is configured for Service Discovery and Configuration with the JHipster-Registry. On launch, it will refuse to start if it is not able to connect to the JHipster-Registry at [http://localhost:8761](http://localhost:8761).
 
 ### Note
 To run all the services in development mode on single machine a minimum of 16 GB of RAM is recommended!
@@ -36,6 +36,7 @@ This is a Ionic based mobile application inteded to be used on top of the gatewa
 For development profile run from BemApp folder: `ionic serve -l`
 
 The service will run on `localhost:8080`
+
 
 ## Demo
 
